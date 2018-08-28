@@ -1,0 +1,354 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta
+	name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<title>Projet info 2A</title>
+
+<link
+	rel="stylesheet"
+	href="css/reveal.css"
+>
+<link
+	rel="stylesheet"
+	href="css/theme/black.css"
+>
+
+<!-- Theme used for syntax highlighting of code -->
+<link
+	rel="stylesheet"
+	href="lib/css/zenburn.css"
+>
+
+<!-- Printing and PDF exports -->
+<script>
+	var link = document.createElement('link');
+	link.rel = 'stylesheet';
+	link.type = 'text/css';
+	link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css'
+			: 'css/print/paper.css';
+	document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section><h1>Projet Info 2A</h1>
+				<h2>Agrégateur de flux RSS et Tweets</h2>
+				<table><tbody>
+						<tr>
+							<td><img
+								src="image/python_logo.png"
+								alt=""
+								class="plain no_bg"
+							/></td>
+							<td><img
+								src="image/visual_studio.png"
+								alt=""
+								class="plain no_bg"
+							/></td>
+							<td><img
+								src="image/rss_logo.png"
+								alt=""
+								class="plain no_bg"
+							/></td>
+							<td><img
+								src="image/twitter_logo.png"
+								alt=""
+								class="plain no_bg"
+							/></td>
+							<td><img
+								src="image/postgre_logo.png"
+								alt=""
+								class="plain no_bg"
+							/></td>
+							<td><img
+								src="image/git_logo.png"
+								alt=""
+								class="plain no_bg"
+							/></td>
+
+					</tr>
+				</tbody></table></section>
+			<section><img
+				src="image/projet info is comming.jpg"
+				alt=""
+				class="plain"
+			/></section>
+			<section>
+				<section>
+					<h2>Rappel du besoin</h2>
+			</section>
+				<section>Réaliser un agrégateur de <b>flux RSS</b> et de
+					<b>tweets</b> pour suivre l'actualité
+			</section>
+
+				<section>
+					<h3>Fonctionnalités de base</h3>
+					<ul>
+						<li class="fragment">Inscription</li>
+						<li class="fragment">Récupérer des flux RSS</li>
+						<li class="fragment">Récupérer des tweet</li>
+						<li class="fragment">Organiser cela en thématique</li>
+						<li class="fragment">Permettre aux utilisateur de s'abonner
+							à des thématiques</li>
+						<li class="fragment">Pouvoir modifier des thématiques
+							directement via l'application</li>
+						<li class="fragment">Sauvergarder, annoter une actu</li>
+				</ul>
+
+			</section>
+				<section>
+					<h3>Fonctionnalités de avancées</h3>
+					<ul>
+						<li class="fragment">Permettre à un utilisateur de partager
+							sur <b>son</b> twitter une actu/un tweet
+					</li>
+						<li class="fragment">Envoyer une notif aux utilisateurs
+							quand une thématique est modifiée</li>
+						<li class="fragment">Ajouter des fonctionnalités de réseau
+							social (commentaire d'actu, like, laisser les utilisateurs
+							poster une actu, etc)</li>
+				</ul>
+
+			</section>
+			</section>
+
+			<section>
+				<section><h2>Flux RSS</h2>
+					<h2>Really Simple Syndication</h2></section>
+				<section>
+					<h3>Flux RSS</h3>
+					<ul>
+						<li class="fragment">Format de données pour la syndication
+							du web</li>
+						<li class="fragment">Basé sur du xml</li>
+				</ul>
+			</section>
+				<section><h2><a
+							href="https://www.lemonde.fr/rss/une.xml"
+						>Un exemple</a></h2></section>
+				<section>
+					<ul>
+						<li class="fragment">Pas ultra lisible</li>
+						<li class="fragment">Besoin d'un aggréagateur de flux RSS
+							pour rendre ça user-friendly</li>
+						<li class="fragment">Le but du projet \o/</li>
+				</ul>
+			</section>
+
+
+				<section>
+					<h3>Les principales balises</h3> <pre><code
+						class="xml"
+						data-trim
+					>
+                    <rss>
+                        <channel>
+                            <title>Mon flux RSS</title>
+                            <description>Ceci est un exemple de flux RSS 2.0</description>
+                            <lastBuildDate>Sat, 07 Sep 2002 00:00:01 GMT</lastBuildDate>
+                            <link>http://www.example.org &lt;/link>
+                            <item>
+                                <title>Actualité N°1</title>
+                                <description>Ceci est ma première actualité</description>
+                                <pubDate>Sat, 07 Sep 2002 00:00:01 GMT</pubDate>
+                                <link>http://www.example.org/actu1&lt;/link>
+                            </item>
+                            <item>
+                                <title>Actualité N°2</title>
+                                <description>Ceci est ma seconde actualité</description>
+                                <pubDate>Sat, 07 Sep 2002 00:00:01 GMT</pubDate>
+                                <link>http://www.example.org/actu2&lt;/link>
+                            </item>
+                            </item>
+                        </channel>
+                    </rss>
+	</code></pre>
+			</section>
+
+			</section>
+
+			<section>
+				<section>
+					<h2>L'api Twitter</h2>
+			</section>
+				<section>
+					<h3>Application Programming Interface</h3>
+					<p>Que nous dit wikipedia</p>
+					<blockquote
+					class="fragment"
+					cite="https://fr.wikipedia.org/wiki/Interface_de_programmation"
+				>En informatique, une interface de programmation applicative
+						(souvent désignée par le terme API pour application programming
+						interface) est un ensemble normalisé de classes, de méthodes ou
+						de fonctions qui sert de façade par laquelle un logiciel offre
+						des services à d'autres logiciels.</blockquote>
+					</p>
+
+
+			</section>
+
+				<section>
+					<h3>Dit autrement</h3>
+					<ul>
+						<li class="fragment">Brique applicative qui offre un
+							service, et qu'on utilise sans savoir comment elle fonctionne</li>
+						<li class="fragment">2 types
+							<ul>
+								<li class="fragment">Les bibliothèques logicielles</li>
+								<li class="fragment">Les web services</li>
+						</ul>
+					</li>
+						<li>
+							<p class="fragment">Note : vous risquez d'utiliser les deux</p>
+					</li>
+				</ul>
+
+
+
+
+			</section>
+
+				<section>
+					<h3>L'api twitter 1/2</h3>
+					<ul>
+						<li class="fragment">Authentification d'un compte tier</li>
+						<li class="fragment">Récupérer des tweets</li>
+						<li class="fragment">En poster</li>
+						<li class="fragment">Direct message</li>
+						<li class="fragment">...</li>
+				</ul>
+					<p class="fragment">Et tout simplement en appelant une simple
+						URL</p>
+
+			</section>
+			
+			
+			<section>
+			<h3>L'api twitter 2/2</h3>
+			
+			<ul>
+				<li class="fragment">Renvoie des <b>json</b></li>
+				<li class="fragment">Un autre format très courant du web avec le xml</li>
+				<li class="fragment">Un peu plus  <a href="https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/intro-to-tweet-json">d'explication</a></li>
+			</ul>
+			</section>
+
+				<section><h3><a
+							href="https://developer.twitter.com/en/docs/basics/getting-started"
+						>Un peu de lecture </a></h3></section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Déroulement du projet</h2>
+			</section>
+
+				<section>
+					<h3>Les deadlines et les livrables</h3>
+					<ul>
+						<li>1er octobre 8h : dossier d'analyse</li>
+						<li>19 novembre 8h : rapport final et code semi-definitif</li>
+						<li>26 novembre 8h : code définitif</li>
+						<li>30 novembre : soutenance</li>
+				</ul>
+			</section>
+
+				<section>
+					<h3>Le chef de projet</h3> <img
+					src="image/david_goodenough.webp"
+					alt=""
+					class="plain"
+				/>
+			</section>
+
+
+				<section><h3>Proposition de méthodes de travail</h3>
+					<ul>
+						<li class="fragment">Fonctions "faciles" <br /> -> pair
+							programming : 2 sur un poste (de préférence de niveau
+							différent)
+					</li>
+						<li class="fragment">Fonction "complexe" et initialisation
+							du projet <br /> -> mob programming : tous sur un poste
+					</li>
+				</ul></section>
+
+
+				<section>
+					<h3>Petit tips</h3>
+					<ul>
+						<li class="fragment">Passez du temps sur l'étude préalzble
+							et la conception générale</li>
+						<li class="fragment">Cernez vos cas d'utilisations, les
+							acteurs etc (diagramme CU)</li>
+						<li class="fragment">L'autre diagramme important est celui
+							de classes, il doit guider vos développements</li>
+						<li class="fragment">Priorisez les développement par la
+							valeur</li>
+						<li class="fragment"><em>Fort couplage, faible
+								cohésion</em></li>
+				</ul>
+			</section>
+
+				<section><img
+					src="image/two buttons.jpg"
+					alt=""
+					style="width: 45%"
+					class="plain"
+				/></section>
+
+			</section>
+
+			<section>
+				<section>
+					<ul>
+						<li>Mail pro si question pas urgente : remi.pepin@insee.fr</li>
+						<li>Mail perso si question urgente : pepin.remi@gmail.com</li>
+				</ul>
+			</section>
+				<section><img
+					src="image/you re gonne have bad time.jpg"
+					alt=""
+					class="plain"
+				/></section>
+			</section>
+
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			dependencies : [ {
+				src : 'plugin/markdown/marked.js'
+			}, {
+				src : 'plugin/markdown/markdown.js'
+			}, {
+				src : 'plugin/notes/notes.js',
+				async : true
+			}, {
+				src : 'plugin/highlight/highlight.js',
+				async : true,
+				callback : function() {
+					hljs.initHighlightingOnLoad();
+				}
+			} ],
+
+		// 			width : "80%",
+		// 			height : "80%"
+
+		});
+	</script>
+</body>
+</html>
