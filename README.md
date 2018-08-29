@@ -1,5 +1,8 @@
 # Agrégateur de flux RSS et de Tweets
 
+
+:arrow_forward: [Les diapos](https://healermikado.github.io/Ensai_projetInfo_2A_RSS/#/)
+
 ## Introduction
 
 L’objectif du projet est de créer un agrégateur de flux RSS et de tweets pour permettre aux utilisateurs de se tenir au informer de l’actualité en temps réel selon des thématiques qu’ils choisissent.
