@@ -21,3 +21,12 @@ L’objectif du projet est de créer un agrégateur de flux RSS et de tweets pou
   - Permettre à un utilisateur inscrit peut lier son compte twitter à l’application et partager grâce à l’application des articles ou retweeter/liker des tweets
   - Mettre en place un système de notification pour prévenir les utilisateurs quand une thématique est ajoutée ou modifiée
   - Ajouter des fonctionnalités type "réseau social" (faites vous plaisir)
+  
+## Liens utiles
+
+  - Doc api twitter : https://developer.twitter.com/en/docs.html
+  - Des flux RSS : 
+     - La une du monde : https://www.lemonde.fr/rss/une.xml
+	 - Tric trac : https://www.trictrac.net/actus/flux-fr.rss
+	 - Science étonante : https://sciencetonnante.wordpress.com/feed/
+  - Doc vers l'api requests (une library pour faire du HTTP) : http://docs.python-requests.org/en/master/
