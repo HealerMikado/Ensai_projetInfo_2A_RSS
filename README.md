@@ -42,7 +42,7 @@ Une DAO (*Data Access Object*) est une classe technique qui permet de faire le l
 
 Car c'est mal !
 
-En informatique au maximum il faut dissocier les taches pour que chaque classe ne fasse qu'une chose (*forte cohérence*). Un objet métier fait partie du coeur de votre système. Ce sont les objets métiers et les traietements que vous allez y appliquer qui vont faire la plu value de votre application. Alors que les DAO ne sont pas réellement importantes. Enfin si, car elles permettent de persister vos données. Mais elles n'apportent aucune plu value métier, et pire vous pouvez parfaitement changer de façon de stocker les données sans modifier le fonctionnement de votre applicatio, car une DAO répond juste à un besoin technique et pas métier. Par exemple vous pourriez 
+En informatique au maximum il faut dissocier les taches pour que chaque classe ne fasse qu'une chose (*forte cohérence*). Un objet métier fait partie du coeur de votre système. Ce sont eux et les traitements que vous allez y appliquer qui vont faire la plu-value de votre application. Alors que les DAO ne sont pas réellement importantes. Enfin si, car elles permettent de persister vos données. Mais elles n'apportent aucune valeur métier, et pire vous pouvez parfaitement changer de façon de stocker les données sans modifier le fonctionnement de votre applicatio. Car une DAO répond juste à un besoin technique et pas métier. Par exemple vous pourriez 
 très bien vous dire à la fin du projet
 
 "Ummhhh ... Non mais en fait, travailler en PostegreSQL c'est démondé, on va faire du MongoDB"
@@ -51,7 +51,7 @@ Pour faire ça il vous suffit juste de supprimer vos classes DAO et d'en faire d
 
 Alors que si vous aviez mis les méthodes mise en base directement dans votre objet métier, vous auriez dû le modifier. Et là, la probabilité de casser votre code est très forte.
 
-Donc au maximum essayer de dissocier le métier de votre application et les solutions techniques. Les solutions techniques bougent très souvent, et sont "jetables" alors que le métier lui
+Donc au maximum, essayez de dissocier le métier de votre application et les solutions techniques. Les solutions techniques bougent très souvent et sont "jetables" alors que le métier lui
 est beaucoup plus stable (même s'il est sujet à changement).
 
 
@@ -65,7 +65,7 @@ Déjà il y a une erreur "technique" liée aux imports. Ceux qui on essayé de l
 
 ModuleNotFoundError: No module named 'connection'
 
-Cela vient du fait que, tout bêtement, python ne trouve pas le fichier que vous voulez importer, car en effet dans le dossier qui contient la DAO, il n'y a aucun fichier connection.py.
+Cela vient du fait que, tout bêtement, python ne trouve pas le fichier que vous voulez importer. En effet dans le dossier qui contient la DAO, il n'y a aucun fichier connection.py. Alors qu'en lançant via le main, l'import se fait car fait de manière relative à partir du main.
 
 Ensuite lancer un fichier contenant uniquement une classe ne fonctionnera jamais (en tout cas, ne produira jamais rien)
 
@@ -75,10 +75,10 @@ Une classe python comme celle-ci
 class MyClass:
 
     def __init__(self, attribut):   
-	   #Something
+		#Something
 
     def myMethod(self, attribut1):
-        #Something
+		#Something
 
 ```
 
@@ -86,22 +86,18 @@ est en fait un simple "plan" et ne peut rien faire seul. Exécuter une classe po
 Pour pouvoir utiliser une classe, il faut d'abord **l'instancier**, c'est à dire, utiliser le plan de la classe pour en créer un objet avec.
 
 ```python
-	
 	myObject = MyClass()
-
 ```
 
-Ici je dit à python de me créer un objet que j'appelle *myObject* en utilisant le constructeur de *Myclass* (le constructeur est la méthode __init__). Comme *monObjet* à pour classe *myClass* je vais pouvoir appeler la méthode *myMethod* et l'appliquer sur *myObject*
+Ici je dis à python de me créer un objet que j'appelle *myObject* en utilisant le constructeur de *Myclass* (le constructeur est la méthode *\_\_init\_\_*). Comme *monObjet* à pour classe *myClass* je vais pouvoir appeler la méthode *myMethod* et l'appliquer sur *myObject*
 
 ```python
-	
 	myObject.myMethod("toto")
-
 ```
 
 **Quid de l'attribut self**
 
-L'attribut self représente l'instance "active" de l'objet (celle que vous allez manipuler). Pour la méthode *__init__* c'est celle que vous créer, et pour la méthode *myMethod* c'est l'instance de l'objet sur laquelle vous l'appliquez (dans l'exemple au dessus c'est *myObject*). Vous devez absolument le mettre dans les attributs lors de la définition de la méthode (ce doit même être le premier), mais vous ne devez pas le renseigné à l'appel de la méthode, car implicitement python sais le valoriser.
+L'attribut self représente l'instance "active" de l'objet (celle que vous allez manipuler). Pour la méthode *\_\_init\_\_* c'est celle que vous créer, et pour la méthode *myMethod* c'est l'instance de l'objet sur laquelle vous l'appliquez (dans l'exemple au dessus c'est *myObject*). Vous devez absolument le mettre dans les attributs lors de la définition de la méthode (ce doit même être le premier), mais vous ne devez pas le renseigner à l'appel de la méthode, car implicitement python sais le valoriser.
 
 #### Erreur lors du string replacement dans les requêtes
 
@@ -115,13 +111,47 @@ Cela provient du fait que dans cette requête un seul placeholder (%s) était re
 cur.execute("DELTE FROM pokedex WHERE nom = %s;", (pokemon.nom))
 ```
 
-Sauf que Psycopg2 (la biliothèque qui gère les la partie SQL) est un peu malicieuse, et sa fonction de remplacement de placeholder attend spécifiquement un tuple, et pas un string (me demanait pas pourquoi, je trouve ça absurde ...). Bref pour que cela fonctionne il faut lui donner un tuple et pour faire ça, rien de plus simple, il suffit de faire 
+Sauf que Psycopg2 (la biliothèque qui gère les la partie SQL) est un peu malicieuse, et sa fonction de remplacement de placeholder attend spécifiquement un **tuple**, et pas un **string** (me demanait pas pourquoi, je trouve ça absurde ...). Bref pour que cela fonctionne il faut lui donner un tuple et pour faire ça, rien de plus simple, il suffit de faire 
 
 ```python
 cur.execute("DELTE FROM pokedex WHERE nom = %s;", (pokemon.nom,))
 ```
 
 Remarquez la virgule seule après pokémon.nom. Voilà c'est aussi simple que ça.
+
+#### Mon update ne se fait pas en base ??!!!
+
+Encore une jolie petite erreur, qui tient à peu de chose. Le sujet du TP est faux. A un moment on vous dit
+
+> Avec psycopg2 lorsque l’on utilise with :
+>
+>```python
+> with connection.cursor() as cur:
+>```
+>Implicitement, commit() et close() sont exécutés (à la fin du block) et rollback si un exception est levée.
+
+Et ce n'est pas totalement juste. En effet *close* et *rollback* sont appelés, mais pas commit. Pour faire un commit il faut le faire manuellement, ou activer le mode autocommit. C'est pour cela que certains d'entre vous lancez un update, récupérez la ligne updatée avec la méthode get_all_pokemon, mais quand ils allaient voir en base, la ligne n'était pas updatée. Entre temps, la base avait fait un rollback pour retrouner à son état avant update. Donc pour tout ce qui est UPDATE, INSERT, DELETE, pensez à faire un commit ! Pour les SELECT, pas besoin car c'est une opération de lecture seulement.
+
+D'ailleurs c'était un bon reflexe d'aller voir la base de données, car c'est son état qui fait foi.
+
+##### Le CRUD
+
+En manipulation de données il existe 4 types de fonctions
+
+  - CREATE
+  - READ
+  - UPDATE
+  - DELETE
+
+En SQL cela se traduit pour des lignes par
+
+  - INSERT
+  - SELECT
+  - UPDATE
+  - DELETE
+  
+Quand vous réaliserez vos DAO pensez-y, et essayez à chaque fois de faire ces 4 fonctions. Sachant que seul SELECT ne modifie pas la base de données, donc c'est la seul qui ne nécessite pas de commit.
+
 
 #### Erreur dans les imports avec pylint
 
