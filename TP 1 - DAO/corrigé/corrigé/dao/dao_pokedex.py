@@ -8,7 +8,7 @@ class DaoPokedex:
         cur = connection.cursor()
         try:
             cur.execute(
-                "INSERT INTO pokedex (name, element) VALUES (%s, %s) RETURNING id;", (pokemon.name))
+                "INSERT INTO pokedex (name, element) VALUES (%s, %s) RETURNING id;", (pokemon.name, pokemon.element))
 
             pokemon.id = cur.fetchone()[0]
             # la transaction est enregistrée en base
@@ -24,13 +24,23 @@ class DaoPokedex:
 
     def update(self, pokemon):
         with connection.cursor() as cur:
-            cur.execute(
-                "update pokedex set name=%s, element=%s where id=%s", (pokemon.name, pokemon.element, pokemon.id))
+            try:
+                cur.execute(
+                    "update pokedex set name=%s, element=%s where id=%s", (pokemon.name, pokemon.element, pokemon.id))
+                connection.commit()
+            except ValueError as error:
+                connection.rollback()
+                raise error
 
     def delete(self, pokemon):
         with connection.cursor() as cur:
-            cur.execute(
-                "delete from pokedex where id=%s", (pokemon.id,))
+            try:
+                cur.execute(
+                    "delete from pokedex where id=%s", (pokemon.id,))
+                connection.commit()
+            except ValueError as error:
+                connection.rollback()
+                raise error
 
     def get_all_pokemons(self):
         with connection.cursor() as cur:
