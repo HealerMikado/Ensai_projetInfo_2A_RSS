@@ -139,7 +139,7 @@ Par contre c'est vrai que pour un with avec une connection et pas un curseur
 	#something
 ```
 
-Quand on quitte le bloc with si aucune exception est levée on fait un commit, et un rollback sinon. Je vous conseille donc de conserver cette écriture
+Quand on quitte le bloc with si aucune exception n'est levée on fait un commit, et un rollback sinon. Je vous conseille donc de conserver cette écriture
 
 ```python
  with connection.cursor() as cur:
@@ -152,7 +152,7 @@ car elle est plus légère que
  except:
 	#something
  finally:
-    #something
+	#something
 ```
 
 mais en précisant bien 
