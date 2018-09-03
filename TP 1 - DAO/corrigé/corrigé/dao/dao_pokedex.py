@@ -8,7 +8,7 @@ class DaoPokedex:
         cur = connection.cursor()
         try:
             cur.execute(
-                "INSERT INTO pokedex (name, element) VALUES (%s, %s) RETURNING id;", (pokemon.name, pokemon.element))
+                "INSERT INTO pokedex (name, element) VALUES (%s, %s) RETURNING id;", (pokemon.name))
 
             pokemon.id = cur.fetchone()[0]
             # la transaction est enregistrée en base
