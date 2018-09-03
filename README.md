@@ -5,29 +5,29 @@
 
 ## Introduction
 
-L’objectif du projet est de créer un agrégateur de flux RSS et de tweets pour permettre aux utilisateurs de se tenir au informer de l’actualité en temps réel selon des thématiques qu’ils choisissent.
+L’objectif du projet est de créer un agrégateur de flux RSS et de tweets pour permettre aux utilisateurs de se tenir informé de l’actualité en temps réel selon des thématiques qu’ils choisissent.
 
 ## Fonctionnalités de base attendues :
 
-  - Inscrire et authentifier les utilisateurs
-  - Récupérer, mettre en forme et afficher des flux RSS et des tweets
-  - Permettre à un utilisateur non inscrit d'accéder à une version allégée de l'application
-  - Permettre à un utilisateur inscrit de s'abonner a des flux d'actualités, de sauvegarder des actualités pour y accéder hors ligne, et d'annoter ses actualités sauvegardées
-  - Permettre à un utilisateur inscrit de gérer ses infos personnelles, et supprimer son compte à tout moment sans garder la moindre information sur lui
-  - Pouvoir paramétrer les thématiques proposées (ajout de thématique, de flus RSS ou de hashtag twitter à une thématique) directement via l'application (en opposition à un paramétrage en dur dans le code)
+  - Inscrire et authentifier les utilisateurs ;
+  - Récupérer, mettre en forme et afficher des flux RSS et des tweets ;
+  - Permettre à un utilisateur non inscrit d'accéder à une version allégée de l'application ;
+  - Permettre à un utilisateur inscrit de s'abonner à des flux d'actualités, de sauvegarder des actualités pour y accéder hors ligne, et d'annoter ses actualités sauvegardées ;
+  - Permettre à un utilisateur inscrit de gérer ses infos personnelles, et supprimer son compte à tout moment sans garder la moindre information sur lui ;
+  - Pouvoir paramétrer les thématiques proposées (ajout de thématique, de flus RSS ou de hashtag twitter à une thématique) directement via l'application (en opposition à un paramétrage en dur dans le code).
  
 ## Fonctionnalités avancées :
 
-  - Permettre à un utilisateur inscrit peut lier son compte twitter à l’application et partager grâce à l’application des articles ou retweeter/liker des tweets
-  - Mettre en place un système de notification pour prévenir les utilisateurs quand une thématique est ajoutée ou modifiée
-  - Ajouter des fonctionnalités type "réseau social" (faites vous plaisir)
+  - Permettre à un utilisateur inscrit de partager grâce à l’application des articles sur tweeter ou retweeter/liker des tweets ;
+  - Mettre en place un système de notification pour prévenir les utilisateurs quand une thématique est ajoutée ou modifiée ;
+  - Ajouter des fonctionnalités type "réseau social" (faites vous plaisir).
   
 ## Diagramme UML
 
 Pour réaliser vos diagrammes, je vous conseille d'utiliser [PlantUML](http://plantuml.com/). Cela vous permet de réaliser vos diagrammes via une syntaxe assez simple,
 sans vous soucier du placement des différents objets. Le placement fonctionne souvent correctement (dans certains ils faut allez bidouiller dans les options de placement).
 Voici le lien pour réaliser vos diagrammes en ligne : [lien](http://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000)
-Vous pouvez sauvegarder vos diagrammes en enregistrant l'image, mais également en copiant le lien en bas. Lien qui vous permettra de charger le code du diagramme pour le modifier. Ne faites pas
+Vous pouvez sauvegarder vos diagrammes en enregistrant l'image, mais également en copiant le lien en bas. Il vous permettra de charger le code du diagramme pour le modifier. Ne faites pas
 comme moi lors de la démo, pour récupérer en diagramme il faut soit
 
   - Copier le lien dans le barre d'adresse en bas de la page de génération de diagramme en ligne
