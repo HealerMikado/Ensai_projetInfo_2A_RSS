@@ -130,7 +130,37 @@ Encore une jolie petite erreur, qui tient à peu de chose. Le sujet du TP est fa
 >```
 >Implicitement, commit() et close() sont exécutés (à la fin du block) et rollback si un exception est levée.
 
-Et ce n'est pas totalement juste. En effet *close* et *rollback* sont appelés, mais pas commit. Pour faire un commit il faut le faire manuellement, ou activer le mode autocommit. C'est pour cela que certains d'entre vous lancez un update, récupérez la ligne updatée avec la méthode get_all_pokemon, mais quand ils allaient voir en base, la ligne n'était pas updatée. Entre temps, la base avait fait un rollback pour retrouner à son état avant update. Donc pour tout ce qui est UPDATE, INSERT, DELETE, pensez à faire un commit ! Pour les SELECT, pas besoin car c'est une opération de lecture seulement.
+Et ce n'est pas totalement juste. En effet *close* est appelé, mais pas *commit* et *rollback*. Pour faire un commit il faut le faire manuellement, ou activer le mode autocommit. C'est pour cela que certains d'entre vous lancez un update, récupérez la ligne updatée avec la méthode get_all_pokemon, mais quand ils allaient voir en base, la ligne n'était pas updatée. Entre temps, la base avait fait un rollback pour retrouner à son état avant update. Donc pour tout ce qui est UPDATE, INSERT, DELETE, pensez à faire un commit ! Pour les SELECT, pas besoin car c'est une opération de lecture seulement.
+
+Par contre c'est vrai que pour un with avec une connection et pas un curseur
+
+```python
+ psycopg2.connect(DSN) as conn:
+	#something
+```
+
+Quand on quitte le bloc with si aucune exception est levée on fait un commit, et un rollback sinon. Je vous conseille donc de conserver cette écriture
+
+```python
+ with connection.cursor() as cur:
+```
+car elle est plus légère que
+
+```python
+ try:
+	#something
+ except:
+	#something
+ finally:
+    #something
+```
+
+mais en précisant bien 
+
+```python
+ connection.commit()
+```
+
 
 D'ailleurs c'était un bon reflexe d'aller voir la base de données, car c'est son état qui fait foi.
 
