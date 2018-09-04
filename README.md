@@ -9,15 +9,15 @@
   - [Fonctionnalités attendues](#fonctionnalités-attendues)
     - [Fonctionnalités de base attendues](#fonctionnalités-de-base-attendues)
     - [Fonctionnalités avancées](#fonctionnalités-avancées)
-  - [Diagramme UML](#diagramme-UML)
+  - [Diagramme UML](#diagramme-uml)
   - [TP 1 DAO](#tp-1-dao)
-  - [Pourquoi ne pas mettre les fonctions de la DAO dans l'objet métier ?](#pourquoi-ne-pas-mettre-les-fonctions-de-la-dao-dans-lobjet-métier-)
-  - [Problèmes rencontrés lors du TP 1](#problèmes-rencontrés-lors-du-TP-1)
-  - [Lancement de la classe et pas du main](#lancement-de-la-classe-et-pas-du-main)
-  - [Erreur lors du string replacement dans les requêtes](#erreur-lors-du-string-replacement-dans-les-requêtes)
-  - [Mon update ne se fait pas en base ??!!!](#mon-update-ne-se-fait-pas-en-base-)
-  - [Le CRUD](#le-crud)
-  - [Erreur dans les imports avec pylint](#erreur-dans-les-imports-avec-pylint)
+    - [Pourquoi ne pas mettre les fonctions de la DAO dans l'objet métier ?](#pourquoi-ne-pas-mettre-les-fonctions-de-la-dao-dans-lobjet-métier-)
+    - [Problèmes rencontrés lors du TP 1](#problèmes-rencontrés-lors-du-tp-1)
+      - [Lancement de la classe et pas du main](#lancement-de-la-classe-et-pas-du-main)
+      - [Erreur lors du string replacement dans les requêtes](#erreur-lors-du-string-replacement-dans-les-requêtes)
+      - [Mon update ne se fait pas en base ??!!!](#mon-update-ne-se-fait-pas-en-base-)
+      - [Le CRUD](#le-crud)
+      - [Erreur dans les imports avec pylint](#erreur-dans-les-imports-avec-pylint)
   - [Liens utiles](#liens-utiles)
 
 
@@ -56,7 +56,13 @@ comme moi lors de la démo, pour récupérer en diagramme il faut soit
   
 ## TP 1 DAO
 
-Une DAO (*Data Access Object*) est une classe technique qui permet de faire le lien entre une classe objet métier (appelée business object dans le TP) et la base de données.
+Une DAO (*Data Access Object*) est une classe technique qui permet de faire le lien entre une classe objet métier (appelée business object dans le TP) et la base de données. C'est cette classe qui va vous permettre de
+
+  - mettre des objets en base ;
+  - les lire ;
+  - les mettre à jour .
+  
+Une fois vos DAO faites, la manipulation de la base de données sera transparente pour vous. Vous ne ferez qu'appeler des méthodes create(), update(), etc, ce qui rendra votre code plus leger et plus simple à comprendre.
 
 ### Pourquoi ne pas mettre les fonctions de la DAO dans l'objet métier ?
 
@@ -115,9 +121,9 @@ Ici je dis à python de me créer un objet que j'appelle *myObject* en utilisant
 	myObject.myMethod("toto")
 ```
 
-**Quid de l'attribut self**
+* **Quid de l'attribut self** *
 
-L'attribut self représente l'instance "active" de l'objet (celle que vous allez manipuler). Pour la méthode *\_\_init\_\_* c'est celle que vous créer, et pour la méthode *myMethod* c'est l'instance de l'objet sur laquelle vous l'appliquez (dans l'exemple au dessus c'est *myObject*). Vous devez absolument le mettre dans les attributs lors de la définition de la méthode (ce doit même être le premier), mais vous ne devez pas le renseigner à l'appel de la méthode, car implicitement python sais le valoriser.
+L'attribut self représente l'instance "active" de l'objet (celle que vous allez manipuler). Pour la méthode *\_\_init\_\_* c'est celle que vous créez, et pour la méthode *myMethod* c'est l'instance de l'objet sur laquelle vous l'appliquez (dans l'exemple au dessus c'est *myObject*). Vous devez absolument le mettre dans les attributs lors de la définition de la méthode (ce doit même être le premier), mais vous ne devez pas le renseigner à l'appel de la méthode, car implicitement python sais le valoriser.
 
 #### Erreur lors du string replacement dans les requêtes
 
@@ -150,7 +156,7 @@ Encore une jolie petite erreur, qui tient à peu de chose. Le sujet du TP est fa
 >```
 >Implicitement, commit() et close() sont exécutés (à la fin du block) et rollback si un exception est levée.
 
-Et ce n'est pas totalement juste. En effet *close* est appelé, mais pas *commit* et *rollback*. Pour faire un commit il faut le faire manuellement, ou activer le mode autocommit. C'est pour cela que certains d'entre vous lancez un update, récupérez la ligne updatée avec la méthode get_all_pokemon, mais quand ils allaient voir en base, la ligne n'était pas updatée. Entre temps, la base avait fait un rollback pour retrouner à son état avant update. Donc pour tout ce qui est UPDATE, INSERT, DELETE, pensez à faire un commit ! Pour les SELECT, pas besoin car c'est une opération de lecture seulement.
+Et ce n'est pas totalement juste. En effet *close* est appelé, mais pas *commit* et *rollback*. Pour faire un commit il faut le faire manuellement, ou activer le mode autocommit. C'est pour cela que certains d'entre vous lançaient un update, récupéraient la ligne updatée avec la méthode get_all_pokemon(), mais quand ils allaient voir en base, la ligne n'était pas updatée. Entre temps, la base avait fait un rollback pour retourner à son état avant update faute de commit. Donc pour tout ce qui est **UPDATE**, **INSERT**, **DELETE**, pensez à faire un commit ! Pour les SELECT, pas besoin car c'est une opération de lecture seulement.
 
 Par contre c'est vrai que pour un with avec une connection et pas un curseur
 
@@ -188,16 +194,16 @@ D'ailleurs c'était un bon reflexe d'aller voir la base de données, car c'est s
 
 En manipulation de données il existe 4 types de fonctions
 
-  - CREATE
-  - READ
-  - UPDATE
-  - DELETE
+  - **C**REATE
+  - **R**EAD
+  - **U**PDATE
+  - **D**ELETE
 
-En SQL cela se traduit pour des lignes par
+En SQL cela se traduit pour la manipulation des lignes par
 
   - INSERT
-  - SELECT
-  - UPDATE
+  - SELECT 
+  - UPDATE 
   - DELETE
   
 Quand vous réaliserez vos DAO pensez-y, et essayez à chaque fois de faire ces 4 fonctions. Sachant que seul SELECT ne modifie pas la base de données, donc c'est la seule qui ne nécessite pas de commit.
@@ -205,7 +211,7 @@ Quand vous réaliserez vos DAO pensez-y, et essayez à chaque fois de faire ces 
 
 #### Erreur dans les imports avec pylint
 
-Cela provient du fait que pylint ne voit pas les répertoires. C'est pas votre faute, c'est une "fausse erreur" en plus car le code fonctionne. Une solution "old_school" est de rajouter des fichier __init__.py dans chaque sous répertoire. On cherche une meilleurs solution
+Cela provient du fait que pylint ne voit pas les répertoires. C'est pas votre faute, c'est une "fausse erreur" en plus car le code fonctionne. Une solution "old_school" est de rajouter des fichier \_\_init\_\_.py dans chaque sous répertoire. On cherche une meilleure solution.
 
 ## Liens utiles
 
