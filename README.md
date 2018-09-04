@@ -58,7 +58,7 @@ comme moi lors de la démo, pour récupérer en diagramme il faut soit
   - Modifier le lien pour qu'il commence par http://www.plantuml.com/plantuml/uml/ et pas http://www.plantuml.com/plantuml/png/, et mettre le nouveau lien
   dans la barre d'adresse de votre navigateur.
   
-## TP 1 DAO
+## TP 1 - DAO
 
 Une DAO (*Data Access Object*) est une classe technique qui permet de faire le lien entre une classe objet métier (appelée business object dans le TP) et la base de données. C'est cette classe qui va vous permettre de
 
@@ -237,9 +237,170 @@ La doc complète : https://github.com/hhatto/autopep8
 
 #### psycopg2-binary
 
-Psycopg2-binary est un utilitaire qui vous permet de vous connecter à une base **PostgreSQL**. Sans lui (ou une autre bibliothèque qui fait la même choseà bon courage pour connecter à une base. Je vous conseille de l'utiliser pour votre projet :wink:
+Psycopg2-binary est un utilitaire qui vous permet de vous connecter à une base **PostgreSQL**. Sans lui (ou une autre bibliothèque qui fait la même chose) bon courage pour vous connecter à une base. Je vous conseille de l'utiliser pour votre projet :wink:
 
 La doc complète : http://initd.org/psycopg/docs/
+
+## TP 2 - Inport/Export de données
+
+Quelque soit l'application que vous développez, il y a de forte chance que vous ayez à manipuler des données externes à votre application mais également à en produire. Vos données en entrée peuvent provenir d'une base de données, mais également de fichiers, de web service ou de toute autre sources de données. Et vos données en sortie peuvent alimenter à peu près les mêmes choses.
+
+Donc vu que quasiment toutes les applications sont amenées à communiquer avec des sources de données externes et des consommateurs de données, il faut se mettre d'accord sur les formats d'échange. Spoiler, il n'y a pas de consensus. Mais, certains formats ont émergé.
+
+### Le CSV
+
+Le **CSV** pour *Coma Separated Values* est un format ultra simple de données. Chaque ligne représente une entrée (par exemple une personne), et chaque valeur est séparée par un caractère de séparation (généralement une virgule, mais ça peut être n'importe quoi)
+
+Par exemple
+
+```CSV
+sam,555-555-555,5 rue des lilas
+max,1234567890,thailande
+bob,666,7eme cercle
+```
+
+Si le caractère de séparation peut se trouver dans les champs, on entoure les champs par des " ou des '
+
+```CSV
+"sam","555-555-555","5, rue des lilas"
+"max,"1234567890","Patong, thailande"
+"bob","666","7eme cercle"
+```
+
+Pour une meilleure lisibilité, on peut également rajouter en première ligne le nom des colonnes. La plupart des *parser* CSV ont une option pour gérer cette ligne
+
+```CSV
+"nom";"numero";"adresse"
+"Sam";"555-555-555";"5, rue des lilas"
+"Max";"1234567890";"Patong, thailande"
+"Bob";"666";"7eme cercle"
+```
+
+Sa simplicité en fait un très bon format pour transférer des données qui peuvent s'apparenter à des tableaux. Les tableurs savent les lire, les pluparts des base de données savent les importer et les exporter. Bref pour les tableau :+1:
+
+### Le XML
+
+Le **XML** pour *eXtensible Markup Language* est un fichier qui utilise des balises pour savoir à quoi correspond vos données. On peut faire plein de choses avec, ici je vais juste montrer la version ultra basique.
+
+```XML
+<?xml version="1.0" encoding="utf8"?>
+<personnes>
+    <personne>
+        <nom>Sam</nom>
+        <numero>555-555-555</numero>
+    </personne>
+    <personne>
+        <nom>Max</nom>
+        <numero>1234567890</numero>
+    </personne>
+    <personne>
+        <nom>Bob</nom>
+        <numero>666</numero>
+    </personne>
+</personnes>
+```
+
+La balise 
+
+```XML
+<?xml version="1.0" encoding="utf8"?>
+```
+est l'entête du fichier. Elle dit juste que l'on a un fichier au format XML et que l'encodage est de l'utf8
+
+La suite est assez lisible. Dans un fichier CSV, cela donnerait
+
+```CSV
+"nom";"numero"
+"Sam";"555-555-555"
+"Max";"1234567890"
+"Bob";"666"
+```
+
+En plus de cela vous pouvez imbriquer des balises les unes dans les autres pour les hiérarchiser, voir dubliquer des balises pour signaler que vous avez plusieur valeur pour cet attribut. Exemple
+
+```XML
+<?xml version="1.0" encoding="utf8"?>
+<personnes>
+    <personne>
+        <nom>Sam</nom>
+        <numero>555-555-555</numero>
+		<numero>556-455-055</numero>
+		<numero>123-263-896</numero>
+    </personne>
+    <personne>
+        <nom>Max</nom>
+        <numero>1234567890</numero>
+		<ville>
+            <nom>Patong</nom>
+            <coord>4.2,6.9</coord>
+        </ville>
+		<ville>
+            <nom>Allyt</nom>
+            <coord>8.3,5.2</coord>
+        </ville>
+    </personne>
+    <personne>
+        <nom>Bob</nom>
+        <numero>666</numero>
+    </personne>
+</personnes>
+```
+
+Ce qui donne en CSV
+```CSV
+"nom";"numero";"ville"
+"Sam";"555-555-555";
+"Sam";"556-455-055";
+"Sam";"123-263-896";
+"Max";"1234567890";"Patong(4.2,6.9)"
+"Max";"1234567890";"Allyt(8.3,5.2)"
+"Bob";"666";
+```
+
+En plus de cela vous pouvez passer des valeurs dans les attributs des balises
+
+```XML
+<personne>
+    <nom>Bob</nom>
+    <numero type="shortcode">666</numero>
+</personne>
+```
+
+Et même utiliser un fichier un autre fichier XML pour vérifier automatiquement la forme de votre fichier (mais là on rentre dans la partie vraiment compliqué du XML)
+
+
+Pour résumer, un XML permet
+  - l'imbrication faciles de vos données ;
+  - la réutilisation du même nom de balise, aussi bien pour le même concept qu'un concept différent
+  - de représenter parfaitement des données sous forme d'arbre, et dont on souhaite vérifier la forme a priori.
+
+
+### Le JSON
+
+Le **JSON** pour *JavaScript Object Notation* est un format qui provient du JavaScript (c'est le langage qui rend les page web interactive). Comme le XML, il permet de représenter la hierachie de vos données, mais de manière plus légère. A la base, c'était juste la représentation textuel d'objet JavaScript, mais avec le temps c'est devenu un format d'échange de données grâce à sa simplicité.
+
+```JSON
+[
+    {
+        'nom': 'Sam',
+        'numero': '555-555-555',
+        'adresse': '5, rue des lilas'
+    },
+    {
+        'nom': 'Max',
+        'numero': '1234567890',
+        'adresse': 'Patong, thailande'
+    },
+    {
+        'nom': 'Bob',
+        'numero': '666',
+        'adresse': '7eme cercle'
+    }
+]
+```
+
+Je n'ai pas grand chose à dire dessus. C'est un fichier de type clef/valeur, avec la possibilité d'imbriquer les objets les uns dans les autres. Il est plus léger que le XML car on ne doit pas fermer les balises, plus agréable à lire, mais ne permet d'être vérifié a priori. Globalement c'est un très bon format d'échange.
+
 
 ## Liens utiles
 
