@@ -326,19 +326,19 @@ En plus de cela vous pouvez imbriquer des balises les unes dans les autres pour 
 <?xml version="1.0" encoding="utf8"?>
 <personnes>
     <personne>
-		<nom>Sam</nom>
-        <numero>555-555-555</numero>
-		<numero>556-455-055</numero>
-		<numero>123-263-896</numero>
+        <nom>Sam</nom>
+            <numero>555-555-555</numero>
+            <numero>556-455-055</numero>
+            <numero>123-263-896</numero>
     </personne>
     <personne>
         <nom>Max</nom>
         <numero>1234567890</numero>
-		<ville>
+        <ville>
             <nom>Patong</nom>
             <coord>4.2,6.9</coord>
         </ville>
-		<ville>
+        <ville>
             <nom>Allyt</nom>
             <coord>8.3,5.2</coord>
         </ville>
