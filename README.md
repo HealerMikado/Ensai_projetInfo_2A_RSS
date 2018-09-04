@@ -22,7 +22,7 @@
       - [pylint](#pylint)
 	  - [autopep8](#autopep8)
 	  - [psycopg2-binary](#psycopg2-binary)
-  -[TP 2 - Inport/Export de données](#https://github.com/HealerMikado/Ensai_projetInfo_2A_RSS#tp-2---inportexport-de-données)
+  - [TP 2 - Inport/Export de données](#https://github.com/HealerMikado/Ensai_projetInfo_2A_RSS#tp-2---inportexport-de-données)
     - [Le CSV](#le-csv)
 	- [Le XML](#le-xml)
 	- [Le JSON](#le-json)
@@ -383,7 +383,7 @@ Pour résumer, un XML permet
 
 Le **JSON** pour *JavaScript Object Notation* est un format qui provient du JavaScript (c'est le langage qui rend les page web interactive). Comme le XML, il permet de représenter la hierachie de vos données, mais de manière plus légère. A la base, c'était juste la représentation textuel d'objet JavaScript, mais avec le temps c'est devenu un format d'échange de données grâce à sa simplicité.
 
-```json
+```javascript
 [
     {
         'nom': 'Sam',
