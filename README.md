@@ -60,7 +60,8 @@ Une DAO (*Data Access Object*) est une classe technique qui permet de faire le l
 
   - mettre des objets en base ;
   - les lire ;
-  - les mettre à jour .
+  - les mettre à jour ;
+  - les supprimer.
   
 Une fois vos DAO faites, la manipulation de la base de données sera transparente pour vous. Vous ne ferez qu'appeler des méthodes create(), update(), etc, ce qui rendra votre code plus leger et plus simple à comprendre.
 
