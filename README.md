@@ -18,6 +18,10 @@
       - [Mon update ne se fait pas en base ??!!!](#mon-update-ne-se-fait-pas-en-base-)
       - [Le CRUD](#le-crud)
       - [Erreur dans les imports avec pylint](#erreur-dans-les-imports-avec-pylint)
+    -[Les imports du TP1](#les-imports-du-tp1)
+      -[pylint](#pylint)
+	  -[autopep8](#autopep8)
+	  -[psycopg2-binary](#psycopg2-binary)
   - [Liens utiles](#liens-utiles)
 
 
@@ -122,9 +126,9 @@ Ici je dis à python de me créer un objet que j'appelle *myObject* en utilisant
 	myObject.myMethod("toto")
 ```
 
-* **Quid de l'attribut self** *
+***Quid de l'attribut self***
 
-L'attribut self représente l'instance "active" de l'objet (celle que vous allez manipuler). Pour la méthode *\_\_init\_\_* c'est celle que vous créez, et pour la méthode *myMethod* c'est l'instance de l'objet sur laquelle vous l'appliquez (dans l'exemple au dessus c'est *myObject*). Vous devez absolument le mettre dans les attributs lors de la définition de la méthode (ce doit même être le premier), mais vous ne devez pas le renseigner à l'appel de la méthode, car implicitement python sais le valoriser.
+L'attribut self représente l'instance "active" de l'objet (celle que vous allez manipuler). Pour la méthode *\_\_init\_\_* c'est celle que vous créez, et pour la méthode *myMethod* c'est l'instance de l'objet sur laquelle vous l'appliquez (dans l'exemple au dessus c'est *myObject*). Vous devez absolument le mettre dans les attributs lors de la définition de la méthode (ce doit même être le premier), mais vous ne devez pas le renseigner à l'appel de la méthode, car implicitement python sait le valoriser.
 
 #### Erreur lors du string replacement dans les requêtes
 
@@ -132,13 +136,13 @@ Certains d'entre vous ont eu des problèmes pour l'écriture de la requête DELE
 
 TypeError: not all arguments converted during string formatting
 
-Cela provient du fait que dans cette requête un seul placeholder (%s) était replacée, et que tout naturellement vous avez fait cela
+Cela provient du fait que dans cette requête un seul placeholder (%s) était replacé, et que tout naturellement vous avez fait cela (j'aurais fait la même chose)
 
 ```python
 cur.execute("DELTE FROM pokedex WHERE nom = %s;", (pokemon.nom))
 ```
 
-Sauf que Psycopg2 (la biliothèque qui gère les la partie SQL) est un peu malicieuse, et sa fonction de remplacement de placeholder attend spécifiquement un **tuple**, et pas un **string** (me demanait pas pourquoi, je trouve ça absurde ...). Bref pour que cela fonctionne il faut lui donner un tuple et pour faire ça, rien de plus simple, il suffit de faire 
+Sauf que Psycopg2 (la biliothèque qui gère les la partie SQL) est un peu malicieuse, et sa fonction de remplacement de placeholder attend spécifiquement un **tuple**, et pas un **string** (me demandait pas pourquoi, je trouve ça absurde ...). Bref pour que cela fonctionne il faut lui donner un tuple et pour faire ça, rien de plus simple, il suffit de faire 
 
 ```python
 cur.execute("DELTE FROM pokedex WHERE nom = %s;", (pokemon.nom,))
@@ -157,7 +161,7 @@ Encore une jolie petite erreur, qui tient à peu de chose. Le sujet du TP est fa
 >```
 >Implicitement, commit() et close() sont exécutés (à la fin du block) et rollback si un exception est levée.
 
-Et ce n'est pas totalement juste. En effet *close* est appelé, mais pas *commit* et *rollback*. Pour faire un commit il faut le faire manuellement, ou activer le mode autocommit. C'est pour cela que certains d'entre vous lançaient un update, récupéraient la ligne updatée avec la méthode get_all_pokemon(), mais quand ils allaient voir en base, la ligne n'était pas updatée. Entre temps, la base avait fait un rollback pour retourner à son état avant update faute de commit. Donc pour tout ce qui est **UPDATE**, **INSERT**, **DELETE**, pensez à faire un commit ! Pour les SELECT, pas besoin car c'est une opération de lecture seulement.
+Et ce n'est pas totalement juste. En effet *close* est appelé, mais pas *commit* et *rollback*. Pour faire un commit il faut le faire manuellement, ou activer le mode autocommit. C'est pour cela que certains d'entre vous lançaient un update, récupéraient la ligne updatée avec la méthode get_all_pokemon(), mais quand ils allaient voir en base, la ligne n'était pas updatée. Entre temps, la base avait fait un rollback pour retourner à son état avant update faute de commit. Donc pour tout ce qui est **UPDATE**, **INSERT**, **DELETE**, pensez à faire un commit ! Pour les **SELECT**, pas besoin car c'est une opération de lecture seulement.
 
 Par contre c'est vrai que pour un with avec une connection et pas un curseur
 
@@ -213,6 +217,29 @@ Quand vous réaliserez vos DAO pensez-y, et essayez à chaque fois de faire ces 
 #### Erreur dans les imports avec pylint
 
 Cela provient du fait que pylint ne voit pas les répertoires. C'est pas votre faute, c'est une "fausse erreur" en plus car le code fonctionne. Une solution "old_school" est de rajouter des fichier \_\_init\_\_.py dans chaque sous répertoire. On cherche une meilleure solution.
+
+
+### Les imports du TP1
+
+Au début du TP on vous a fait installer 3 bibliothèques (*pylint*, *autopep8* et *psycopg2-binary*), je vous propose une petite explication sur ces installations
+
+#### pylint
+
+Pylint est un outil qui va vérifier si votre code python ne contient pas d'erreur mais aussi vérifier que vous utilisez les bonnes pratiques de codage python. C'est donc un utilitaire qui ne vous apporte rien d'un point de vu métier, mais qui vous aide à développer du code avec une syntaxe de qualité. Il peut également passer en revu votre code et vous donner des informations dessus. Mais comme vous avez pu le voir, pylint n'est pas infaillible, et peu relever des erreurs qui n'en sont pas.
+
+La doc complète : https://www.pylint.org/
+
+#### autopep8
+
+Encore un utilitaire pour vous aider à écrire du code de qualité. Autopep8 vous permet de formatter votre code pour qu'il se suive les bonnes pratiques **PEP 8**.
+
+La doc complète : https://github.com/hhatto/autopep8
+
+#### psycopg2-binary
+
+Psycopg2-binary est un utilitaire qui vous permet de vous connecter à une base **PostgreSQL**. Sans lui (ou une autre bibliothèque qui fait la même choseà bon courage pour connecter à une base. Je vous conseille de l'utiliser pour votre projet :wink:
+
+La doc complète : http://initd.org/psycopg/docs/
 
 ## Liens utiles
 
