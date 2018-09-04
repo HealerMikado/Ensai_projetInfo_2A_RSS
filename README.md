@@ -1,13 +1,33 @@
 # Agrégateur de flux RSS et de Tweets
 
+:arrow_forward: [Les diapos de présentation](https://healermikado.github.io/Ensai_projetInfo_2A_RSS/#/)
 
-:arrow_forward: [Les diapos](https://healermikado.github.io/Ensai_projetInfo_2A_RSS/#/)
+
+## Table des matières
+
+  - [Introduction](#introduction)
+  - [Fonctionnalités attendues](#fonctionnalités-attendues)
+    - [Fonctionnalités de base attendues](#fonctionnalités-de-base-attendues)
+    - [Fonctionnalités avancées](#fonctionnalités-avancées)
+  - [Diagramme UML](#diagramme-UML)
+  - [TP 1 DAO](#tp-1-dao)
+  - [Pourquoi ne pas mettre les fonctions de la DAO dans l'objet métier ?](#pourquoi-ne-pas-mettre-les-fonctions-de-la-dao-dans-lobjet-métier-)
+  - [Problèmes rencontrés lors du TP 1](#problèmes-rencontrés-lors-du-TP-1)
+  - [Lancement de la classe et pas du main](#lancement-de-la-classe-et-pas-du-main)
+  - [Erreur lors du string replacement dans les requêtes](#erreur-lors-du-string-replacement-dans-les-requêtes)
+  - [Mon update ne se fait pas en base ??!!!](#mon-update-ne-se-fait-pas-en-base-)
+  - [Le CRUD](#le-crud)
+  - [Erreur dans les imports avec pylint](#erreur-dans-les-imports-avec-pylint)
+  - [Liens utiles](#liens-utiles)
+
 
 ## Introduction
 
 L’objectif du projet est de créer un agrégateur de flux RSS et de tweets pour permettre aux utilisateurs de se tenir informé de l’actualité en temps réel selon des thématiques qu’ils choisissent.
 
-## Fonctionnalités de base attendues :
+## Fonctionnalités attendues
+
+### Fonctionnalités de base attendues
 
   - Inscrire et authentifier les utilisateurs ;
   - Récupérer, mettre en forme et afficher des flux RSS et des tweets ;
@@ -16,7 +36,7 @@ L’objectif du projet est de créer un agrégateur de flux RSS et de tweets pou
   - Permettre à un utilisateur inscrit de gérer ses infos personnelles, et supprimer son compte à tout moment sans garder la moindre information sur lui ;
   - Pouvoir paramétrer les thématiques proposées (ajout de thématique, de flus RSS ou de hashtag twitter à une thématique) directement via l'application (en opposition à un paramétrage en dur dans le code).
  
-## Fonctionnalités avancées :
+### Fonctionnalités avancées
 
   - Permettre à un utilisateur inscrit de partager grâce à l’application des articles sur tweeter ou retweeter/liker des tweets ;
   - Mettre en place un système de notification pour prévenir les utilisateurs quand une thématique est ajoutée ou modifiée ;
