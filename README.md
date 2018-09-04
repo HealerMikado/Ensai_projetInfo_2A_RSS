@@ -10,7 +10,7 @@
     - [Fonctionnalités de base attendues](#fonctionnalités-de-base-attendues)
     - [Fonctionnalités avancées](#fonctionnalités-avancées)
   - [Diagramme UML](#diagramme-uml)
-  - [TP 1 DAO](#tp-1-dao)
+  - [TP 1 - DAO](#tp--1--dao)
     - [Pourquoi ne pas mettre les fonctions de la DAO dans l'objet métier ?](#pourquoi-ne-pas-mettre-les-fonctions-de-la-dao-dans-lobjet-métier-)
     - [Problèmes rencontrés lors du TP 1](#problèmes-rencontrés-lors-du-tp-1)
       - [Lancement de la classe et pas du main](#lancement-de-la-classe-et-pas-du-main)
@@ -22,6 +22,10 @@
       - [pylint](#pylint)
 	  - [autopep8](#autopep8)
 	  - [psycopg2-binary](#psycopg2-binary)
+  -[TP 2 - Inport/Export de données](#https://github.com/HealerMikado/Ensai_projetInfo_2A_RSS#tp-2---inportexport-de-données)
+    - [Le CSV](#le-csv)
+	- [Le XML](#le-xml)
+	- [Le JSON](#le-json)
   - [Liens utiles](#liens-utiles)
 
 
@@ -243,9 +247,9 @@ La doc complète : http://initd.org/psycopg/docs/
 
 ## TP 2 - Inport/Export de données
 
-Quelque soit l'application que vous développez, il y a de forte chance que vous ayez à manipuler des données externes à votre application mais également à en produire. Vos données en entrée peuvent provenir d'une base de données, mais également de fichiers, de web service ou de toute autre sources de données. Et vos données en sortie peuvent alimenter à peu près les mêmes choses.
+Quelque soit l'application que vous développez, il y a de forte chance que vous ayez à manipuler des données externes à votre application mais également vous risquez de devoir en produire. Vos données en entrée peuvent provenir d'une base de données, mais également de fichiers, de web service ou de toute autre sources de données. Et vos données en sortie peuvent alimenter à peu près les mêmes choses.
 
-Donc vu que quasiment toutes les applications sont amenées à communiquer avec des sources de données externes et des consommateurs de données, il faut se mettre d'accord sur les formats d'échange. Spoiler, il n'y a pas de consensus. Mais, certains formats ont émergé.
+Donc vu que quasiment toutes les applications sont amenées à communiquer avec des sources de données externes et des consommateurs de données, il faut se mettre d'accord sur les formats d'échange. Spoiler, il n'y a pas de consensus, car un format ultime qui résout tout les problèmes, ça n'existe pas. Mais, certains formats ont émergé.
 
 ### Le CSV
 
@@ -322,7 +326,7 @@ En plus de cela vous pouvez imbriquer des balises les unes dans les autres pour 
 <?xml version="1.0" encoding="utf8"?>
 <personnes>
     <personne>
-        <nom>Sam</nom>
+		<nom>Sam</nom>
         <numero>555-555-555</numero>
 		<numero>556-455-055</numero>
 		<numero>123-263-896</numero>
@@ -357,7 +361,7 @@ Ce qui donne en CSV
 "Bob";"666";
 ```
 
-En plus de cela vous pouvez passer des valeurs dans les attributs des balises
+En plus de cela vous pouvez passer des valeurs dans les attributs des balises.
 
 ```XML
 <personne>
@@ -366,7 +370,7 @@ En plus de cela vous pouvez passer des valeurs dans les attributs des balises
 </personne>
 ```
 
-Et même utiliser un fichier un autre fichier XML pour vérifier automatiquement la forme de votre fichier (mais là on rentre dans la partie vraiment compliqué du XML)
+Et même utiliser un autre fichier XML pour vérifier automatiquement la forme de votre fichier (mais là on rentre dans la partie vraiment compliqué du XML)
 
 
 Pour résumer, un XML permet
@@ -379,7 +383,7 @@ Pour résumer, un XML permet
 
 Le **JSON** pour *JavaScript Object Notation* est un format qui provient du JavaScript (c'est le langage qui rend les page web interactive). Comme le XML, il permet de représenter la hierachie de vos données, mais de manière plus légère. A la base, c'était juste la représentation textuel d'objet JavaScript, mais avec le temps c'est devenu un format d'échange de données grâce à sa simplicité.
 
-```JSON
+```json
 [
     {
         'nom': 'Sam',
