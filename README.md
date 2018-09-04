@@ -180,7 +180,7 @@ En SQL cela se traduit pour des lignes par
   - UPDATE
   - DELETE
   
-Quand vous réaliserez vos DAO pensez-y, et essayez à chaque fois de faire ces 4 fonctions. Sachant que seul SELECT ne modifie pas la base de données, donc c'est la seul qui ne nécessite pas de commit.
+Quand vous réaliserez vos DAO pensez-y, et essayez à chaque fois de faire ces 4 fonctions. Sachant que seul SELECT ne modifie pas la base de données, donc c'est la seule qui ne nécessite pas de commit.
 
 
 #### Erreur dans les imports avec pylint
