@@ -18,10 +18,10 @@
       - [Mon update ne se fait pas en base ??!!!](#mon-update-ne-se-fait-pas-en-base-)
       - [Le CRUD](#le-crud)
       - [Erreur dans les imports avec pylint](#erreur-dans-les-imports-avec-pylint)
-    -[Les imports du TP1](#les-imports-du-tp1)
-      -[pylint](#pylint)
-	  -[autopep8](#autopep8)
-	  -[psycopg2-binary](#psycopg2-binary)
+    - [Les imports du TP1](#les-imports-du-tp1)
+      - [pylint](#pylint)
+	  - [autopep8](#autopep8)
+	  - [psycopg2-binary](#psycopg2-binary)
   - [Liens utiles](#liens-utiles)
 
 
