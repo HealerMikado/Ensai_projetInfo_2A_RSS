@@ -323,6 +323,7 @@
 	<script src="lib/js/head.min.js"></script>
 	<script src="js/reveal.js"></script>
 
+
 	<script>
 		// More info about config & dependencies:
 		// - https://github.com/hakimel/reveal.js#configuration
@@ -342,11 +343,20 @@
 					hljs.initHighlightingOnLoad();
 				}
 			} ],
+			// Display the page number of the current slide
+			slideNumber: true,
+
+			// Push each slide change to the browser history
+			history: true,
+			
+			// Enable slide navigation via mouse wheel
+			mouseWheel: true,
 
 		// 			width : "80%",
 		// 			height : "80%"
 
 		});
+		Reveal.configure({ slideNumber: 'c/t' });
 	</script>
 </body>
 </html>

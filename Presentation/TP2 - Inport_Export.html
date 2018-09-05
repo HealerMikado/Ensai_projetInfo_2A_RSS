@@ -378,11 +378,20 @@ cur.execute(
 					hljs.initHighlightingOnLoad();
 				}
 			} ],
+			// Display the page number of the current slide
+			slideNumber: true,
+
+			// Push each slide change to the browser history
+			history: true,
+			
+			// Enable slide navigation via mouse wheel
+			mouseWheel: true,
 
 		// 			width : "80%",
 		// 			height : "80%"
 
 		});
+		Reveal.configure({ slideNumber: 'c/t' });
 	</script>
 </body>
 </html>
