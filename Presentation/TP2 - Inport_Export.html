@@ -37,6 +37,111 @@
 <body>
 	<div class="reveal">
 		<div class="slides">
+
+			<section>
+				<section><h1>Retour sur le TP1</h1></section>
+
+				<section><h3>Problèmes rencontrés</h3>
+
+					<ul>
+						<li class="fragment">Lancer une classe et pas le main</li>
+						<li class="fragment">with cursor</li>
+						<li class="fragment">string replacement avec 1 seul
+							paramètre</li>
+						<li class="fragment">import avec pylint</li>
+				</ul></section>
+
+				<section>
+					<h2>Injection SQL et Prepared Statements</h2>
+			</section>
+
+				<section><h3>Injection SQL</h3>
+					<ul>
+						<li class="fragment">Faille applicative trop commune</li>
+						<li class="fragment">Consiste à passer un bout de SQL via
+							l'IHM</li>
+						<ul>
+							<li class="fragment">Vol d'identité</li>
+							<li class="fragment">De données</li>
+							<li class="fragment">Modification de données</li>
+					</ul>
+				</ul></section>
+
+				<section>
+					<h3>Exemple de mauvais code</h3> <pre><code
+						class="python"
+						data-trim
+					>
+requete = "SELECT * FROM utilisateur 
+	WHERE login = '%s' AND password = '%s'" %(login, password)
+					</code></pre>
+
+
+					<p
+						class="fragment"
+						data-fragment-index="1"
+					>Si un utilisateur saisi comme mdp</p> <pre
+					class="fragment"
+					data-fragment-index="1"
+				><code
+						class="sql"
+						data-trim
+					>
+' OR 1=1--
+					</code></pre>
+
+
+					<p
+						class="fragment"
+						data-fragment-index="2"
+					>On obtient comme requête</p> <pre
+					class="fragment"
+					data-fragment-index="2"
+				><code
+						class="sql"
+						data-trim
+					>
+SELECT * FROM utilisateur 
+WHERE login = 'toto' AND password = '' OR 1=1--'
+					</code></pre>
+
+					<p
+						class="fragment"
+						data-fragment-index="3"
+					>Et la condition est toujours vraie</p>
+			</section>
+				<section>
+					<h3>Ce qu'il faut faire</h3>
+					<ul>
+						<li class="fragment">Utiliser des Prepared Statements !</li>
+						<li class="fragment">C'est ce que vous avez fait dans le TP</li>
+				</ul> <pre class="fragment"><code
+						class="python"
+						data-trim
+					>
+cur.execute(
+	"SELECT * FROM utilisateur WHERE login = %s AND password = %s"
+	,(login, password))
+					</code></pre>
+			</section>
+
+				<section><h3>Prepared Statements</h3>
+					<ul>
+						<li class="fragment">Template de requête envoyé à la base
+							sans les paramètres</li>
+						<li class="fragment">La BDD la compile sans l'exécuter</li>
+						<li class="fragment">On envoie les paramètres pour que la
+							BD exécute tout ça</li>
+						<li class="fragment">Grâce à cela pas de risque d'injection
+							SQL</li>
+						<li class="fragment">Simple à mettre en place, grand gain
+							de sécurité</li>
+
+				</ul></section>
+
+			</section>
+
+
 			<section>
 				<h1>TP2 - Import/Export de fichier</h1>
 
@@ -48,8 +153,7 @@
 				<h2>Pourquoi est-ce nécessaire ?</h2>
 				<ul>
 					<li class="fragment">Vie future de data scientist</li>
-					<li class="fragment">Sources de données externe à vos
-						appli</li>
+					<li class="fragment">Sources de données externe à vos appli</li>
 					<li class="fragment">Et le projet info de 2A</li>
 			</ul>
 			</section>
@@ -198,38 +302,56 @@
 						<li class="fragment">Polyvalent</li>
 						<li class="fragment">Données hiérarchique</li>
 						<li class="fragment">Natif en javascript</li>
-						
+
 				</ul>
 			</section>
 			</section>
 			<section>
 				<section><h2>Conclusion</h2></section>
-				<section> <h3>Beaucoup de données</h3>
-				<ul>
-					<li class="fragment">Aujourd'hui toute les applications du web manipulent des données</li>
-					<li class="fragment">Et en tant que data scientist vous allez en manipuler encore plus !</li>
-					<li class="fragment">Developpement orienté service</li>
-				</ul>
-				
-				</section>
 				<section>
-				<h3>Chaque donnée à son format</h3>
-				<ul>
-					<li class="fragment">Pas de format ultime</li>
-					<li class="fragment">CSV -> tableau</li>
-					<li class="fragment">XML -> phase de validation des données</li>
-					<li class="fragment">JSON -> user friendly et léger</li>
-					<li class="fragment">RDF -> décrire ressource web et métadonnées</li>
-					<li class="fragment">YAML -> configuration</li>
+					<h3>Beaucoup de données</h3>
+					<ul>
+						<li class="fragment">Aujourd'hui toute les applications du
+							web manipulent des données</li>
+						<li class="fragment">En tant que data scientist vous
+							allez en manipuler beaucoup  dans votre vie!</li>
+						<li class="fragment">Si vous faites du dev : developpement orienté service</li>
 				</ul>
-				</section>
+
+			</section>
+				<section>
+					<h3>Chaque donnée à son format</h3>
+					Pas de format ultime
+					<table>
+						<tr>
+							<td>CSV</td>
+							<td>Tableau</td>
+						</tr>
+						<tr>
+							<td>XML</td>
+							<td>Phase validation données</td>
+						</tr>
+						<tr>
+							<td>JSON</td>
+							<td>User friendly, léger, polyvalent</td>
+						</tr>
+						<tr>
+							<td>RDF</td>
+							<td>Métadonnées, ressource du web</td>
+						</tr>
+						<tr>
+							<td>YAML</td>
+							<td>Configuration</td>
+						</tr>
+					</table>
+					
+			</section>
 				<section><h3>Dans votre cas</h3>
-				<ul>
-					<li class="fragment">Le RSS est un type de XML</li>
-					<li class="fragment">Le webservice Twitter renvoie un JSON</li>
-				</ul>
-				</section>
-				
+					<ul>
+						<li class="fragment">Le RSS est un type de XML</li>
+						<li class="fragment">Le webservice Twitter renvoie un JSON</li>
+				</ul></section>
+
 			</section>
 		</div>
 	</div>

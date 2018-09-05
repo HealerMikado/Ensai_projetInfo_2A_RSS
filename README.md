@@ -78,7 +78,7 @@ Une fois vos DAO faites, la manipulation de la base de données sera transparent
 
 ### Pourquoi ne pas mettre les fonctions de la DAO dans l'objet métier ?
 
-Car c'est mal !
+**Car c'est mal !**
 
 En informatique au maximum il faut dissocier les taches pour que chaque classe ne fasse qu'une chose (*forte cohérence*). Un objet métier fait partie du coeur de votre système. Ce sont eux et les traitements que vous allez y appliquer qui vont faire la plu-value de votre application. Alors que les DAO ne sont pas réellement importantes. Enfin si, car elles permettent de persister vos données. Mais elles n'apportent aucune valeur métier, et pire vous pouvez parfaitement changer de façon de stocker les données sans modifier le fonctionnement de votre applicatio. Car une DAO répond juste à un besoin technique et pas métier. Par exemple vous pourriez 
 très bien vous dire à la fin du projet
@@ -96,7 +96,7 @@ est beaucoup plus stable (même s'il est sujet à changement).
 
 *Ce paragraphe est à titre de culture informatique, et plus précisement de sécurité informatique.*
 
-Ne faites jamais confiance à vos utilisateurs ! Jamais ! **JAMAIS !** Pourquoi ? Eh bien car entre les utilisateurs qui font n'importe quoi sans le vouloir, et ceux qui essayent d'attaquer votre application, une application accessible depuis le web à la vie dure ! Couvrir tout ce que cela implique prendrait des mois (littérallement), alors ici je vais me concentrer sur les ***Injections SQL***
+Ne faites jamais confiance à vos utilisateurs ! Jamais ! **JAMAIS !** Pourquoi ? Eh bien car entre les utilisateurs qui font n'importe quoi sans le vouloir, et ceux qui essayent d'attaquer votre application, une application accessible depuis le web à la vie dure ! Couvrir tout ce que cela implique prendrait des mois (littérallement), alors ici je vais me concentrer sur les ***injections SQL***
 
 Une ***injection SQL*** est une faille applicative qui permet à un utilisateur de faire réaliser à la base de données des traitements qu'elle ne devrait normalement pas faire. Cela peut-être
 
