@@ -12,6 +12,9 @@
   - [Diagramme UML](#diagramme-uml)
   - [TP 1 - DAO](#tp--1--dao)
     - [Pourquoi ne pas mettre les fonctions de la DAO dans l'objet métier ?](#pourquoi-ne-pas-mettre-les-fonctions-de-la-dao-dans-lobjet-métier-)
+	- [Injection SQL et prepared statements](#injection-sql-et-prepared-statements)
+	  - [Le principe](#le-principe)
+	  - [Comment s'en prémunir](#comment-sen-prémunir)
     - [Problèmes rencontrés lors du TP 1](#problèmes-rencontrés-lors-du-tp-1)
       - [Lancement de la classe et pas du main](#lancement-de-la-classe-et-pas-du-main)
       - [Erreur lors du string replacement dans les requêtes](#erreur-lors-du-string-replacement-dans-les-requêtes)
@@ -89,6 +92,76 @@ Alors que si vous aviez mis les méthodes mise en base directement dans votre ob
 Donc au maximum, essayez de dissocier le métier de votre application et les solutions techniques. Les solutions techniques bougent très souvent et sont "jetables" alors que le métier lui
 est beaucoup plus stable (même s'il est sujet à changement).
 
+### Injection SQL et prepared statements
+
+*Ce paragraphe est à titre de culture informatique, et plus précisement de sécurité informatique.*
+
+Ne faites jamais confiance à vos utilisateurs ! Jamais ! **JAMAIS !** Pourquoi ? Eh bien car entre les utilisateurs qui font n'importe quoi sans le vouloir, et ceux qui essayent d'attaquer votre application, une application accessible depuis le web à la vie dure ! Couvrir tout ce que cela implique prendrait des mois (littérallement), alors ici je vais me concentrer sur les ***Injections SQL***
+
+Une ***injection SQL*** est une faille applicative qui permet à un utilisateur de faire réaliser à la base de données des traitements qu'elle ne devrait normalement pas faire. Cela peut-être
+
+  - usurper l'identité de quelqu'un ;
+  - modifier des données ;
+  - en supprimer ;
+  - ralentir votre application.
+
+Et tout ça, c'est pas glop :weary:. Et c'est assez simple à faire si l'application n'est pas protégée contre ça. Mais c'est simple de la protéger, ouf. :relieved:
+
+#### Le principe
+
+Le principe est ultra simple. L'attaquant va rentrer dans un champs de l'application un bout de requête sql, que l'application va envoyer à la base. Et quand je vous dis que c'est simple, c'est vraiment simple. Dans presque tous les site, on trouve des champs login/mdp. Et ce que fait une application, en général, c'est aller chercher en base si le couple login/mdp existe. En simplifiant l'application fait
+
+```sql
+SELECT * FROM utilisateur WHERE login = 'login_saisi' AND password = 'mdp_saisi'
+```
+Si une ligne est renvoyée, c'est bon l'utilisateur est authentifié.
+
+Et pour faire cette requête en python, le plus simple est de concaténer les des chaînes de caractères. Et cela donnerais quelque chose comme
+
+```python
+requete = "SELECT * FROM utilisateur WHERE login = '%s' AND password = '%s'" %(login, password)
+```
+
+Maintenant plaçons nous dans la peau d'un attaquant, qui a une petite idée du fonctionnement de notre système d'authentification. Il connait un login, mais pas de mot de passe. Au lieu d'en tenter plein, il écrit simplement
+
+```sql
+' OR 1=1--
+(les -- permettent de mettre en commentaire la suite de la ligne)
+```
+
+Python fait gentillement son travail et envoie comme requête à la base :
+
+```sql
+SELECT * FROM utilisateur WHERE login = 'toto' AND password = '' OR 1=1--'
+```
+
+Si vous vous souvenez de vos cours de SQL, cette requête va systématiquement renvoyer le contenu de toute la table. Bon je souhaitais juste m'authentifier, mais on va dire que c'est un bonus. 
+
+La cause de cette faille est que l'on va concaténer des chaînes de caractères pour réaliser notre requête. Sauf qu'en SQL une chaîne de caractères est entre quote. Et en sachant cela il est facile de tricher, en fermant la chaîne dans le champ que l'on passe pour ensuite écire sa requête.
+
+Bref une injection SQL c'est vraiment tout bête. Cela consiste juste à avoir une idée de quels champ ssont utilisés pour créer une requête SQL et les remplir avec les bons bouts de requête.
+
+#### Comment s'en prémunir
+
+Tout simplement en ne concatenant plus de chaîne de caractères pour faire une requête et utiliser des ***Prepared Statements***. C'est valable en python, mais également pour tous les autres langages de programmation.
+
+Sans rentrer dans les détails, une prepared statements vous permet de ne pas faire une simple concaténation de chaine de caractère. Elle va prendre en charge également la conversion des champs que vous passez à la requête et donc échapper tous les caractères spéciaux.
+
+Je m'explique dans cette requête :
+
+```python
+requete = "SELECT * FROM utilisateur WHERE login = '%s' AND password = '%s'" %(login, password)
+```
+
+vous spécifiez vous même que login et password attendent des textes (regardez les ' entourants les %s). Avec une prepared statement, c'est elle qui s'en occupe. Et vous allez simplement écrire
+
+```python
+cur.execute("SELECT * FROM utilisateur WHERE login = %s AND password = %s" ,(login, password))
+```
+
+Et en changeant juste cela, vous êtes assurez (enfin ça c'est si aucune faille n'est découverte dans les prepared statements) qu'aucune injection SQL ne pourrait être réalisé via cette requête. C'est vraiment tout simple, alors pourquoi s'en priver ? :smile:
+
+Alors ne vous inquiétez pas, c'est ce que vous avez déjà utilisé dans le TP1, mais je voulais vous expliquer ce que vous faisiez et pourquoi vous le faisiez.
 
 ### Problèmes rencontrés lors du TP 1
 
@@ -241,7 +314,7 @@ La doc complète : https://github.com/hhatto/autopep8
 
 #### psycopg2-binary
 
-Psycopg2-binary est un utilitaire qui vous permet de vous connecter à une base **PostgreSQL**. Sans lui (ou une autre bibliothèque qui fait la même chose) bon courage pour vous connecter à une base. Je vous conseille de l'utiliser pour votre projet :wink:
+Psycopg2-binary est un utilitaire qui vous permet de vous connecter à une base **PostgreSQL**. Sans lui (ou une autre bibliothèque qui fait la même chose) bon courage pour vous connecter à une base. Et en plus elle vous permet de faire des prepared statements, si c'est pas beau ! Je vous conseille de l'utiliser pour votre projet :wink:
 
 La doc complète : http://initd.org/psycopg/docs/
 
