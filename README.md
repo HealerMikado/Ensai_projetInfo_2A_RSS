@@ -42,14 +42,14 @@ L’objectif du projet est de créer un agrégateur de flux RSS et de tweets pou
 
   - Inscrire et authentifier les utilisateurs ;
   - Récupérer, mettre en forme et afficher des flux RSS et des tweets ;
-  - Permettre à un utilisateur non inscrit d'accéder à une version allégée de l'application ;
-  - Permettre à un utilisateur inscrit de s'abonner à des flux d'actualités, de sauvegarder des actualités pour y accéder hors ligne, et d'annoter ses actualités sauvegardées ;
-  - Permettre à un utilisateur inscrit de gérer ses infos personnelles, et supprimer son compte à tout moment sans garder la moindre information sur lui ;
+  - Permettre à un utilisateur non connecté d'accéder à une version allégée de l'application ;
+  - Permettre à un utilisateur connecté de s'abonner à des flux d'actualités, de sauvegarder des actualités pour y accéder hors ligne, et d'annoter ses actualités sauvegardées ;
+  - Permettre à un utilisateur connecté de gérer ses infos personnelles, et supprimer son compte à tout moment sans garder la moindre information sur lui ;
   - Pouvoir paramétrer les thématiques proposées (ajout de thématique, de flus RSS ou de hashtag twitter à une thématique) directement via l'application (en opposition à un paramétrage en dur dans le code).
  
 ### Fonctionnalités avancées
 
-  - Permettre à un utilisateur inscrit de partager grâce à l’application des articles sur tweeter ou retweeter/liker des tweets ;
+  - Permettre à un utilisateur connecté  de partager grâce à l’application des articles sur tweeter ou retweeter/liker des tweets ;
   - Mettre en place un système de notification pour prévenir les utilisateurs quand une thématique est ajoutée ou modifiée ;
   - Ajouter des fonctionnalités type "réseau social" (faites vous plaisir).
   
@@ -67,16 +67,15 @@ comme moi lors de la démo, pour récupérer en diagramme il faut soit
   
 ## Utilisateur inscrit vs utilisateur connecté
 
-En passant dans les rangs, j'ai vu que beaucoup ont pris le parti d'avoir un utilisateur inscrit/non inscrit, et j'ai un peu était surpris. Je vais essayer de vous expliquer pourquoi, un peu plus en détail que ce que j'ai fait à l'oral (et comme ça il y a une trace écrite).
+En passant dans les rangs, j'ai vu que beaucoup ont pris le parti d'avoir un utilisateur inscrit/non inscrit, et j'ai un peu était surpris. Après relecture du sujet, je me rend compte que c'est sûrement ma faute car je faisais mention d'utilisateur inscrit. Je vais essayer de vous expliquer pourquoi je pense que la notion d'utilisateur connecté/non connecté à plus de sens qu'inscrit/non inscrit un peu plus en détail que ce que j'ai fait à l'oral (et comme ça il y a une trace écrite).
 
 ### Vision machine vs vision humaine
 
-La notion d'inscription, n'a pas trop de sens pour la machine, c'est une vision humaine. Alors oui il y a une ligne en base, mais quand un utilisateur lancera l'application, la machine ne saura pas s'il est inscrit ou pas. Elle ce qu'elle sait c'est s'il est authentifié ou pas, c'est une vision machine.
+La notion d'inscription, n'a pas trop de sens pour la machine, c'est une vision humaine. Alors oui il y a une ligne en base, mais quand un utilisateur lancera l'application, la machine ne saura pas s'il est inscrit ou pas. Elle ce qu'elle sait c'est s'il est authentifié ou pas (vision machine).
 
-L'autre avantage de la notion de connecté/déconnecté est pour le reprénsetation d'un diagramme d'activité. Si vous faite le schéma de navigation "complet", à l'ouverture de l'application l'utilisateur sera non connecté. Et c'est sans appel. Alors qu'avec le notion d'inscrit c'est pas clair. Il pourra être inscrit, s'il a déjà utilisé l'applicaiton, comme non inscrit si c'est ça première fois. Et rien n'empêche à un utilisateur inscrit de créer nouveau un compte. Par contre un utilisateur connecté ne doit pas avoir ce droit.
+L'autre avantage de la notion de connecté/déconnecté est pour la réalisation d'un diagramme d'activité avec les états de l'utilisateur. Si vous faite le schéma de navigation "complet", de l'ouverture de l'application à sa fermeture, l'utilisateur sera non connecté au début. Et c'est sans appel. Alors qu'avec le notion d'inscrit c'est pas clair. Il pourra être inscrit, s'il a déjà utilisé l'applicaiton, comme non inscrit si c'est ça première fois. Et rien n'empêche à un utilisateur inscrit de créer nouveau un compte. Par contre un utilisateur connecté ne doit pas avoir ce droit.
 
-Voilà pourquoi, il me semble plus logique d'un point de vu informatique de parle de notion de connecté, non connecté que d'inscrit, non inscrit.
-
+Après c'est moi le premier a avoir parlé d'utilisateur inscrit/non inscrit, alors vous avez eu raison de reprendre ma terminologie. Et j'aurais sûrement dû parler d'utilisateur connecté/non connecté (j'ai d'ailleurs mis jour les fonctionnalités en haut de la page, et c'est celles de cette page qui sont les "bonnes"). Le côté positif, c'est que quand je suis passé, vous aviez bien tous la notion de connection, avec le CU "s'authentifier", ce qui est finalement une autre manière de représenter cela. Ce sont finalement deux visions qui s'opposent, pas un réel bug dans la conception (de mon point de vu). Donc voilà si vos diagrammes vous vont, gardez les tels quels tant que l'expication qui va avec me permet de bien les comprendre. 
 
 ## TP 1 - DAO
 
