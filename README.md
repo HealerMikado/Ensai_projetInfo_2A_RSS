@@ -491,6 +491,24 @@ Le **JSON** pour *JavaScript Object Notation* est un format qui provient du Java
 Je n'ai pas grand chose à dire dessus. C'est un fichier de type clef/valeur, avec la possibilité d'imbriquer les objets les uns dans les autres. Il est plus léger que le XML car on ne doit pas fermer les balises, plus agréable à lire, mais ne permet d'être vérifié a priori. Globalement c'est un très bon format d'échange.
 
 
+### Problèmes rencontrés lors du TP2
+
+#### Les fichiers n'existent pas
+
+Au lancement des exemples, vous aviez une erreur qui vous disez que le fichier XX n'existait pas. En même temps vous vouliez le créer alors c'est normal. La raison était que vous lanciez vos scripts depuis C:\Windows il me semble. Alors quand ce genre de chose vous arrive, pensez à regarder dans la console depuis où le script se lance. Normalement, quand vous faite ouvrir un dossier avec Visual studio il doit vous amener dans le bon repertoire. Mais il semblerait qu'à l'Ensai ça fonctionne pas toujours en fonction de la manière dont vous allez chercher votre dossier (passage par mes documents ou P:)
+
+#### Encodage
+
+Ahhhhh la gestion des caractères spéciaux et l'encodage. Clairement l'un des problèmes les plus courants qui existe dans l'échange de données. Et vous allez sûrement y être confronté dans votre vie future, alors autant commencer tôt.
+
+Vous devez tous savoir qu'un ordinateur ça traite des 0 et des 1, et pas des chaînes de caractères, des nombre, des dates etc. Spoiler, les date c'est chiant également. Pour représenter un caractère, il faut donc se mettre d'accord sur la manière dont on le représente avec des 0 et des 1. Le problème (comme souvent) c'est qu'on n'est pas arrivé à ce mettre d'accord pour un encodage unique, donc il y en a beaucoup. Dans certains cas ça à du sens d'avoir des encodages différents, surtout pour des langues comme le japonais, le chinois, le coréen etc qui sont à base d'idéogramme. Mais dans d'autres cas, c'est sujet à problème. Et dans une même entreprise il n'y a pas consensus. Par moment on va vous fournir des fichiers en UTF-8 et après des fichiers en Windows-1252 ou autre encodage. Dans ce cas, c'est souvent car les gens ne connaissent pas la notion d'encoding, ou n'y pense pas. Mais voilà faites-y attention. Cela fait souvent perdre beaucoup de temps pour rien.
+
+Le pire, c'est qu'en général sur les caractères "normaux", c'est bon. Alors si dans un fichier exemple il n'y a pas d'accent, on pense que c'est ok et quand on passe sur le fichier final, ça fonctionne pas du tout. Je vais vous donner un exemple. Par exemple si je pendre un **é**, dans un codage ascii il devient **11101001**, mais dans un codage UTF8 c'est **11000011 10101001**. C'est pas réellement la même chose.
+
+Résultat, quand vous allez lire en fichier en utilisant le mauvaise encodage, vous allez avoir des résultats surprenants qui vont apparaitre. Car l'ordinateur il est un peu "idiot" donc il va le lire votre fichier et le traduire comme il peut. S'il a un caractère pour ce code il le met, et sinon il va vous mettre un caractère du style "?" car il ne sait pas. Et en plus en fonction de l'encodage, votre ordinateur doit lire les octets une par un, deux par deux, ou en prendre un nombre variable en foncton d'un préfixe. Bref c'est compliqué et ça génère plein d'erreurs.
+
+Si vous voulez vous amusez voir ce que ça fait, sur notepad++ vous pouvez changer l'encodage d'un fichier manuellement. Cela donne des résultats surprenant. Ou sinon voici un site pour vous voir ce qu'un changement d'encodage fait sur vos fichiers : http://string-functions.com/encodedecode.aspx
+
 ## Liens utiles
 
   - Doc api twitter : https://developer.twitter.com/en/docs.html
