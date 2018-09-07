@@ -65,6 +65,19 @@ comme moi lors de la démo, pour récupérer en diagramme il faut soit
   - Modifier le lien pour qu'il commence par http://www.plantuml.com/plantuml/uml/ et pas http://www.plantuml.com/plantuml/png/, et mettre le nouveau lien
   dans la barre d'adresse de votre navigateur.
   
+## Utilisateur inscrit vs utilisateur connecté
+
+En passant dans les rangs, j'ai vu que beaucoup ont pris le parti d'avoir un utilisateur inscrit/non inscrit, et j'ai un peu était surpris. Je vais essayer de vous expliquer pourquoi, un peu plus en détail que ce que j'ai fait à l'oral (et comme ça il y a une trace écrite).
+
+### Vision machine vs vision humaine
+
+La notion d'inscription, n'a pas trop de sens pour la machine, c'est une vision humaine. Alors oui il y a une ligne en base, mais quand un utilisateur lancera l'application, la machine ne saura pas s'il est inscrit ou pas. Elle ce qu'elle sait c'est s'il est authentifié ou pas, c'est une vision machine.
+
+L'autre avantage de la notion de connecté/déconnecté est pour le reprénsetation d'un diagramme d'activité. Si vous faite le schéma de navigation "complet", à l'ouverture de l'application l'utilisateur sera non connecté. Et c'est sans appel. Alors qu'avec le notion d'inscrit c'est pas clair. Il pourra être inscrit, s'il a déjà utilisé l'applicaiton, comme non inscrit si c'est ça première fois. Et rien n'empêche à un utilisateur inscrit de créer nouveau un compte. Par contre un utilisateur connecté ne doit pas avoir ce droit.
+
+Voilà pourquoi, il me semble plus logique d'un point de vu informatique de parle de notion de connecté, non connecté que d'inscrit, non inscrit.
+
+
 ## TP 1 - DAO
 
 Une DAO (*Data Access Object*) est une classe technique qui permet de faire le lien entre une classe objet métier (appelée business object dans le TP) et la base de données. C'est cette classe qui va vous permettre de
