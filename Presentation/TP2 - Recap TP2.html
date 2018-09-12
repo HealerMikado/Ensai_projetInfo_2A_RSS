@@ -1,0 +1,352 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Recap TP2</title>
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css'
+			: 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+
+			<section>
+				<section>
+					<h1>Retour sur le TP2</h1>
+				</section>
+
+				<section>
+					<h3>Pourquoi ce TP est important ?</h3>
+					<h3>Petite histoire</h3>
+
+					<ul>
+						<li class="fragment">Transformer du CSV en RDF Turtle</li>
+						<li class="fragment">Problème d'encodage</li>
+						<li class="fragment">Problème de volumétrie</li>
+						<li class="fragment">Globalement j'ai refait le TP</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Conclusion</h3>
+					Savoir manipuler des données c'est super important !
+
+				</section>
+			</section>
+
+			<section>
+				<h1>Petit rappel sur les type de données</h1>
+			</section>
+			<section>
+				<section>
+					<h2>Le CSV</h2>
+					<h3>Coma Separated Values</h3>
+				</section>
+
+				<section>
+					<h3>Le CSV</h3>
+					<ul>
+						<li class="fragment">Format simple</li>
+						<li class="fragment">1 ligne = 1 entité</li>
+						<li class="fragment">Champs séparés par un caractère de séparation (souvent , ou ;)</li>
+						<li class="fragment">Champs entre " ou ' si caractère de séparation dans le champ</li>
+						<li class="fragment">Première ligne avec le nom des champs optionnelle
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Un exemple</h3>
+					<pre><code
+						class="csv"
+						data-trim
+					>
+"nom";"numero";"adresse"
+"Sam";"555-555-555";"5, rue des lilas"
+"Max";"1234567890";"Patong, thailande"
+"Bob";"666";"7eme cercle"
+					</code></pre>
+				</section>
+				<section>
+					<h3>Conclusion</h3>
+					<ul>
+						<li class="fragment">Sûrement le format de donnée le plus simple qui existe</li>
+						<li class="fragment">Simple à lire et écrire</li>
+						<li class="fragment">Parfait pour des tableaux</li>
+						<li class="fragment">Les tableurs et les BDD savent les lire et les écrire</li>
+						<li class="fragment">Pas de hierachisation</li>
+					</ul>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Le XML</h2>
+					<h3>eXtensible Markup Language</h3>
+				</section>
+				<section>
+					<h3>Le XML</h3>
+					<ul>
+						<li class="fragment">Format à balise</li>
+						<li class="fragment">Plus complexe que le CSV</li>
+						<li class="fragment">Mais plus riche</li>
+						<li class="fragment">Hiérarchisation</li>
+						<li class="fragment">On peut dupliquer les attributs</li>
+						<li class="fragment">Ou cycler les objets</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Un exemple</h3>
+					<pre><code
+						class="xml"
+						data-trim
+					>
+<?xml version="1.0" encoding="utf8"?>
+<personnes>
+    <personne>
+        <nom>Sam</nom>
+            <numero>555-555-555</numero>
+            <numero>556-455-055</numero>
+            <numero>123-263-896</numero>
+    </personne>
+    <personne>
+        <nom>Max</nom>
+        <numero>1234567890</numero>
+        <ville>
+            <nom>Patong</nom>
+            <coord>4.2,6.9</coord>
+        </ville>
+        <ville>
+            <nom>Allyt</nom>
+            <coord>8.3,5.2</coord>
+        </ville>
+    </personne>
+    <personne>
+        <nom>Bob</nom>
+        <numero>666</numero>
+    </personne>
+</personnes>
+					</code></pre>
+				</section>
+				<section>
+					<h3>Conclusion</h3>
+					<ul>
+						<li class="fragment">Format très verbeux</li>
+						<li class="fragment">Pas toujours lisible</li>
+						<li class="fragment">Mais avoir des données hiérarchique c'est cool</li>
+						<li class="fragment">Et avec un fichier XSD on peut contrôler le fichier XML</li>
+					</ul>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Le JSON</h2>
+					<h3>JavaScript Object Notation</h3>
+				</section>
+				<section>
+					<h3>Le JSON</h3>
+					<ul>
+						<li class="fragment">Format clef/valeur</li>
+						<li class="fragment">Plus simple que le XML</li>
+						<li class="fragment">Et plus leger</li>
+						<li class="fragment">Hiérarchisation</li>
+						<li class="fragment">On peut dupliquer les attributs</li>
+						<li class="fragment">Ou cycler les objets</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Un exemple</h3>
+					<pre><code
+						class="javascript"
+						data-trim
+					>
+[
+    {
+		'nom': 'Sam',
+        'numero': '555-555-555',
+        'adresse': '5, rue des lilas'
+    },
+    {
+		'nom': 'Max',
+        'numero': '1234567890',
+        'adresse': 'Patong, thailande'
+    },
+    {
+		'nom': 'Bob',
+        'numero': '666',
+        'adresse': '7eme cercle'
+    }
+	]
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Conclusion</h3>
+					<ul>
+						<li class="fragment">Format très simple</li>
+						<li class="fragment">Polyvalent</li>
+						<li class="fragment">Données hiérarchique</li>
+						<li class="fragment">Natif en javascript</li>
+
+					</ul>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Les problèmes que vous avez rencontré</h2>
+				</section>
+				<section>
+					<h3>Les problèmes que vous avez rencontré</h3>
+					<ul>
+						<li class="fragment">Impossible d'ouvrir le fichier</li>
+						<li class="fragment">Encodage ...</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Récupérer les colonnes sans connaitre leur posistion</h3>
+					
+					<pre><code
+							class="python"
+							data-trim
+						>
+SIREN = "SIREN"
+with open('out', 'w', encoding="utf8") as output:
+	with open('in', 'r', encoding="utf8") as csvfile:
+		csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
+		headers = next(csvreader)
+		indice_SIREN =  headers.index(SIREN)
+		for row in csvreader:
+			siret = row[indice_SIREN]
+						</code></pre>
+				</section>
+				<section>
+					<h3>La notion d'iterator</h3>
+					<ul>
+						<li class="fragment">Limite l'espace mémoire utilisé</li>
+						<li class="fragment">Partait pour des traitements iteratifs sans mémoire du passé</li>
+						<li class="fragment">Exemple : lire un CSV !</li>
+						</ul>
+
+						<pre class="fragment"><code
+							class="python"
+							data-trim
+						>
+for row in csvreader:
+	print(row)
+						</code></pre>
+				</section>
+			</section>
+
+
+
+			<section>
+				<section>
+					<h2>Conclusion</h2>
+				</section>
+				<section>
+					<h3>Beaucoup de données</h3>
+					<ul>
+						<li class="fragment">Aujourd'hui toute les applications du web manipulent des données</li>
+						<li class="fragment">En tant que data scientist vous allez en manipuler beaucoup dans votre vie!</li>
+						<li class="fragment">Si vous faites du dev : developpement orienté service</li>
+					</ul>
+
+				</section>
+				<section>
+					<h3>Chaque donnée à son format</h3>
+					Pas de format ultime
+					<table>
+						<tr>
+							<td>CSV</td>
+							<td>Tableau</td>
+						</tr>
+						<tr>
+							<td>XML</td>
+							<td>Phase validation données</td>
+						</tr>
+						<tr>
+							<td>JSON</td>
+							<td>User friendly, léger, polyvalent</td>
+						</tr>
+						<tr>
+							<td>RDF</td>
+							<td>Métadonnées, ressource du web</td>
+						</tr>
+						<tr>
+							<td>YAML</td>
+							<td>Configuration</td>
+						</tr>
+					</table>
+
+				</section>
+				<section>
+					<h3>Dans votre cas</h3>
+					<ul>
+						<li class="fragment">Le RSS est un type de XML</li>
+						<li class="fragment">Le webservice Twitter renvoie un JSON</li>
+					</ul>
+				</section>
+
+			</section>
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			dependencies: [{
+				src: 'plugin/markdown/marked.js'
+			}, {
+				src: 'plugin/markdown/markdown.js'
+			}, {
+				src: 'plugin/notes/notes.js',
+				async: true
+			}, {
+				src: 'plugin/highlight/highlight.js',
+				async: true,
+				callback: function () {
+					hljs.initHighlightingOnLoad();
+				}
+			}],
+			// Display the page number of the current slide
+			slideNumber: true,
+
+			// Push each slide change to the browser history
+			history: true,
+
+			// Enable slide navigation via mouse wheel
+			mouseWheel: true,
+
+			// 			width : "80%",
+			// 			height : "80%"
+
+		});
+		Reveal.configure({ slideNumber: 'c/t' });
+	</script>
+</body>
+
+</html>
