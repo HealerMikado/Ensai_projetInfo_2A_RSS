@@ -93,6 +93,7 @@
 						<li class="fragment">Parfait pour des tableaux</li>
 						<li class="fragment">Les tableurs et les BDD savent les lire et les écrire</li>
 						<li class="fragment">Pas de hierachisation</li>
+						<li class="fragment">Ni de liste simplement</li>
 					</ul>
 				</section>
 			</section>
@@ -109,7 +110,7 @@
 						<li class="fragment">Plus complexe que le CSV</li>
 						<li class="fragment">Mais plus riche</li>
 						<li class="fragment">Hiérarchisation</li>
-						<li class="fragment">On peut dupliquer les attributs</li>
+						<li class="fragment">On a des listes !!!!!</li>
 						<li class="fragment">Ou cycler les objets</li>
 					</ul>
 				</section>
@@ -149,7 +150,7 @@
 				<section>
 					<h3>Conclusion</h3>
 					<ul>
-						<li class="fragment">Format très verbeux</li>
+						<li class="fragment">&lt;verbeux&gt;verbeux&lt;/verbeux&gt;</li>
 						<li class="fragment">Pas toujours lisible</li>
 						<li class="fragment">Mais avoir des données hiérarchique c'est cool</li>
 						<li class="fragment">Et avec un fichier XSD on peut contrôler le fichier XML</li>
@@ -181,17 +182,17 @@
 					>
 [
     {
-		'nom': 'Sam',
+        'nom': 'Sam',
         'numero': '555-555-555',
         'adresse': '5, rue des lilas'
     },
     {
-		'nom': 'Max',
+        'nom': 'Max',
         'numero': '1234567890',
         'adresse': 'Patong, thailande'
     },
     {
-		'nom': 'Bob',
+        'nom': 'Bob',
         'numero': '666',
         'adresse': '7eme cercle'
     }
@@ -212,100 +213,106 @@
 			</section>
 			<section>
 				<section>
-					<h2>Les problèmes que vous avez rencontré</h2>
+					<h2>Les problèmes que vous avez rencontrés</h2>
 				</section>
 				<section>
-					<h3>Les problèmes que vous avez rencontré</h3>
+					<h3>Les problèmes que vous avez rencontrés</h3>
 					<ul>
-						<li class="fragment">Impossible d'ouvrir le fichier</li>
-						<li class="fragment">Encodage ...</li>
+						<li class="fragment">Impossible d'ouvrir le fichier <br> Solution : être au bon endroit</li>
+						<li class="fragment">Encodage ... <br> Solution : préciser l'encodage</li>
+
 					</ul>
+					<pre class="fragment"><code
+						class="python"
+						data-trim
+					>
+					with open('output/prenoms-cesson-sevigne.json'
+						, 'w'
+						, encoding="utf8") as jsonfile:
+					</code></pre>
 				</section>
 				<section>
 					<h3>Récupérer les colonnes sans connaitre leur posistion</h3>
-					
-					<pre><code
-							class="python"
-							data-trim
-						>
-SIREN = "SIREN"
-with open('out', 'w', encoding="utf8") as output:
-	with open('in', 'r', encoding="utf8") as csvfile:
-		csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
-		headers = next(csvreader)
-		indice_SIREN =  headers.index(SIREN)
-		for row in csvreader:
-			siret = row[indice_SIREN]
-						</code></pre>
-				</section>
-				<section>
-					<h3>La notion d'iterator</h3>
-					<ul>
-						<li class="fragment">Limite l'espace mémoire utilisé</li>
-						<li class="fragment">Partait pour des traitements iteratifs sans mémoire du passé</li>
-						<li class="fragment">Exemple : lire un CSV !</li>
-						</ul>
+					<span class="fragment">
+						<h4>Solution 1</h4>
+						<pre><code
+								class="python"
+								data-trim
+							>
+	SIREN = "SIREN"
+	csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
+	headers = next(csvreader)
+	indice_SIREN =  headers.index(SIREN)
+	for row in csvreader:
+		siret = row[indice_SIREN]
+							</code></pre>
 
-						<pre class="fragment"><code
+					</span>
+					<span class="fragment">
+					<h4>Solution 2</h4>
+					<pre><code
+								class="python"
+								data-trim
+							>
+	SIREN = "SIREN"
+	csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
+	headers = next(csvreader)
+	for row in csvreader:
+		dictLigne = dict(zip(headers, row))
+		siret = dictLigne[SIREN]
+							</code></pre>
+						</span>
+				</section>
+			<section>
+				<h3>La notion d'iterator</h3>
+				<ul>
+					<li class="fragment">Limite l'espace mémoire utilisé</li>
+					<li class="fragment">Partait pour des traitements iteratifs sans mémoire du passé</li>
+					<li class="fragment">Exemple : lire un CSV !</li>
+				</ul>
+
+				<pre class="fragment"><code
 							class="python"
 							data-trim
 						>
 for row in csvreader:
 	print(row)
 						</code></pre>
-				</section>
+			</section>
+			<section>
+				<h3>Un iterator maison</h3>
+				<pre class="fragment"><code
+						class="python"
+						data-trim
+					>
+					class mySuperIterator:
+					def __init__(self, n):
+						self.i = 0
+						self.n = n
+				
+					def __iter__(self):
+						return self
+				
+					def next(self):
+						if self.i < self.n:
+							i = self.i
+							self.i += 1
+							return i
+						else:
+							raise StopIteration()
+					</code></pre>
+			</section>
+
 			</section>
 
 
 
 			<section>
 				<section>
-					<h2>Conclusion</h2>
+					<h2>TP3 - Communication client/serveur
+					</h2>
+					Tout est sur Moodle ou sur mon repo git
 				</section>
-				<section>
-					<h3>Beaucoup de données</h3>
-					<ul>
-						<li class="fragment">Aujourd'hui toute les applications du web manipulent des données</li>
-						<li class="fragment">En tant que data scientist vous allez en manipuler beaucoup dans votre vie!</li>
-						<li class="fragment">Si vous faites du dev : developpement orienté service</li>
-					</ul>
-
-				</section>
-				<section>
-					<h3>Chaque donnée à son format</h3>
-					Pas de format ultime
-					<table>
-						<tr>
-							<td>CSV</td>
-							<td>Tableau</td>
-						</tr>
-						<tr>
-							<td>XML</td>
-							<td>Phase validation données</td>
-						</tr>
-						<tr>
-							<td>JSON</td>
-							<td>User friendly, léger, polyvalent</td>
-						</tr>
-						<tr>
-							<td>RDF</td>
-							<td>Métadonnées, ressource du web</td>
-						</tr>
-						<tr>
-							<td>YAML</td>
-							<td>Configuration</td>
-						</tr>
-					</table>
-
-				</section>
-				<section>
-					<h3>Dans votre cas</h3>
-					<ul>
-						<li class="fragment">Le RSS est un type de XML</li>
-						<li class="fragment">Le webservice Twitter renvoie un JSON</li>
-					</ul>
-				</section>
-
 			</section>
 		</div>
 	</div>
