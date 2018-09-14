@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Retour sur le TP3</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css'
+            : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h1>Retour sur les 3 TP</h1>
+            </section>
+            <section>
+                <section>
+                    <h2>Previously</h2>
+                    <ul>
+                        <li class="fragment">TP1 : DAO <br>
+                            <span class="fragment">Comment lire et écrire en base </span>
+                        </li>
+                        <li class="fragment">TP2 : lecture/écriture données <br>
+                            <span class="fragment">Comment lire un json et du RSS </span>
+                        </li>
+                        <li class="fragment">TP3 : client serveur <br>
+                            <span class="fragment">Comment requêter l'API twitter </span>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    Réutilisez les codes des TP !!
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>Focus sur les TP3</h2>
+                </section>
+                <section>
+                    <h3>Ce que vous avez vu</h3>
+                    <ul>
+                        <li>Appeler une API web
+
+                        </li>
+                    </ul>
+                    <pre><code
+                            class="python"
+                            data-trim
+                        >
+response = requests.get(
+monURL, proxies=proxies))
+                        </code></pre>
+                    <ul>
+                        <li>Faire une API web (même si c'est pas utile pour le projet info)
+                        </li>
+                    </ul>
+                    <pre><code
+                        class="python"
+                        data-trim
+                    >
+                    app = Flask(__name__)
+                    @app.route("/films", methods=['GET'])
+                    def movieList():
+                        return something
+                    
+                    
+                    @app.route("/film", methods=['POST'])
+                    def addMovie():
+                       #somethin
+                                                    
+                    if __name__ == "__main__":
+                        app.run()
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Les petits problèmes rencontrés</h3>
+                    <ul>
+                        <li class="fragment">Les proxys (url exacte, activation ou non)</li>
+                        <li class="fragment">Les urls des webservices</li>
+                        <li class="fragment">Les méthodes (GET, POST)</li>
+                        <li class="fragment">Les arguments à passer</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <h2>Les proxys (HTTP)</h2>
+                </section>
+                <section>
+                    <h3>Les proxys (HTTP)</h3>
+                    "Juste" un intermédiaire entre un pc/réseau et internet.
+                    <p class="fragment">"Être caché derrière un proxy"</p>
+                </section>
+                <section>
+                    <h3>Configurer un proxy sur son navigateur</h3>
+                    <ul>
+                        <li class="fragment">Normalement c'est déjà fait</li>
+                        <li class="fragment">Pour les curieux Firefox>option>avancé>réseau</li>
+                    </ul>
+                    <p class="fragment">Mais pour le reste, faut le faire vous même (pip install, python ...)</p>
+                    
+                </section>
+                <section>
+                    <h3>Les avantages</h3>
+                    <ul>
+                        <li class="fragment">Sécurisation</li>
+                        <li class="fragment">Filtrer les sites</li>
+                        <li class="fragment">Logger les échanges</li>
+                        <li class="fragment">Optimiser la navigation</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Les inconvenient</h3>
+                    <ul>
+                        <li class="fragment">Faut le configurer</li>
+                        <li class="fragment">Une seule IP pour tout l'Ensai</li>
+                    </ul>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+        // More info about config & dependencies:
+        // - https://github.com/hakimel/reveal.js#configuration
+        // - https://github.com/hakimel/reveal.js#dependencies
+        Reveal.initialize({
+            dependencies: [{
+                src: 'plugin/markdown/marked.js'
+            }, {
+                src: 'plugin/markdown/markdown.js'
+            }, {
+                src: 'plugin/notes/notes.js',
+                async: true
+            }, {
+                src: 'plugin/highlight/highlight.js',
+                async: true,
+                callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }],
+            // Display the page number of the current slide
+            slideNumber: true,
+
+            // Push each slide change to the browser history
+            history: true,
+
+            // Enable slide navigation via mouse wheel
+            mouseWheel: true,
+
+            // 			width : "80%",
+            // 			height : "80%"
+
+        });
+        Reveal.configure({ slideNumber: 'c/t' });
+    </script>
+</body>
+
+</html>
