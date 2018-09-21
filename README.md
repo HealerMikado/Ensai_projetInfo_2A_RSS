@@ -501,13 +501,73 @@ Au lancement des exemples, vous aviez une erreur qui vous disez que le fichier X
 
 Ahhhhh la gestion des caractères spéciaux et l'encodage. Clairement l'un des problèmes les plus courants qui existe dans l'échange de données. Et vous allez sûrement y être confronté dans votre vie future, alors autant commencer tôt.
 
-Vous devez tous savoir qu'un ordinateur ça traite des 0 et des 1, et pas des chaînes de caractères, des nombre, des dates etc. Spoiler, les date c'est chiant également. Pour représenter un caractère, il faut donc se mettre d'accord sur la manière dont on le représente avec des 0 et des 1. Le problème (comme souvent) c'est qu'on n'est pas arrivé à ce mettre d'accord pour un encodage unique, donc il y en a beaucoup. Dans certains cas ça à du sens d'avoir des encodages différents, surtout pour des langues comme le japonais, le chinois, le coréen etc qui sont à base d'idéogramme. Mais dans d'autres cas, c'est sujet à problème. Et dans une même entreprise il n'y a pas consensus. Par moment on va vous fournir des fichiers en UTF-8 et après des fichiers en Windows-1252 ou autre encodage. Dans ce cas, c'est souvent car les gens ne connaissent pas la notion d'encoding, ou n'y pense pas. Mais voilà faites-y attention. Cela fait souvent perdre beaucoup de temps pour rien.
+Vous devez tous savoir qu'un ordinateur ça traite des 0 et des 1, et pas des chaînes de caractères, des nombre, des dates etc. *Spoiler*, les date c'est chiant également. Pour représenter un caractère, il faut donc se mettre d'accord sur la manière dont on le représente avec des 0 et des 1. Le problème (comme souvent) c'est qu'aucun consensus n'a était trouvé pour créer un encodage unique, donc il y en a beaucoup. Dans certains cas ça à du sens d'avoir des encodages différents, surtout pour des langues comme le japonais, le chinois, le coréen etc qui sont à base d'idéogrammes. Mais dans d'autres cas, c'est sujet à problème. Et dans une même entreprise il n'y a pas consensus. Par moment on va vous fournir des fichiers en UTF-8 et après des fichiers en Windows-1252 ou autre encodage. Dans ce cas, c'est souvent car les gens ne connaissent pas la notion d'encodage, ou n'y pense pas. Mais voilà faites-y attention. Cela fait souvent perdre beaucoup de temps pour rien.
 
 Le pire, c'est qu'en général sur les caractères "normaux", c'est bon. Alors si dans un fichier exemple il n'y a pas d'accent, on pense que c'est ok et quand on passe sur le fichier final, ça fonctionne pas du tout. Je vais vous donner un exemple. Par exemple si je pendre un **é**, dans un codage ascii il devient **11101001**, mais dans un codage UTF8 c'est **11000011 10101001**. C'est pas réellement la même chose.
 
 Résultat, quand vous allez lire en fichier en utilisant le mauvaise encodage, vous allez avoir des résultats surprenants qui vont apparaitre. Car l'ordinateur il est un peu "idiot" donc il va le lire votre fichier et le traduire comme il peut. S'il a un caractère pour ce code il le met, et sinon il va vous mettre un caractère du style "?" car il ne sait pas. Et en plus en fonction de l'encodage, votre ordinateur doit lire les octets une par un, deux par deux, ou en prendre un nombre variable en foncton d'un préfixe. Bref c'est compliqué et ça génère plein d'erreurs.
 
 Si vous voulez vous amusez voir ce que ça fait, sur notepad++ vous pouvez changer l'encodage d'un fichier manuellement. Cela donne des résultats surprenant. Ou sinon voici un site pour vous voir ce qu'un changement d'encodage fait sur vos fichiers : http://string-functions.com/encodedecode.aspx
+
+## TP 3 : Utiliser un api web et réaliser une
+
+Bon alors même si dans le TP il y a la réalisation d'une webservice, vu que ça ne va pas servir dans le cadre du projet, je ne vais pas trop détailler comment ça fonctionne. Ici je vais me concentrer uniquement sur contacter une web API (ou webservice)
+
+### Une simple URL
+
+Appeler une API web c'est simple, très simple même. Il vous suffit une simple [URL](https://fr.wikipedia.org/wiki/Uniform_Resource_Locator). Et c'est tout. Sauf que derrière cette URL, au lieu d'avoir une page web (style https://ent.ensai.fr) vous allez avoir une application qui va faire des traitements (par exemple aller chercher des infos dans une base de données et les mettre au format JSON) et vous envoyer un résultat, qui va contenir un code retour pour vous dire si ça c'est bien passé (code 200) ou mal passé (il y a beaucoup de code pour dire que ça c'est mal passé). Et comme ce sont des URL vous allez pouvoir y accéder avec votre navigateur !! Enfin, toute celle qui sont en méthode GET, mais ça on en parlera plus tard.
+
+Maintenant, parlons de l'URL que vous allez envoyer. Par exemple si je veux récupérer les infos sur les arrêts physique de la STAR je peux appeler cette URL : https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=equipement-accessibilite-arrets-bus, ou celle là : https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=equipement-accessibilite-arrets-bus&facet=equip_mobilier&facet=equip_banc&facet=equip_eclairage&facet=equip_poubelle&facet=access_pmr&facet=nomcommune. La différence entre les deux (à part leur taille) est que l'une beaucoup des paramètre et que l'autre n'en moins. Dans une requête HTTP vous pouvez passer des paramètres directement dans l'URL. Et cela simplement en mettant un ? avant vos paramètres. Et ceci n'est pas spécifique au fonctionnement des API web, c'est dans la norme HTTP.
+
+Décortiquons nos requêtes. Avant le ? les deux URL sont identiques, et font référence à  https://data.rennesmetropole.fr/api/records/1.0/search. En allant fouiller dans la doc de l'API on voit que
+
+```
+/api/records/1.0/search/
+Description
+
+Ce service permet d'effectuer une recherche sur l'ensemble des données d'un Dataset, à travers l'utilisation de fonctionnalités intuitives de recherche telles que la recherche textuelle et la recherche géographique; il permet également la navigation par Facettes pour offrir à l'utilisateur un moyen d'obtenir facilement et précisément les données souhaitées.
+
+Dans le cas d'une utilisation sans paramètre de recherche, toutes les données du Dataset sont restituées.
+```
+
+Donc déjà nos deux requêtes sont faites pour chercher des données.
+
+Ensuite premier paramètre : dataset=equipement-accessibilite-arrets-bus. En reprenant le doc le Dataset c'est les données que l'on veut interrogé. Et c'est un attribut obligatoire. Donc pour le moment nos deux requêtes vont bien tapé la même base. Et c'est maintenant que la différence commence car l'une à comme autres attributs : *&facet=equip_mobilier&facet=equip_banc&facet=equip_eclairage&facet=equip_poubelle&facet=access_pmr&facet=nomcommune*. Déjà les & servent à faire passer plusieurs paramètres dans l'URL. Ensuite on voit que l'on a plusieurs fois facet avec des valeurs différentes. 
+
+Dans le doc on lit
+
+```
+facet 	
+
+Active une Facette pour qu'elle soit incluse dans les résultats (les Facettes disponibles sont indiquées au niveau de la défition du Dataset); ce paramètre peut-être utilisé plusieurs fois pour activer plusieurs Facettes. Par défaut aucune Facette n'est activée.
+```
+
+Donc dans la requête longue on passe plusieurs facets pour récupérer plus de données. Alors oui il suffisait de cliquer sur les liens pour le voir, mais je voulais vous expliquer un peu le fonctionnement. D'ailleurs dans le TP, on vous demandait de récupérer que les arrets PMR. Et c'était faisable directement via l'API, en rajouant à l'URL &refine.access_pmr=OUI.
+
+Petit exemple avec l'API twitter avec cette URL : https://api.twitter.com/1.1/search/tweets.json?q=ensai je vais récupérer les tweets qui mentionnent l'Ensai. Mais ça ne va pas fonctionner car *Bad Authentication data*. Et oui pour accéder à l'API twitter il faut s'authentifier. Et pour faire ça vous allez devoir passez des paramètres à vos requêtes, mais pas dans l'URL, dans le l'en-tête de la requête.
+
+### Une requête HTTP
+
+Bon je vous ai déjà dit que l'on pouvait passser des paramêtres dans l'URL avec ?monparam=mavaleur. Mais on peut aussi en passer via l'en-tête et le corps de la requête. Alors je ne vais pas vous expliquer plus en détail que ça comment fonctionne une requête. C'est pas forcément ultra passionnant et utile pour vous. Retenez juste cela, une requête HTTP est constituée de 
+
+```
+Ligne de commande (Commande, URL, Version de protocole)
+En-tête de requête
+<nouvelle ligne>
+Corps de requête
+```
+
+Pourquoi c'est pas ultra important ? Car vous n'allez jamais faire une requête vous même. Vous allez toujours passer par une librairie qui la fera pour vous. Typiquement, **Requets** qui permet de tout faire, ou **feedparser** qui permet juste de récupérer un flux RSS.
+
+Mais comment on fait pour se connecter à Twitter ? Déjà on va lire la [doc](https://developer.twitter.com/en/docs/basics/authentication/overview/oauth). Youpi une nouvelle notion, Oauth !! Oauth est un protocole de délagation d'authentification. Rapidement, avec Oauth, vous allez pouvoir via une application consommatrice de données (par exemple l'application que vous êtes en train de développer) vous connecter à une application fournisseuse de données (par exemple twitter) sans jamais passé vos identifiant/mdp de l'application fournisseuse à l'application consommatrice. Dans notre exemple, vous allez pouvoir accéder à votre compte twitter via votre application sans jamais rentrer dans votre application votre login/mdp
+
+GROSSE PRECISION !! Ici je ne parle pas du cas d'utilisation avancé qui permet à un utilisateur de partager des choses sur twitter. Je suis juste en train de vous parler du processus qui vous permet de récupérer des infos sur twitter. Car pour faire cela il faut lier un compte twitter à votre application.
+
+PETITE PRECISION. Pour faire le cas d'utilisation qui permet à un utilisateur de partager quelque chose sur son twitter, vous allez utiliser également Oauth, mais ça sera plus dur.
+
+Voici un exemple de code qui vous montre comment récupérer la timeline twitter en python  https://developer.twitter.com/en/docs/basics/authentication/guides/single-user
+
+
 
 ## Liens utiles
 
