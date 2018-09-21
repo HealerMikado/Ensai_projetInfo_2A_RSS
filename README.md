@@ -521,26 +521,26 @@ Maintenant, parlons de l'URL que vous allez envoyer. Par exemple si je veux réc
 
 Décortiquons nos requêtes. Avant le ? les deux URL sont identiques, et font référence à  https://data.rennesmetropole.fr/api/records/1.0/search. En allant fouiller dans la doc de l'API on voit que
 
-```
-/api/records/1.0/search/
-Description
 
-Ce service permet d'effectuer une recherche sur l'ensemble des données d'un Dataset, à travers l'utilisation de fonctionnalités intuitives de recherche telles que la recherche textuelle et la recherche géographique; il permet également la navigation par Facettes pour offrir à l'utilisateur un moyen d'obtenir facilement et précisément les données souhaitées.
+>/api/records/1.0/search/
+>Description
+>
+>Ce service permet d'effectuer une recherche sur l'ensemble des données d'un Dataset, à travers l'utilisation de fonctionnalités intuitives de recherche telles que la recherche textuelle et la recherche géographique; il permet également la navigation par Facettes pour offrir à l'utilisateur un moyen d'obtenir facilement et précisément les données souhaitées.
 
-Dans le cas d'une utilisation sans paramètre de recherche, toutes les données du Dataset sont restituées.
-```
+>Dans le cas d'une utilisation sans paramètre de recherche, toutes les données du Dataset sont restituées.
+
 
 Donc déjà nos deux requêtes sont faites pour chercher des données.
 
-Ensuite premier paramètre : dataset=equipement-accessibilite-arrets-bus. En reprenant le doc le Dataset c'est les données que l'on veut interrogé. Et c'est un attribut obligatoire. Donc pour le moment nos deux requêtes vont bien tapé la même base. Et c'est maintenant que la différence commence car l'une à comme autres attributs : *&facet=equip_mobilier&facet=equip_banc&facet=equip_eclairage&facet=equip_poubelle&facet=access_pmr&facet=nomcommune*. Déjà les & servent à faire passer plusieurs paramètres dans l'URL. Ensuite on voit que l'on a plusieurs fois facet avec des valeurs différentes. 
+Ensuite premier paramètre : dataset=equipement-accessibilite-arrets-bus. En reprenant le doc le Dataset c'est les données que l'on veut interroger. Et c'est un paramètre obligatoire. Donc pour le moment nos deux requêtes vont bien taper la même base. Et c'est maintenant que la différence commence car l'une à comme autres attributs : *&facet=equip_mobilier&facet=equip_banc&facet=equip_eclairage&facet=equip_poubelle&facet=access_pmr&facet=nomcommune*. Déjà les & servent à faire passer plusieurs paramètres dans l'URL. Ensuite on voit que l'on a plusieurs fois facet avec des valeurs différentes. 
 
 Dans le doc on lit
 
-```
-facet 	
 
-Active une Facette pour qu'elle soit incluse dans les résultats (les Facettes disponibles sont indiquées au niveau de la défition du Dataset); ce paramètre peut-être utilisé plusieurs fois pour activer plusieurs Facettes. Par défaut aucune Facette n'est activée.
-```
+>facet 	
+>
+>Active une Facette pour qu'elle soit incluse dans les résultats (les Facettes disponibles sont indiquées au niveau de la défition du Dataset); ce paramètre peut-être utilisé plusieurs fois pour activer plusieurs Facettes. Par défaut aucune Facette n'est activée.
+
 
 Donc dans la requête longue on passe plusieurs facets pour récupérer plus de données. Alors oui il suffisait de cliquer sur les liens pour le voir, mais je voulais vous expliquer un peu le fonctionnement. D'ailleurs dans le TP, on vous demandait de récupérer que les arrets PMR. Et c'était faisable directement via l'API, en rajouant à l'URL &refine.access_pmr=OUI.
 
