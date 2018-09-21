@@ -28,66 +28,58 @@
     <div class="reveal">
         <div class="slides">
             <section>
-                <h1>Retour sur les 3 TP</h1>
+                <h1>Résumé de la première trilogie</h1>
             </section>
             <section>
+
+
                 <section>
-                    <h2>Previously</h2>
-                    <ul>
-                        <li class="fragment">TP1 : DAO <br>
-                            <span class="fragment">Comment lire et écrire en base </span>
-                        </li>
-                        <li class="fragment">TP2 : lecture/écriture données <br>
-                            <span class="fragment">Comment lire un json et du RSS </span>
-                        </li>
-                        <li class="fragment">TP3 : client serveur <br>
-                            <span class="fragment">Comment requêter l'API twitter </span>
-                        </li>
-                    </ul>
+                    <h2>Projet info épisode 1</h2>
+                    <h1>La menace des DAO</h1>
+
                 </section>
 
                 <section>
-                    Réutilisez les codes des TP !!
-                </section>
-            </section>
-            <section>
-                <section>
-                    <h2>Focus sur les TP3</h2>
-                </section>
-                <section>
-                    <h3>Ce que vous avez vu</h3>
+                    <h3>Résumé de la menace des DAO</h3>
                     <ul>
-                        <li>Appeler une API web
-
-                        </li>
+                        <li class="fragment">Data access object</li>
+                        <li class="fragment">lien BdD - objets métiers</li>
+                        <li class="fragment">séparation des couches</li>
+                        <li class="fragment">prepared statement</li>
+                        <li class="fragment">Pensez à faire des commits !</li>
+                        <li class="fragment">Librairie psycopg2</li>
                     </ul>
-                    <pre><code
-                            class="python"
-                            data-trim
-                        >
-response = requests.get(
-monURL, proxies=proxies))
-                        </code></pre>
+                </section>
+                <section>
+                    <h2>Projet info épisode 2</h2>
+                    <h1>La guerre des formats</h1>
+                </section>
+                <section>
+                    <h3>Résumé de la guerre des formats</h3>
                     <ul>
-                        <li>Faire une API web (même si c'est pas utile pour le projet info)
-                        </li>
+                        <li class="fragment">CSV : pas utile dans le projet</li>
+                        <li class="fragment">XML : un flux RSS est un XML</li>
+                        <li class="fragment">JSON : l'API twitter vous en renvoie</li>
+                        <li class="fragment">Librairie json, lxml, beautifulsoup</li>
                     </ul>
-                    <pre><code
+                </section>
+                <section>
+                    <h2>Projet info épisode 3</h2>
+                    <h1>La revanche des API</h1>
+                </section>
+                <section>
+                    <h3>Résumé de la revanche des API</h3>
+                    <ul>
+                        <li class="fragment">Comment appeler une web API</li>
+                        <li class="fragment">Comment en faire une</li>
+                        <li class="fragment">Librairie request</li>
+                    </ul>
+                    <pre class="fragment"><code
                         class="python"
                         data-trim
                     >
-                    app = Flask(__name__)
-                    @app.route("/films", methods=['GET'])
-                    def movieList():
-                        return something
-                    
-                    
-                    @app.route("/film", methods=['POST'])
-                    def addMovie():
-                       #somethin
-                                                    
-                    if __name__ == "__main__":
-                        app.run()
+response = requests.get(
+        monURL, proxies=proxies))
                     </code></pre>
                 </section>
                 <section>
@@ -100,10 +92,54 @@ monURL, proxies=proxies))
                     </ul>
                 </section>
             </section>
-
             <section>
                 <section>
-                    <h2>Les proxys (HTTP)</h2>
+                    <h2>Maintenant la suite</h2>
+                </section>
+                <section>
+                    Il y a pas très longtemps, dans une galaxie pas du tout lointaine
+                </section>
+                <section>
+                    <img class = "plain"src="image/logo starwars.png" alt="" style="width : 1000px">
+                    <audio data-autoplay src="musique star wars.mp3"></audio>
+                </section>
+                <section>
+                    <h2>Projet info épisode 4</h2>
+                    <h1>Un nouvel espoir</h1>
+                    <p class="fragment">Désolé j'avais pas de jeu de mot ...</p>
+                </section>
+                <section>
+                    <h3>Spoiler</h3>
+                    <ul>
+                        <li class="fragment">Partager son code avec git</li>
+                        <li class="fragment">Un squelette d'application</li>
+                        <li class="fragment">Gestion des menus en console</li>
+                        <li class="fragment">Tests unitaires</li>
+                        <li class="fragment">Variables de session</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Pour cet épisode est si important ?</h3>
+                    <ul>
+                        <li class="fragment">Git c'est important ! Et pas que pour les "informaticiens"</li>
+                        <li class="fragment">Comprendre le code = meilleur diagramme de classe</li>
+                        <li class="fragment">Exemple de navigation</li>
+                        <li class="fragment">Comment on fait des tests unitaires</li>
+                        <li class="fragment">Session = gestion simplifée des variables</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Conclusion</h3>
+                    <ul>
+                        <li class="fragment">Code technique : OK</li>
+                        <li class="fragment">Code métier : TO DO</li>
+                    </ul>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>Episode spin-off : Les proxys (HTTP)</h2>
                 </section>
                 <section>
                     <h3>Les proxys (HTTP)</h3>
@@ -117,7 +153,7 @@ monURL, proxies=proxies))
                         <li class="fragment">Pour les curieux Firefox>option>avancé>réseau</li>
                     </ul>
                     <p class="fragment">Mais pour le reste, faut le faire vous même (pip install, python ...)</p>
-                    
+
                 </section>
                 <section>
                     <h3>Les avantages</h3>
@@ -129,10 +165,11 @@ monURL, proxies=proxies))
                     </ul>
                 </section>
                 <section>
-                    <h3>Les inconvenient</h3>
+                    <h3>Les inconvenients</h3>
                     <ul>
                         <li class="fragment">Faut le configurer</li>
                         <li class="fragment">Une seule IP pour tout l'Ensai</li>
+                        <li class="fragment">Pirater le proy compromet tout le réseau</li>
                     </ul>
                 </section>
             </section>
