@@ -2,12 +2,6 @@
 
 :arrow_forward: [Les diapos de présentation](https://healermikado.github.io/Ensai_projetInfo_2A_RSS/#/)
 
----
-
-
-
-
-
 ## Table des matières
 
 - [Agrégateur de flux RSS et de Tweets](#agrégateur-de-flux-rss-et-de-tweets)
