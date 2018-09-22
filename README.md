@@ -2,36 +2,51 @@
 
 :arrow_forward: [Les diapos de présentation](https://healermikado.github.io/Ensai_projetInfo_2A_RSS/#/)
 
+---
+
+
+
+
 
 ## Table des matières
 
-  - [Introduction](#introduction)
-  - [Fonctionnalités attendues](#fonctionnalités-attendues)
-    - [Fonctionnalités de base attendues](#fonctionnalités-de-base-attendues)
-    - [Fonctionnalités avancées](#fonctionnalités-avancées)
-  - [Diagramme UML](#diagramme-uml)
-  - [TP 1 - DAO](#tp--1--dao)
-    - [Pourquoi ne pas mettre les fonctions de la DAO dans l'objet métier ?](#pourquoi-ne-pas-mettre-les-fonctions-de-la-dao-dans-lobjet-métier-)
-	- [Injection SQL et prepared statements](#injection-sql-et-prepared-statements)
-	  - [Le principe](#le-principe)
-	  - [Comment s'en prémunir](#comment-sen-prémunir)
-    - [Problèmes rencontrés lors du TP 1](#problèmes-rencontrés-lors-du-tp-1)
-      - [Lancement de la classe et pas du main](#lancement-de-la-classe-et-pas-du-main)
-      - [Erreur lors du string replacement dans les requêtes](#erreur-lors-du-string-replacement-dans-les-requêtes)
-      - [Mon update ne se fait pas en base ??!!!](#mon-update-ne-se-fait-pas-en-base-)
-      - [Le CRUD](#le-crud)
-      - [Erreur dans les imports avec pylint](#erreur-dans-les-imports-avec-pylint)
-    - [Les imports du TP1](#les-imports-du-tp1)
-      - [pylint](#pylint)
-	  - [autopep8](#autopep8)
-	  - [psycopg2-binary](#psycopg2-binary)
-  - [TP 2 - Inport/Export de données](#tp-2---inportexport-de-données)
-    - [Le CSV](#le-csv)
-	- [Le XML](#le-xml)
-	- [Le JSON](#le-json)
-  - [Liens utiles](#liens-utiles)
-
-
+- [Agrégateur de flux RSS et de Tweets](#agrégateur-de-flux-rss-et-de-tweets)
+    - [Table des matières](#table-des-matières)
+    - [Introduction](#introduction)
+    - [Fonctionnalités attendues](#fonctionnalités-attendues)
+        - [Fonctionnalités de base attendues](#fonctionnalités-de-base-attendues)
+        - [Fonctionnalités avancées](#fonctionnalités-avancées)
+    - [Diagramme UML](#diagramme-uml)
+    - [Utilisateur inscrit vs utilisateur connecté](#utilisateur-inscrit-vs-utilisateur-connecté)
+        - [Vision machine vs vision humaine](#vision-machine-vs-vision-humaine)
+    - [TP 1 - DAO](#tp-1---dao)
+        - [Pourquoi ne pas mettre les fonctions de la DAO dans l'objet métier ?](#pourquoi-ne-pas-mettre-les-fonctions-de-la-dao-dans-lobjet-métier-)
+        - [Injection SQL et prepared statements](#injection-sql-et-prepared-statements)
+            - [Le principe](#le-principe)
+            - [Comment s'en prémunir](#comment-sen-prémunir)
+        - [Problèmes rencontrés lors du TP 1](#problèmes-rencontrés-lors-du-tp-1)
+            - [Lancement de la classe et pas du main](#lancement-de-la-classe-et-pas-du-main)
+            - [Erreur lors du string replacement dans les requêtes](#erreur-lors-du-string-replacement-dans-les-requêtes)
+            - [Mon update ne se fait pas en base ??!!!](#mon-update-ne-se-fait-pas-en-base-)
+                - [Le CRUD](#le-crud)
+            - [Erreur dans les imports avec pylint](#erreur-dans-les-imports-avec-pylint)
+        - [Les imports du TP1](#les-imports-du-tp1)
+            - [pylint](#pylint)
+            - [autopep8](#autopep8)
+            - [psycopg2-binary](#psycopg2-binary)
+    - [TP 2 - Inport/Export de données](#tp-2---inportexport-de-données)
+        - [Le CSV](#le-csv)
+        - [Le XML](#le-xml)
+        - [Le JSON](#le-json)
+        - [Problèmes rencontrés lors du TP2](#problèmes-rencontrés-lors-du-tp2)
+            - [Les fichiers n'existent pas](#les-fichiers-nexistent-pas)
+            - [Encodage](#encodage)
+    - [TP 3 : Utiliser un api web et réaliser une](#tp-3--utiliser-un-api-web-et-réaliser-une)
+        - [Une simple URL](#une-simple-url)
+        - [Une requête HTTP](#une-requête-http)
+        - [Le cas de l'API Twitter](#le-cas-de-lapi-twitter)
+    - [TP 4 : la gestion des menus, des écrans et GIT](#tp-4--la-gestion-des-menus-des-écrans-et-git)
+    - [Liens utiles](#liens-utiles)
 ## Introduction
 
 L’objectif du projet est de créer un agrégateur de flux RSS et de tweets pour permettre aux utilisateurs de se tenir informé de l’actualité en temps réel selon des thématiques qu’ils choisissent.
@@ -511,28 +526,47 @@ Si vous voulez vous amusez voir ce que ça fait, sur notepad++ vous pouvez chang
 
 ## TP 3 : Utiliser un api web et réaliser une
 
-Bon alors même si dans le TP il y a la réalisation d'une webservice, vu que ça ne va pas servir dans le cadre du projet, je ne vais pas trop détailler comment ça fonctionne. Ici je vais me concentrer uniquement sur contacter une web API (ou webservice)
+Bon alors même si dans le TP il y a la réalisation d'une webservice, vu que ça ne va pas servir dans le cadre du projet, je ne vais pas trop détailler comment ça fonctionne. Ici je vais me concentrer uniquement sur contacter une web API (ou webservice). Alors je vous préviens, dans ce chapitre, je vais aborder quelques notions du web, pas forcément utile pour le projet, mais c'est de la culture informatique, et je pense qu'avoir entendu ces notions une fois est une bonne chose. Bien commençons !
 
 ### Une simple URL
 
-Appeler une API web c'est simple, très simple même. Il vous suffit une simple [URL](https://fr.wikipedia.org/wiki/Uniform_Resource_Locator). Et c'est tout. Sauf que derrière cette URL, au lieu d'avoir une page web (style https://ent.ensai.fr) vous allez avoir une application qui va faire des traitements (par exemple aller chercher des infos dans une base de données et les mettre au format JSON) et vous envoyer un résultat, qui va contenir un code retour pour vous dire si ça c'est bien passé (code 200) ou mal passé (il y a beaucoup de code pour dire que ça c'est mal passé). Et comme ce sont des URL vous allez pouvoir y accéder avec votre navigateur !! Enfin, toute celle qui sont en méthode GET, mais ça on en parlera plus tard.
+Appeler une API web c'est simple, très simple même. Il vous suffit une simple [URL](https://fr.wikipedia.org/wiki/Uniform_Resource_Locator). Et c'est tout. En fait, tous les sites que lesquelle vous allez sont sur des serveurs. Quand vous appelez une URL, le serveur vous renvoie la page web derière cette URL. Typiquement https://ent.ensai.fr vous retourne l'ent de l'Ensai. C'est très bien pour les humains, mais les machines elles, elles préfèrent des données, pas une page web. C'est pour ça que des gens on commençait à mettre derrière des URL des serveurs qui font des traitememts et qui retournent juste des données. Par exemple Twitter à mis en place une API qui permet à d'autres de récupérer des informations de twitter sans faire du webscrapping.  Et comme ce sont des URL vous allez pouvoir y accéder avec votre navigateur !! Enfin, toute celle qui sont en méthode GET, mais ça on en parlera plus tard.
 
-Maintenant, parlons de l'URL que vous allez envoyer. Par exemple si je veux récupérer les infos sur les arrêts physique de la STAR je peux appeler cette URL : https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=equipement-accessibilite-arrets-bus, ou celle là : https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=equipement-accessibilite-arrets-bus&facet=equip_mobilier&facet=equip_banc&facet=equip_eclairage&facet=equip_poubelle&facet=access_pmr&facet=nomcommune. La différence entre les deux (à part leur taille) est que l'une beaucoup des paramètre et que l'autre n'en moins. Dans une requête HTTP vous pouvez passer des paramètres directement dans l'URL. Et cela simplement en mettant un ? avant vos paramètres. Et ceci n'est pas spécifique au fonctionnement des API web, c'est dans la norme HTTP.
 
-Décortiquons nos requêtes. Avant le ? les deux URL sont identiques, et font référence à  https://data.rennesmetropole.fr/api/records/1.0/search. En allant fouiller dans la doc de l'API on voit que
+Maintenant, parlons de l'URL que vous allez envoyer. Par exemple si je veux récupérer les infos sur les arrêts physique de la STAR je peux appeler cette URL : https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=equipement-accessibilite-arrets-bus, ou celle là : https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=equipement-accessibilite-arrets-bus&facet=equip_mobilier&facet=equip_banc&facet=equip_eclairage&facet=equip_poubelle&facet=access_pmr&facet=nomcommune. La différence entre les deux (à part leur taille) est que l'une beaucoup de paramètres et que l'autre en n'a moins. Dans une requête HTTP vous pouvez passer des paramètres directement dans l'URL. Et cela simplement en mettant un **?** avant vos paramètres. Et ceci n'est pas spécifique au fonctionnement des API web, c'est dans la norme HTTP.
+
+Décortiquons nos requêtes. Avant le ? les deux URL sont identiques, et font référence à  
+
+```
+https://data.rennesmetropole.fr/api/records/1.0/search
+```
+
+ En allant fouiller dans la doc de l'API on voit que
 
 
 >/api/records/1.0/search/
 >Description
 >
 >Ce service permet d'effectuer une recherche sur l'ensemble des données d'un Dataset, à travers l'utilisation de fonctionnalités intuitives de recherche telles que la recherche textuelle et la recherche géographique; il permet également la navigation par Facettes pour offrir à l'utilisateur un moyen d'obtenir facilement et précisément les données souhaitées.
-
+>
 >Dans le cas d'une utilisation sans paramètre de recherche, toutes les données du Dataset sont restituées.
 
 
-Donc déjà nos deux requêtes sont faites pour chercher des données.
+Donc déjà on est sûrs que nos deux requêtes sont faites pour chercher des données. :relieved:
 
-Ensuite premier paramètre : dataset=equipement-accessibilite-arrets-bus. En reprenant le doc le Dataset c'est les données que l'on veut interroger. Et c'est un paramètre obligatoire. Donc pour le moment nos deux requêtes vont bien taper la même base. Et c'est maintenant que la différence commence car l'une à comme autres attributs : *&facet=equip_mobilier&facet=equip_banc&facet=equip_eclairage&facet=equip_poubelle&facet=access_pmr&facet=nomcommune*. Déjà les & servent à faire passer plusieurs paramètres dans l'URL. Ensuite on voit que l'on a plusieurs fois facet avec des valeurs différentes. 
+Ensuite premier paramètre : 
+
+```
+dataset=equipement-accessibilite-arrets-bus
+```
+
+ En reprenant le doc le Dataset c'est les données que l'on veut interroger. Et c'est un paramètre obligatoire. Donc pour le moment nos deux requêtes vont bien taper la même base. Et c'est maintenant que la différence commence car l'une à comme autres attributs :
+ 
+ ```
+ &facet=equip_mobilier&facet=equip_banc&facet=equip_eclairage&facet=equip_poubelle&facet=access_pmr&facet=nomcommune
+ ```
+
+ Déjà les & servent à faire passer plusieurs paramètres dans l'URL. Ensuite on voit que l'on a plusieurs fois facet avec des valeurs différentes. 
 
 Dans le doc on lit
 
@@ -548,7 +582,13 @@ Petit exemple avec l'API twitter avec cette URL : https://api.twitter.com/1.1/se
 
 ### Une requête HTTP
 
-Bon je vous ai déjà dit que l'on pouvait passser des paramêtres dans l'URL avec ?monparam=mavaleur. Mais on peut aussi en passer via l'en-tête et le corps de la requête. Alors je ne vais pas vous expliquer plus en détail que ça comment fonctionne une requête. C'est pas forcément ultra passionnant et utile pour vous. Retenez juste cela, une requête HTTP est constituée de 
+Bon je vous ai déjà dit que l'on pouvait passser des paramêtres dans l'URL avec
+
+```
+?monparam=mavaleur
+```
+
+  Mais on peut aussi en passer via l'en-tête et le corps de la requête. Alors je ne vais pas vous expliquer plus en détail que ça comment fonctionne une requête. C'est pas forcément ultra passionnant et utile pour vous. Retenez juste cela, une requête HTTP est constituée de 
 
 ```
 Ligne de commande (Commande, URL, Version de protocole)
@@ -559,13 +599,52 @@ Corps de requête
 
 Pourquoi c'est pas ultra important ? Car vous n'allez jamais faire une requête vous même. Vous allez toujours passer par une librairie qui la fera pour vous. Typiquement, **Requets** qui permet de tout faire, ou **feedparser** qui permet juste de récupérer un flux RSS.
 
-Mais comment on fait pour se connecter à Twitter ? Déjà on va lire la [doc](https://developer.twitter.com/en/docs/basics/authentication/overview/oauth). Youpi une nouvelle notion, Oauth !! Oauth est un protocole de délagation d'authentification. Rapidement, avec Oauth, vous allez pouvoir via une application consommatrice de données (par exemple l'application que vous êtes en train de développer) vous connecter à une application fournisseuse de données (par exemple twitter) sans jamais passé vos identifiant/mdp de l'application fournisseuse à l'application consommatrice. Dans notre exemple, vous allez pouvoir accéder à votre compte twitter via votre application sans jamais rentrer dans votre application votre login/mdp
+Pour la petite histoire, quand vous appelez une URL via votre navigateur internet préféré, il génère une requête HTTP. Et aussi surprenant que ça puisse paraitre, même internet explorer fait ça. :stuck_out_tongue:
 
-GROSSE PRECISION !! Ici je ne parle pas du cas d'utilisation avancé qui permet à un utilisateur de partager des choses sur twitter. Je suis juste en train de vous parler du processus qui vous permet de récupérer des infos sur twitter. Car pour faire cela il faut lier un compte twitter à votre application.
+Par exemple voici la requête que fait mon navigateur quand je me connecte à l'ent de l'ensai.
+
+```
+GET / HTTP/1.1
+Host: ent.ensai.fr
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Mobile Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+```
+
+Je ne vais pas vous détailler la requête comme dit plus haut c'est pas intéressant, je voulais juste vous en monter une, et vous dire que c'est ce que génère votre navigateur à chaque fois que vous tapez une URL dans la barre la barre d'URL.
+
+### Le cas de l'API Twitter
+
+Mais comment on fait pour se connecter à Twitter ? Déjà on va lire la [doc](https://developer.twitter.com/en/docs/basics/authentication/overview/oauth). Youpi une nouvelle notion, **Oauth** !!
+
+Oauth est un protocole de délagation d'authentification. Rapidement, avec Oauth, vous allez pouvoir via une application consommatrice de données (par exemple l'application que vous êtes en train de développer) vous connecter à une application fournisseuse de données (par exemple twitter) sans jamais passé vos identifiant/mdp de l'application fournisseuse à l'application consommatrice. Dans notre exemple, vous allez pouvoir accéder à votre compte twitter via votre application sans jamais rentrer dans votre application votre login/mdp
+
+GROSSE PRECISION !! Ici je ne parle pas du cas d'utilisation avancé qui permet à un utilisateur de partager des choses sur twitter. Je suis juste en train de vous parler du processus qui vous permet de récupérer des infos sur twitter. Car pour connecter votre application à Twitter vous avez du demander un compte développeur et obtenir un jeu de keys. C'est avec ces keys que vous allez pouvoir connecter votre application à twitter.
 
 PETITE PRECISION. Pour faire le cas d'utilisation qui permet à un utilisateur de partager quelque chose sur son twitter, vous allez utiliser également Oauth, mais ça sera plus dur.
 
 Voici un exemple de code qui vous montre comment récupérer la timeline twitter en python  https://developer.twitter.com/en/docs/basics/authentication/guides/single-user
+
+```python
+def oauth_req(url, key, secret, http_method="GET", post_body=””, http_headers=None):
+    consumer = oauth2.Consumer(key=CONSUMER_KEY, secret=CONSUMER_SECRET)
+    token = oauth2.Token(key=key, secret=secret)
+    client = oauth2.Client(consumer, token)
+    resp, content = client.request( url, method=http_method, body=post_body, headers=http_headers )
+    return content
+
+home_timeline = oauth_req( 'https://api.twitter.com/1.1/statuses/home_timeline.json', 'abcdefg', 'hijklmnop' )
+```
+
+## TP 4 : la gestion des menus, des écrans et GIT
+
+Pour le dernire TP on attaque du lourd. Déjà ce TP doit vous servir comme base pour vos développements ! Sérieusement, si vous comprenez ce TP toute la partie navigation de votre appli sera ultra facile ! Et git va vous servir à travailler sur votre code en groupe. Et comme je vous l'ai dit lors du TP, git est simple outil de partage. Ainsi il marche pour travailler sur un projet python, mais aussi java, R, SAS etc. Mais également il peut servir à déposer des documents pour les rendre accessible à tous ou rédiger plein de compléments d'information sur le projet informatique de 2A.
+
+Pour la petite histoire, tout ce texte est contenu dans un fichier markdown (.md). C'est un format de fichier What You Write Is What You Mean (WYWIWYM). C'est comme du latex, en plus simple. Et c'est automatiquement interprété par github (ou gitlab) si le fichier s'appelle README.md.
+
 
 
 
