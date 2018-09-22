@@ -40,6 +40,9 @@
         - [Une requête HTTP](#une-requête-http)
         - [Le cas de l'API Twitter](#le-cas-de-lapi-twitter)
     - [TP 4 : la gestion des menus, des écrans et GIT](#tp-4--la-gestion-des-menus-des-écrans-et-git)
+        - [Git, un gestionnaire de version](#git-un-gestionnaire-de-version)
+            - [Se synchroniser avec le dépôt du projet](#se-synchroniser-avec-le-dépôt-du-projet)
+            - [Git au quotidien](#git-au-quotidien)
     - [Liens utiles](#liens-utiles)
 ## Introduction
 
@@ -639,8 +642,75 @@ Pour le dernire TP on attaque du lourd. Déjà ce TP doit vous servir comme base
 
 Pour la petite histoire, tout ce texte est contenu dans un fichier markdown (.md). C'est un format de fichier What You Write Is What You Mean (WYWIWYM). C'est comme du latex, en plus simple. Et c'est automatiquement interprété par github (ou gitlab) si le fichier s'appelle README.md.
 
- 
+### Git, un gestionnaire de version
 
+Git est un gestionnaire de version décentralisé créé par Linus Torvald (juste le mec qui a créer le noyau Linux). A la différence d'un gestionnaire centralisé avec un seul dépôt, avec git il y a un dépôt central, et des dépôts distants, en nombre potentiellement infini.
+
+Le principe est "simple". Chaque personne clone le dépôt distant sur son poste, et fait des modifs qu'il **commit** sur son dépôt local. En général on commit quand on termine une petite tâche, genre faire une classe et que cela fonctionne. Car un commit veut dire que vous validez votre code ! Chaque commit doit être accompagné d'un petit message qui a pour but d'expliquer ce que vous avez fait.
+
+Une fois votre/vos commit fait, vous allez vouloir/devoir le partager avec les autres. Et cela se fait avec un **push**. Pusher votre code va envoyer sur le dépôt distant votre code et ainsi le rendre accessible à tous. Mais pour pusher il faut que votre dépôt local soit à jour. Sinon le dépôt distant va refuser votre push. Cela permet d'être sûr que le code sur le dépôt distant soit toujours en train "d'avancer", et qu'il n'y ai pas de retour arrière. Si ce genre de chose arrive il vous faut **pull** le code du dépôt distant. C'est à dire récupérer le code du dépôt distant et le fusionner avec votre code actuel. Si vos modification ne touche pas les mêmes lignes que celles modifiés sur le dépôt distant, c'est tout bon et vous n'avez rien à faire. Et si ce n'est pas le cas et que vous avez des conflits, ça va être un peu plus compliqué. Vous allez voir apparaitre dans votre code des 
+
+```
+<<<<<<< HEAD
+Votre code
+=======
+Le code du dépôt
+>>>>>>> something
+```
+
+Entre les
+```
+<<<<<<< HEAD
+Votre code
+=======
+```
+
+vous allez trouver ... votre code. Et entre les
+
+```
+=======
+Le code du dépôt
+>>>>>>> something
+```
+
+vous trouverez le code sur dépôt. Le but du jeu si ça arrive, est de résoudre le conflit en enlevant les >>, == et << **AVANT** de pusher votre code. Je répète, **avant de pusher vérifiez que vous n'avez pas de conflit !**.
+
+#### Se synchroniser avec le dépôt du projet
+
+Voici une petite marche à suivre pour vous synchroniser depuis un nouveau pc avec le repo de votre projet. D'abord ouvrez git-bash. Ensuite avec l'explorateur windows (ou autre) placez vous dans le dossier où vous voulez mettre votre projet et copiez l'adresse. Dans git-bash faites
+
+```
+cd le/chemin/vers/mon/dossier
+```
+
+puis clonez le repo
+
+```
+git clone url_du_repo
+```
+
+Cela va remplir votre dossier avec... un autre dossier. Et dans ce dossier vous trouverez votre projet. Dans ce dossier, en plus de votre projet vous il y a un dossier .git. C'est dans ce dossier que ce trouve votre dépôt local. Supprimez-le et votre projet se trouve déconnecté du repo distant. 
+
+> Globalement, quand vous débutez un projet, je vous conseille de toujours faire : créer un repo git vide sur github/gitlab, le cloner, et travailler dans le dossier que cela vient de vous créer. Comme ça vous vous assurez d'être connecté au bon repo.
+
+#### Git au quotidien
+
+Une fois le projet sur votre poste, à vous de coder. Voici une liste des commandes communes :
+
+  - git add . : permet à git de détecter tous les fichiers que vous avez modifié pour les commit (note git add . et git add -A sont idtentiques)
+  - git commit -m "message" : réalise un commit et y joindre un petit message pour expliquer son contenu
+  - git push : push le code sur le dépôt distant
+  - git pull : récupère le code du dépôt distant et le fusionne avec votre code.
+
+Git est bien plus riche que cela. Mais pour le moment je pense que cela va vous suffire
+
+
+En gros voici ce que vous risquez de faire régulièrement :
+
+  1. git pull pour récupérer les modifs des autres
+  2. codage
+  3. git add . et git commit -m "mon super message explicite" régulièrement pour "valider" vos développements
+  4. git push pour mettre tout ça sur le dépôt distant
 
 ## Liens utiles
 
