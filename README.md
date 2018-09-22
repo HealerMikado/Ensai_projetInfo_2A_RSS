@@ -645,7 +645,7 @@ Pour le dernire TP on attaque du lourd. Déjà ce TP doit vous servir comme base
 
 Pour la petite histoire, tout ce texte est contenu dans un fichier markdown (.md). C'est un format de fichier What You Write Is What You Mean (WYWIWYM). C'est comme du latex, en plus simple. Et c'est automatiquement interprété par github (ou gitlab) si le fichier s'appelle README.md.
 
-
+ 
 
 
 ## Liens utiles
