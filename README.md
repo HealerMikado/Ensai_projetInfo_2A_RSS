@@ -38,11 +38,16 @@
     - [TP 3 : Utiliser un api web et réaliser une](#tp-3--utiliser-un-api-web-et-réaliser-une)
         - [Une simple URL](#une-simple-url)
         - [Une requête HTTP](#une-requête-http)
+        - [Des méthodes HTTP](#des-méthodes-http)
         - [Le cas de l'API Twitter](#le-cas-de-lapi-twitter)
     - [TP 4 : la gestion des menus, des écrans et GIT](#tp-4--la-gestion-des-menus-des-écrans-et-git)
         - [Git, un gestionnaire de version](#git-un-gestionnaire-de-version)
             - [Se synchroniser avec le dépôt du projet](#se-synchroniser-avec-le-dépôt-du-projet)
             - [Git au quotidien](#git-au-quotidien)
+        - [La gestion des écrans, des menus et d'une session](#la-gestion-des-écrans-des-menus-et-dune-session)
+            - [AbstractVue](#abstractvue)
+            - [L'affichage (display_info)](#laffichage-display_info)
+            - [Les menus (make_choice)](#les-menus-make_choice)
     - [Liens utiles](#liens-utiles)
 ## Introduction
 
@@ -527,10 +532,12 @@ Bon alors même si dans le TP il y a la réalisation d'une webservice, vu que ç
 
 ### Une simple URL
 
-Appeler une API web c'est simple, très simple même. Il vous suffit une simple [URL](https://fr.wikipedia.org/wiki/Uniform_Resource_Locator). Et c'est tout. En fait, tous les sites que lesquelle vous allez sont sur des serveurs. Quand vous appelez une URL, le serveur vous renvoie la page web derière cette URL. Typiquement https://ent.ensai.fr vous retourne l'ent de l'Ensai. C'est très bien pour les humains, mais les machines elles, elles préfèrent des données, pas une page web. C'est pour ça que des gens on commençait à mettre derrière des URL des serveurs qui font des traitememts et qui retournent juste des données. Par exemple Twitter à mis en place une API qui permet à d'autres de récupérer des informations de twitter sans faire du webscrapping.  Et comme ce sont des URL vous allez pouvoir y accéder avec votre navigateur !! Enfin, toute celle qui sont en méthode GET, mais ça on en parlera plus tard.
+Appeler une API web c'est simple, très simple même. Il vous suffit d'appeler une simple [URL](https://fr.wikipedia.org/wiki/Uniform_Resource_Locator). Et c'est tout. En fait, tous les sites sur lesquels vous allez sont sur des serveurs. Quand vous appelez une URL, le serveur vous renvoie la page web derière cette URL. Typiquement https://ent.ensai.fr vous retourne l'ent de l'Ensai. C'est très bien pour les humains, mais les machines elles, elles préfèrent des données, pas une page web. C'est pour ça que des gens on commençait à mettre derrière des URL des serveurs qui font des traitememts et qui retournent juste des données. Par exemple Twitter à mis en place une API qui permet à d'autres de récupérer des informations de twitter sans faire du webscrapping.  Et comme ce sont des URL vous allez pouvoir y accéder avec votre navigateur !! Enfin, toutes celles qui sont en méthode GET, mais ça on en parlera plus tard.
 
 
-Maintenant, parlons de l'URL que vous allez envoyer. Par exemple si je veux récupérer les infos sur les arrêts physique de la STAR je peux appeler cette URL : https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=equipement-accessibilite-arrets-bus, ou celle là : https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=equipement-accessibilite-arrets-bus&facet=equip_mobilier&facet=equip_banc&facet=equip_eclairage&facet=equip_poubelle&facet=access_pmr&facet=nomcommune. La différence entre les deux (à part leur taille) est que l'une beaucoup de paramètres et que l'autre en n'a moins. Dans une requête HTTP vous pouvez passer des paramètres directement dans l'URL. Et cela simplement en mettant un **?** avant vos paramètres. Et ceci n'est pas spécifique au fonctionnement des API web, c'est dans la norme HTTP.
+Maintenant, parlons de l'URL que vous allez envoyer. Par exemple si je veux récupérer les infos sur les arrêts physique de la STAR je peux appeler cette URL : https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=equipement-accessibilite-arrets-bus, ou celle là : https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=equipement-accessibilite-arrets-bus&facet=equip_mobilier&facet=equip_banc&facet=equip_eclairage&facet=equip_poubelle&facet=access_pmr&facet=nomcommune. La différence entre les deux (à part leur taille) est que l'une a beaucoup de paramètres et que l'autre en n'a moins.
+
+ Dans une requête HTTP vous pouvez passer des paramètres directement dans l'URL. Et cela simplement en mettant un **?** avant vos paramètres. Et ceci n'est pas spécifique au fonctionnement des API web, c'est dans la norme HTTP.
 
 Décortiquons nos requêtes. Avant le ? les deux URL sont identiques, et font référence à  
 
@@ -557,13 +564,13 @@ Ensuite premier paramètre :
 dataset=equipement-accessibilite-arrets-bus
 ```
 
- En reprenant le doc le Dataset c'est les données que l'on veut interroger. Et c'est un paramètre obligatoire. Donc pour le moment nos deux requêtes vont bien taper la même base. Et c'est maintenant que la différence commence car l'une à comme autres attributs :
+ En reprenant la doc, le Dataset c'est les données que l'on veut interroger. Et c'est un paramètre obligatoire. Donc pour le moment nos deux requêtes vont bien taper la même base. Et c'est maintenant que la différence commence car l'une à comme autres attributs :
  
  ```
  &facet=equip_mobilier&facet=equip_banc&facet=equip_eclairage&facet=equip_poubelle&facet=access_pmr&facet=nomcommune
  ```
 
- Déjà les & servent à faire passer plusieurs paramètres dans l'URL. Ensuite on voit que l'on a plusieurs fois facet avec des valeurs différentes. 
+Déjà les & servent à faire passer plusieurs paramètres dans l'URL. Ensuite on voit que l'on a plusieurs fois facet avec des valeurs différentes. 
 
 Dans le doc on lit
 
@@ -585,7 +592,7 @@ Bon je vous ai déjà dit que l'on pouvait passser des paramêtres dans l'URL av
 ?monparam=mavaleur
 ```
 
-  Mais on peut aussi en passer via l'en-tête et le corps de la requête. Alors je ne vais pas vous expliquer plus en détail que ça comment fonctionne une requête. C'est pas forcément ultra passionnant et utile pour vous. Retenez juste cela, une requête HTTP est constituée de 
+Mais on peut aussi en passer via l'en-tête et le corps de la requête. Alors je ne vais pas vous expliquer plus en détail comment fonctionne une requête. C'est pas forcément ultra passionnant et utile pour vous. Retenez juste cela, une requête HTTP est constituée de 
 
 ```
 Ligne de commande (Commande, URL, Version de protocole)
@@ -594,7 +601,7 @@ En-tête de requête
 Corps de requête
 ```
 
-Pourquoi c'est pas ultra important ? Car vous n'allez jamais faire une requête vous même. Vous allez toujours passer par une librairie qui la fera pour vous. Typiquement, **Requets** qui permet de tout faire, ou **feedparser** qui permet juste de récupérer un flux RSS.
+Pourquoi c'est pas ultra important ? Car vous n'allez jamais faire une requête vous même. Vous allez toujours passer par une librairie qui la fera pour vous. Typiquement, **requets** qui permet de tout faire, ou **feedparser** qui permet juste de récupérer un flux RSS.
 
 Pour la petite histoire, quand vous appelez une URL via votre navigateur internet préféré, il génère une requête HTTP. Et aussi surprenant que ça puisse paraitre, même internet explorer fait ça. :stuck_out_tongue:
 
@@ -612,6 +619,10 @@ Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
 ```
 
 Je ne vais pas vous détailler la requête comme dit plus haut c'est pas intéressant, je voulais juste vous en monter une, et vous dire que c'est ce que génère votre navigateur à chaque fois que vous tapez une URL dans la barre la barre d'URL.
+
+### Des méthodes HTTP
+
+WIP
 
 ### Le cas de l'API Twitter
 
@@ -698,11 +709,11 @@ Cela va remplir votre dossier avec... un autre dossier. Et dans ce dossier vous 
 Une fois le projet sur votre poste, à vous de coder. Voici une liste des commandes communes :
 
   - git add . : permet à git de détecter tous les fichiers que vous avez modifié pour les commit (note git add . et git add -A sont idtentiques)
-  - git commit -m "message" : réalise un commit et y joindre un petit message pour expliquer son contenu
+  - git commit -m "message" : réalise un commit et y joint un petit message pour expliquer son contenu
   - git push : push le code sur le dépôt distant
   - git pull : récupère le code du dépôt distant et le fusionne avec votre code.
 
-Git est bien plus riche que cela. Mais pour le moment je pense que cela va vous suffire
+Git est bien plus riche que cela. Mais pour le moment je pense que cela va vous suffire.
 
 
 En gros voici ce que vous risquez de faire régulièrement :
@@ -710,7 +721,35 @@ En gros voici ce que vous risquez de faire régulièrement :
   1. git pull pour récupérer les modifs des autres
   2. codage
   3. git add . et git commit -m "mon super message explicite" régulièrement pour "valider" vos développements
-  4. git push pour mettre tout ça sur le dépôt distant
+  4. git push pour mettre tout ça sur le dépôt distant.
+
+### La gestion des écrans, des menus et d'une session
+
+Comme on a pas eu le temps de faire cette partie du TP, je vais essayer de vous expliquer les concepts importants du code que l'on vous a donnée, mais je vous conseille fortement de faire le TP. Au programme, héritage, et un peu de pattern model-vue-controlleur.
+
+#### AbstractVue
+
+Comme son nom l'indique, l'AbstractVue est une vue abstraite. Et je dirais même plus, c'est une **classe abstraite**. Le problème, c'est que c'est un concept qui n'existe pas vraiment un python, mais dans beaucoup d'autres langages si (genre Java ou C++), donc on vous en parle pour que vous connaissiez la notion. Mais la classe n'est pas totalement inutile, et sert à gérer la session entre tout les écrans.
+
+Une classe abstraite est une classe que l'on ne doit pas instancier (comprenez créer un objet de cette classe). Elle sert seulement à spécifier du comportement pour toutes les classes qui vont en hériter.
+
+Dans notre cas présent si on regarde AbstractVue :
+
+``` python
+class AbstractVue:
+    session = Session()
+
+    def display_info(self):
+        pass
+
+    def make_choice(self):
+        pass
+
+```
+
+#### L'affichage (display_info)
+
+#### Les menus (make_choice)
 
 ## Liens utiles
 
