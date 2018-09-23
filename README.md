@@ -46,8 +46,11 @@
             - [Git au quotidien](#git-au-quotidien)
         - [La gestion des écrans, des menus et d'une session](#la-gestion-des-écrans-des-menus-et-dune-session)
             - [AbstractVue](#abstractvue)
-            - [L'affichage (display_info)](#laffichage-display_info)
-            - [Les menus (make_choice)](#les-menus-make_choice)
+            - [Le pattern modèle/vue/contrôleur](#le-pattern-modèlevuecontrôleur)
+                - [Les vues](#les-vues)
+                - [Le contrôleur](#le-contrôleur)
+                - [Le modèle](#le-modèle)
+            - [La session](#la-session)
     - [Liens utiles](#liens-utiles)
 ## Introduction
 
@@ -725,7 +728,7 @@ En gros voici ce que vous risquez de faire régulièrement :
 
 ### La gestion des écrans, des menus et d'une session
 
-Comme on a pas eu le temps de faire cette partie du TP, je vais essayer de vous expliquer les concepts importants du code que l'on vous a donnée, mais je vous conseille fortement de faire le TP. Au programme, héritage, et un peu de pattern model-vue-controlleur.
+Comme on a pas eu le temps de faire cette partie du TP, je vais essayer de vous expliquer les concepts importants du code que l'on vous a donnée, mais je vous conseille fortement de faire le TP. Au programme, héritage, et un peu de pattern modèle-vue-contrôleur.
 
 #### AbstractVue
 
@@ -744,12 +747,122 @@ class AbstractVue:
 
     def make_choice(self):
         pass
-
 ```
 
-#### L'affichage (display_info)
+on dit que toutes les classes qui en hérite on une méthode *display_info()* et *make_choice()*. Comme dans AbstractVue elle ne font rien, il faudra spécifier leur comportement dans toutes les classes qui en héritent.
 
-#### Les menus (make_choice)
+Pour vous expliquer pourquoi c'est "fort" de faire cela, regardons le main.
+
+```python
+ while current_vue:
+        # on affiche une bordure pour séparer les vue
+        with open('assets/border.txt', 'r', encoding="utf-8") as asset:
+            print(asset.read())
+        # les infos à afficher
+        current_vue.display_info()
+        # le choix que doit saisir l'utilisateur
+        current_vue = current_vue.make_choice()
+```
+
+A chaque itération de la boucle on appele les méthodes *display_info()* et *make_choice()* de la vue sans savoir laquelle s'est. On part juste du principe qu'elle a ses méthodes car elle hérite d'AbstractVue.
+
+Sauf qu'en python, même sans l'héritage, cela aurait fonctionné car
+
+>“If it looks like a duck and quacks like a duck, it must be a duck”
+> (j'adore cette citation)
+
+Du moment que current_vue a bien les méthodes *display_info()* et *make_choice()* tout ce serait bien passé. Mais l'avantage de faire de l'héritage est que la personne qui relira votre code comprendra ce que vous faites, et surtout permet de partager des varaibles entres toutes les instances qui hérite d'AbstractVue.
+
+#### Le pattern modèle/vue/contrôleur
+
+Je ne sais pas si vous avez déjà ententu parler de design pattern, ou patron de conception, ou de pattern MVC, et je vais partir du principe que non et vous expliquer rapidement ce que c'est.
+
+Un design pattern (ou patron de conception) est une solution technique à un problème récurent en programmation. Cette solution théorique se décline en implémentations différentes en fonction des langages. L'avantage des design pattern c'est que théoriquement tout le monde les comprends, et que ce sont des solutions robustes qui reprennent les bonne pratiques de développement.
+
+Quand on réalise une application interactive, se pose souvent le problème du découpage du code pour arriver à un code propre. Et la solution à cela est le pattern **modèle/vue/contrôleur** (ou MVC).
+
+Le pattern MVC est constitué de 3 modules
+
+  - Les vues
+  - Les contolleurs
+  - Le modèle
+
+##### Les vues
+
+Les vues sont ce qui va être envoyé à l'utilisateur et qu'il va voir. C'est par les vue  qu'il va intéragir avec votre application. Dans votre cas ça sera ce que vous allez écrire dans la console.
+
+Les vues lisent le modèle, et previennent le contrôleur en cas d'interaction avec l'utilisateur.
+
+Dans votre cas les vue seront les méthodes *display_info()* des classes qui héritent d'AbstractVue.
+
+##### Le contrôleur
+
+Le contrôleur traite les actions de l'utilisateur, modifie les données du modèle et de la vue.
+
+Alors dans cotre application, les controlleurs seront les méthodes *make_choice()*. C'est elle qui récupère les choix de l'utilisateurs et qui vont modifier le modèle.
+
+##### Le modèle
+
+Le modèle contient les données ainsi que de la logique en rapport avec les données. En gros c'est les données et traitements métiers.
+
+Dans le modèle vous allez trouver
+
+  - votre base de données qui permet de péréniser des données. Vous y accéderez grâce à des classes DAO.
+  - la session qui va contenir les infos utiles pour le contrôleur et le modèle
+
+
+#### La session
+
+Si on reprend le code d'AbstractVue on trouve une variable *session*
+
+``` python
+class AbstractVue:
+    session = Session()
+```
+
+Cette variable est déclarée dans la définition de la classe et pas dans une méthode, ce qui l'a rend **static**. Une variable static est partagé par toutes les intances d'une même classe. Et si on rajoute en plus une notion d'héritage, cela fait que cette variable est partagée par toutes les intances des classes qui héritent d'AbstractVue. 
+
+Et grâce à cela vous allez pouvoir mettre plein d'info dans la session qui seront passé de vue en vue !
+
+Pour accéder à un paramètre voici ce qu'il faut faire 
+
+```python
+AbstractVue.session.user
+```
+
+et pour en mettre à jour un 
+
+```python
+AbstractVue.session.user = monUser
+```
+
+Dans le TP la classe session est très simple
+
+``` python
+class Session:
+
+def __init__(self):
+    self.user = None
+    pass
+```
+Mais rien ne vous empèche de rajouter plein de paramètres ! Spoiler : vous allez devoir en rajouter plein. Mais vous pouvez également juste passez un dictionnaire à la session et le remplir au fur et à mesure. Du genre
+
+``` python
+class Session:
+
+    USER = "user"
+    LISTE_ACTUALITE = "liste actualité"
+
+    def __init__(self):
+        self.sessionDict = {}
+        pass
+
+--------
+
+AbstractVue.session.sessionDict[Session.USER] = monUser
+```
+
+C'est un peu moins lisible, alors évitez. Et si vous tenez absolument à faire cela, faites comme j'ai fait en définissant les clefs de votre dictionnaire avec des variables que vous définissez dans la classe Session. Sans ça, c'est impossible de comprendre ce que vous mettez en session.
 
 ## Liens utiles
 
