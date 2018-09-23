@@ -652,17 +652,17 @@ home_timeline = oauth_req( 'https://api.twitter.com/1.1/statuses/home_timeline.j
 
 ## TP 4 : la gestion des menus, des écrans et GIT
 
-Pour le dernire TP on attaque du lourd. Déjà ce TP doit vous servir comme base pour vos développements ! Sérieusement, si vous comprenez ce TP toute la partie navigation de votre appli sera ultra facile ! Et git va vous servir à travailler sur votre code en groupe. Et comme je vous l'ai dit lors du TP, git est simple outil de partage. Ainsi il marche pour travailler sur un projet python, mais aussi java, R, SAS etc. Mais également il peut servir à déposer des documents pour les rendre accessible à tous ou rédiger plein de compléments d'information sur le projet informatique de 2A.
+Pour le dernier TP on attaque du lourd. Déjà ce TP doit vous servir de base pour vos développements ! Sérieusement, si vous comprenez ce TP toute la partie navigation de votre appli sera ultra facile ! Et git va vous servir à travailler sur votre code en groupe. Et comme je vous l'ai dit lors du TP, git est simple outil de partage. Ainsi il marche pour travailler sur un projet python, mais aussi java, R, SAS etc. Mais également il peut servir à déposer des documents pour les rendre accessibles à tous ou rédiger plein de compléments d'information sur le projet informatique de 2A.
 
-Pour la petite histoire, tout ce texte est contenu dans un fichier markdown (.md). C'est un format de fichier What You Write Is What You Mean (WYWIWYM). C'est comme du latex, en plus simple. Et c'est automatiquement interprété par github (ou gitlab) si le fichier s'appelle README.md.
+> Pour la petite histoire, tout ce texte est contenu dans un fichier markdown (.md). C'est un format de fichier What You Write Is What You Mean (WYWIWYM). C'est comme du latex, en plus simple. Et c'est automatiquement interprété par github (ou gitlab) si le fichier s'appelle README.md.
 
 ### Git, un gestionnaire de version
 
-Git est un gestionnaire de version décentralisé créé par Linus Torvald (juste le mec qui a créer le noyau Linux). A la différence d'un gestionnaire centralisé avec un seul dépôt, avec git il y a un dépôt central, et des dépôts distants, en nombre potentiellement infini.
+Git est un gestionnaire de version décentralisé créé par Linus Torvald (juste le mec qui a créé le noyau Linux). A la différence d'un gestionnaire centralisé avec un seul dépôt, avec git il y a un dépôt central, et des dépôts distants, en nombre potentiellement infini.
 
-Le principe est "simple". Chaque personne clone le dépôt distant sur son poste, et fait des modifs qu'il **commit** sur son dépôt local. En général on commit quand on termine une petite tâche, genre faire une classe et que cela fonctionne. Car un commit veut dire que vous validez votre code ! Chaque commit doit être accompagné d'un petit message qui a pour but d'expliquer ce que vous avez fait.
+Le principe est "simple". Chaque personne clone le dépôt distant sur son poste, et fait des modifs qu'il **commit** sur son dépôt local. En général on commit quand on termine une petite tâche, genre faire une classe et qu'on s'est assuré qu'elle fonctionne. Car un commit veut dire que vous validez votre code ! Chaque commit doit être accompagné d'un petit message qui a pour but d'expliquer ce que vous avez fait.
 
-Une fois votre/vos commit fait, vous allez vouloir/devoir le partager avec les autres. Et cela se fait avec un **push**. Pusher votre code va envoyer sur le dépôt distant votre code et ainsi le rendre accessible à tous. Mais pour pusher il faut que votre dépôt local soit à jour. Sinon le dépôt distant va refuser votre push. Cela permet d'être sûr que le code sur le dépôt distant soit toujours en train "d'avancer", et qu'il n'y ai pas de retour arrière. Si ce genre de chose arrive il vous faut **pull** le code du dépôt distant. C'est à dire récupérer le code du dépôt distant et le fusionner avec votre code actuel. Si vos modification ne touche pas les mêmes lignes que celles modifiés sur le dépôt distant, c'est tout bon et vous n'avez rien à faire. Et si ce n'est pas le cas et que vous avez des conflits, ça va être un peu plus compliqué. Vous allez voir apparaitre dans votre code des 
+Une fois votre/vos commit fait, vous allez vouloir/devoir le partager avec les autres. Et cela se fait avec un **push**. Pusher votre code va envoyer sur le dépôt distant votre code et ainsi le rendre accessible à tous. Mais pour pusher il faut que votre dépôt local soit à jour. Sinon le dépôt distant va refuser votre push. Cela permet d'être sûr que le code sur le dépôt distant soit toujours en train "d'avancer", et qu'il n'y ai pas de retour arrière. Si ce genre de chose arrive il vous faut **pull** le code du dépôt distant. C'est à dire récupérer le code du dépôt distant et le fusionner avec votre code actuel. Si vos modifications ne touchent pas les mêmes lignes que celles modifiése sur le dépôt distant, c'est tout bon et vous n'avez rien à faire. Et si ce n'est pas le cas et que vous avez des conflits, ça va être un peu plus compliqué. Vous allez voir apparaitre dans votre code des 
 
 ```
 <<<<<<< HEAD
@@ -691,10 +691,10 @@ vous trouverez le code sur dépôt. Le but du jeu si ça arrive, est de résoudr
 
 #### Se synchroniser avec le dépôt du projet
 
-Voici une petite marche à suivre pour vous synchroniser depuis un nouveau pc avec le repo de votre projet. D'abord ouvrez git-bash. Ensuite avec l'explorateur windows (ou autre) placez vous dans le dossier où vous voulez mettre votre projet et copiez l'adresse. Dans git-bash faites
+Voici une petite marche à suivre pour vous synchroniser depuis un nouveau pc avec le repo de votre projet. D'abord ouvrez git-bash. Ensuite avec l'explorateur windows (ou autre) placez vous dans le dossier où vous voulez mettre votre projet et copiez l'adresse du dossier. Dans git-bash faites
 
 ```
-cd le/chemin/vers/mon/dossier
+cd "le/chemin/vers/mon/dossier"
 ```
 
 puis clonez le repo
@@ -771,11 +771,11 @@ Sauf qu'en python, même sans l'héritage, cela aurait fonctionné car
 >“If it looks like a duck and quacks like a duck, it must be a duck”
 > (j'adore cette citation)
 
-Du moment que current_vue a bien les méthodes *display_info()* et *make_choice()* tout ce serait bien passé. Mais l'avantage de faire de l'héritage est que la personne qui relira votre code comprendra ce que vous faites, et surtout permet de partager des varaibles entres toutes les instances qui hérite d'AbstractVue.
+Du moment que current_vue a bien les méthodes *display_info()* et *make_choice()* tout ce serait bien passé. Mais l'avantage de faire de l'héritage est que la personne qui relira votre code comprendra ce que vous faites, et surtout permet de partager des variables entres toutes les instances qui héritent d'AbstractVue.
 
 #### Le pattern modèle/vue/contrôleur
 
-Je ne sais pas si vous avez déjà ententu parler de design pattern, ou patron de conception, ou de pattern MVC, et je vais partir du principe que non et vous expliquer rapidement ce que c'est.
+Je ne sais pas si vous avez déjà entendu parler de design pattern, ou patron de conception, ou de pattern MVC, et je vais partir du principe que non et vous expliquer rapidement ce que c'est.
 
 Un design pattern (ou patron de conception) est une solution technique à un problème récurent en programmation. Cette solution théorique se décline en implémentations différentes en fonction des langages. L'avantage des design pattern c'est que théoriquement tout le monde les comprends, et que ce sont des solutions robustes qui reprennent les bonne pratiques de développement.
 
@@ -799,7 +799,7 @@ Dans votre cas les vue seront les méthodes *display_info()* des classes qui hé
 
 Le contrôleur traite les actions de l'utilisateur, modifie les données du modèle et de la vue.
 
-Alors dans cotre application, les controlleurs seront les méthodes *make_choice()*. C'est elle qui récupère les choix de l'utilisateurs et qui vont modifier le modèle.
+Dans votre application, les controlleurs seront les méthodes *make_choice()*. Ce sont ellee qui récupèrent les choix de l'utilisateurs et qui vont modifier le modèle.
 
 ##### Le modèle
 
@@ -809,6 +809,7 @@ Dans le modèle vous allez trouver
 
   - votre base de données qui permet de péréniser des données. Vous y accéderez grâce à des classes DAO.
   - la session qui va contenir les infos utiles pour le contrôleur et le modèle
+  - en fait tout ce qui n'est pas contrôleur ou vue ...
 
 
 #### La session
@@ -820,7 +821,7 @@ class AbstractVue:
     session = Session()
 ```
 
-Cette variable est déclarée dans la définition de la classe et pas dans une méthode, ce qui l'a rend **static**. Une variable static est partagé par toutes les intances d'une même classe. Et si on rajoute en plus une notion d'héritage, cela fait que cette variable est partagée par toutes les intances des classes qui héritent d'AbstractVue. 
+Cette variable est déclarée dans la définition de la classe et pas dans une méthode, ce qui l'a rend **static**. Une variable static est partagée par toutes les intances d'une même classe. Et si on rajoute en plus une notion d'héritage, cela fait que cette variable est partagée par toutes les intances des classes qui héritent d'AbstractVue. 
 
 Et grâce à cela vous allez pouvoir mettre plein d'info dans la session qui seront passé de vue en vue !
 
