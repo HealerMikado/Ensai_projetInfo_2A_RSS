@@ -179,7 +179,7 @@ Tout simplement en ne concatenant plus de chaînes de caractères pour faire une
 
 Sans rentrer dans les détails, une prepared statements vous permet de ne pas faire une simple concaténation de chaine de caractère. Elle va prendre en charge également la conversion des champs que vous passez à la requête et donc échapper tous les caractères spéciaux. Pour réaliser cela, vous aller envoyer une requête sans paramètre à la base, qui va la compiler, et ensuite lui passer les paramètres.
 
-EDIT : en fouillant dans la doc de Psycopg il se trouve que cette librairie de réalise pas des Prepared Statments. Elle protège bien des injections SQL en echappant les caractères spéciaux lors de la réalisation de la requête, mais elle ne fait pas Prepared Statement. En effet pour réaliser une Prepared Statement, il faut dans un premier temps envoyer une requête sans paramètre à la base de données qui va la compiler, et ensuite lui envoyer des paramètres pour l'exécution. Ici on envoie la requête avec les paramètre directement, mais les paramètres sont échappés. Voilà désolé pour l'erreur.
+EDIT : en fouillant dans la doc de Psycopg il se trouve que cette librairie de réalise pas des Prepared Statments nativement. Elle protège bien des injections SQL en echappant les caractères spéciaux lors de la réalisation de la requête, mais elle ne fait pas Prepared Statement. En effet pour réaliser une Prepared Statement, il faut dans un premier temps envoyer une requête sans paramètre à la base de données qui va la compiler, et ensuite lui envoyer des paramètres pour l'exécution. Ici on envoie la requête avec les paramètre directement, mais les paramètres sont échappés. Voilà désolé pour l'erreur.
 
 Je m'explique dans cette requête :
 
@@ -209,7 +209,7 @@ J'ai vu pas mal de fois cette erreur, je vais essayer de vous expliquer pourquoi
 
 Déjà il y a une erreur "technique" liée aux imports. Ceux qui on essayé de lancer une DAO directement ont eu une erreur du style
 
-ModuleNotFoundError: No module named 'connection'
+>ModuleNotFoundError: No module named 'connection'
 
 Cela vient du fait que, tout bêtement, python ne trouve pas le fichier que vous voulez importer. En effet dans le dossier qui contient la DAO, il n'y a aucun fichier connection.py. Alors qu'en lançant via le main, l'import se fait car fait de manière relative à partir du main.
 
@@ -232,24 +232,24 @@ est en fait un simple "plan" et ne peut rien faire seul. Exécuter une classe po
 Pour pouvoir utiliser une classe, il faut d'abord **l'instancier**, c'est à dire, utiliser le plan de la classe pour en créer un objet avec.
 
 ```python
-	myObject = MyClass()
+myObject = MyClass()
 ```
 
-Ici je dis à python de me créer un objet que j'appelle *myObject* en utilisant le constructeur de *Myclass* (le constructeur est la méthode *\_\_init\_\_*). Comme *monObjet* à pour classe *myClass* je vais pouvoir appeler la méthode *myMethod* et l'appliquer sur *myObject*
+Ici je dis à python de me créer un objet que j'appelle *myObject* en utilisant le constructeur de *Myclass* (le constructeur est la méthode *\_\_init\_\_*). Comme *monObjet* a pour classe *myClass* je vais pouvoir appeler la méthode *myMethod* et l'appliquer sur *myObject*
 
 ```python
-	myObject.myMethod("toto")
+myObject.myMethod("toto")
 ```
 
 ***Quid de l'attribut self***
 
-L'attribut self représente l'instance "active" de l'objet (celle que vous allez manipuler). Pour la méthode *\_\_init\_\_* c'est celle que vous créez, et pour la méthode *myMethod* c'est l'instance de l'objet sur laquelle vous l'appliquez (dans l'exemple au dessus c'est *myObject*). Vous devez absolument le mettre dans les attributs lors de la définition de la méthode (ce doit même être le premier), mais vous ne devez pas le renseigner à l'appel de la méthode, car implicitement python sait le valoriser.
+L'attribut self représente l'instance "active" de l'objet (celle que vous allez manipuler). Pour la méthode *\_\_init\_\_* c'est celle que vous créez, et pour la méthode *myMethod* c'est l'instance de l'objet sur laquelle vous l'appliquez (dans l'exemple au dessus c'est *myObject*). Vous devez absolument le mettre dans les attributs lors de la définition de la méthode (ce doit même être le premier) si vous voulez intéragir avec l'objet actif, mais vous ne devez pas le renseigner à l'appel de la méthode, car implicitement python sait le valoriser.
 
 #### Erreur lors du string replacement dans les requêtes
 
 Certains d'entre vous ont eu des problèmes pour l'écriture de la requête DELETE et on vu cette erreur s'afficher 
 
-TypeError: not all arguments converted during string formatting
+>TypeError: not all arguments converted during string formatting
 
 Cela provient du fait que dans cette requête un seul placeholder (%s) était replacé, et que tout naturellement vous avez fait cela (j'aurais fait la même chose)
 
@@ -281,30 +281,30 @@ Et ce n'est pas totalement juste. En effet *close* est appelé, mais pas *commit
 Par contre c'est vrai que pour un with avec une connection et pas un curseur
 
 ```python
- psycopg2.connect(DSN) as conn:
-	#something
+psycopg2.connect(DSN) as conn:
+  #something
 ```
 
 Quand on quitte le bloc with si aucune exception n'est levée on fait un commit, et un rollback sinon. Je vous conseille donc de conserver cette écriture
 
 ```python
- with connection.cursor() as cur:
+with connection.cursor() as cur:
 ```
 car elle est plus légère que
 
 ```python
- try:
-	#something
- except:
-	#something
- finally:
-	#something
+try:
+  #something
+except:
+  #something
+finally:
+  #something
 ```
 
 mais en précisant bien 
 
 ```python
- connection.commit()
+connection.commit()
 ```
 
 
@@ -336,11 +336,11 @@ Cela provient du fait que pylint ne voit pas les répertoires. C'est pas votre f
 
 ### Les imports du TP1
 
-Au début du TP on vous a fait installer 3 bibliothèques (*pylint*, *autopep8* et *psycopg2-binary*), je vous propose une petite explication sur ces installations
+Au début du TP on vous a fait installer 3 bibliothèques (*pylint*, *autopep8* et *psycopg2-binary*), je vous propose une petite explication sur ces installations.
 
 #### pylint
 
-Pylint est un outil qui va vérifier si votre code python ne contient pas d'erreur mais aussi vérifier que vous utilisez les bonnes pratiques de codage python. C'est donc un utilitaire qui ne vous apporte rien d'un point de vu métier, mais qui vous aide à développer du code avec une syntaxe de qualité. Il peut également passer en revu votre code et vous donner des informations dessus. Mais comme vous avez pu le voir, pylint n'est pas infaillible, et peu relever des erreurs qui n'en sont pas.
+Pylint est un outil qui va vérifier si votre code python ne contient pas d'erreur mais aussi vérifier que vous utilisez les bonnes pratiques de codage python. C'est donc un utilitaire qui ne vous apporte rien d'un point de vue métier, mais qui vous aide à développer du code avec une syntaxe de qualité. Il peut également passer en revue votre code et vous donner des informations dessus. Mais comme vous avez pu le voir, pylint n'est pas infaillible, et peut relever des erreurs qui n'en sont pas.
 
 La doc complète : https://www.pylint.org/
 
@@ -352,7 +352,7 @@ La doc complète : https://github.com/hhatto/autopep8
 
 #### psycopg2-binary
 
-Psycopg2-binary est un utilitaire qui vous permet de vous connecter à une base **PostgreSQL**. Sans lui (ou une autre bibliothèque qui fait la même chose) bon courage pour vous connecter à une base. Et en plus elle vous permet de faire des prepared statements, si c'est pas beau ! Je vous conseille de l'utiliser pour votre projet :wink:
+Psycopg2-binary est un utilitaire qui vous permet de vous connecter à une base **PostgreSQL**. Sans lui (ou une autre bibliothèque qui fait la même chose) bon courage pour vous connecter à une base. Et en plus elle vous permet de vous protéger des injections SQL, si c'est pas beau ! Je vous conseille de l'utiliser pour votre projet :wink:
 
 La doc complète : http://initd.org/psycopg/docs/
 
@@ -391,7 +391,7 @@ Pour une meilleure lisibilité, on peut également rajouter en première ligne l
 "Bob";"666";"7eme cercle"
 ```
 
-Sa simplicité en fait un très bon format pour transférer des données qui peuvent s'apparenter à des tableaux. Les tableurs savent les lire, les pluparts des base de données savent les importer et les exporter. Bref pour les tableau :+1:
+Sa simplicité en fait un très bon format pour transférer des données qui peuvent se mettre sous forme de tableaux. Les tableurs savent les lire, les pluparts des base de données savent les importer et les exporter. Bref pour les tableau :+1:
 
 ### Le XML
 
@@ -420,7 +420,7 @@ La balise
 ```XML
 <?xml version="1.0" encoding="utf8"?>
 ```
-est l'entête du fichier. Elle dit juste que l'on a un fichier au format XML et que l'encodage est de l'utf8
+est l'en-tête du fichier. Elle dit juste que l'on a un fichier au format XML et que l'encodage est de l'utf8
 
 La suite est assez lisible. Dans un fichier CSV, cela donnerait
 
@@ -431,7 +431,7 @@ La suite est assez lisible. Dans un fichier CSV, cela donnerait
 "Bob";"666"
 ```
 
-En plus de cela vous pouvez imbriquer des balises les unes dans les autres pour les hiérarchiser, voir dubliquer des balises pour signaler que vous avez plusieur valeur pour cet attribut. Exemple
+En plus de cela vous pouvez imbriquer des balises les unes dans les autres pour les hiérarchiser, voir dubliquer des balises pour signaler que vous avez plusieures valeurs pour cet attribut. Exemple
 
 ```XML
 <?xml version="1.0" encoding="utf8"?>
@@ -486,13 +486,13 @@ Et même utiliser un autre fichier XML pour vérifier automatiquement la forme d
 
 Pour résumer, un XML permet
   - l'imbrication faciles de vos données ;
-  - la réutilisation du même nom de balise, aussi bien pour le même concept qu'un concept différent
+  - la réutilisation du même nom de balise, aussi bien pour le même concept qu'un concept différent ;
   - de représenter parfaitement des données sous forme d'arbre, et dont on souhaite vérifier la forme a priori.
 
 
 ### Le JSON
 
-Le **JSON** pour *JavaScript Object Notation* est un format qui provient du JavaScript (c'est le langage qui rend les page web interactive). Comme le XML, il permet de représenter la hierachie de vos données, mais de manière plus légère. A la base, c'était juste la représentation textuel d'objet JavaScript, mais avec le temps c'est devenu un format d'échange de données grâce à sa simplicité.
+Le **JSON** pour *JavaScript Object Notation* est un format qui provient du JavaScript (c'est le langage qui rend les page web interactive). Comme le XML, il permet de représenter la hierachie de vos données, mais de manière plus légère. A la base, c'était juste la représentation textuelle d'objet JavaScript, mais avec le temps c'est devenu un format d'échange de données grâce à sa simplicité.
 
 ```javascript
 [
@@ -531,9 +531,9 @@ Vous devez tous savoir qu'un ordinateur ça traite des 0 et des 1, et pas des ch
 
 Le pire, c'est qu'en général sur les caractères "normaux", c'est bon. Alors si dans un fichier exemple il n'y a pas d'accent, on pense que c'est ok et quand on passe sur le fichier final, ça fonctionne pas du tout. Je vais vous donner un exemple. Par exemple si je pendre un **é**, dans un codage ascii il devient **11101001**, mais dans un codage UTF8 c'est **11000011 10101001**. C'est pas réellement la même chose.
 
-Résultat, quand vous allez lire en fichier en utilisant le mauvaise encodage, vous allez avoir des résultats surprenants qui vont apparaitre. Car l'ordinateur il est un peu "idiot" donc il va le lire votre fichier et le traduire comme il peut. S'il a un caractère pour ce code il le met, et sinon il va vous mettre un caractère du style "?" car il ne sait pas. Et en plus en fonction de l'encodage, votre ordinateur doit lire les octets une par un, deux par deux, ou en prendre un nombre variable en foncton d'un préfixe. Bref c'est compliqué et ça génère plein d'erreurs.
+Résultat, quand vous allez lire en fichier en utilisant le mauvais encodage, vous allez avoir des résultats surprenants qui vont apparaitre. Car l'ordinateur il est un peu "idiot" donc il va le lire votre fichier et le traduire comme il peut. S'il a un caractère pour ce code il le met, et sinon il va vous mettre un caractère du style "?" car il ne sait pas. Et en plus en fonction de l'encodage, votre ordinateur doit lire les octets un par un, deux par deux, ou en prendre un nombre variable en foncton d'un préfixe. Bref c'est compliqué et ça génère plein d'erreurs.
 
-Si vous voulez vous amusez voir ce que ça fait, sur notepad++ vous pouvez changer l'encodage d'un fichier manuellement. Cela donne des résultats surprenant. Ou sinon voici un site pour vous voir ce qu'un changement d'encodage fait sur vos fichiers : http://string-functions.com/encodedecode.aspx
+Si vous voulez vous amusez voir ce que ça fait, sur notepad++ vous pouvez changer l'encodage d'un fichier manuellement. Cela donne des résultats marrant. Ou sinon voici un site pour vous voir ce qu'un changement d'encodage fait sur vos fichiers : http://string-functions.com/encodedecode.aspx
 
 ## TP 3 : Utiliser un api web et réaliser une
 
