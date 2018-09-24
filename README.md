@@ -4,52 +4,52 @@
 
 ## Table des matières
 
-- [Agrégateur de flux RSS et de Tweets](#agrégateur-de-flux-rss-et-de-tweets)
-    - [Table des matières](#table-des-matières)
+- [Agrégateur de flux RSS et de Tweets](#agr%C3%A9gateur-de-flux-rss-et-de-tweets)
+    - [Table des matières](#table-des-mati%C3%A8res)
     - [Introduction](#introduction)
-    - [Fonctionnalités attendues](#fonctionnalités-attendues)
-        - [Fonctionnalités de base attendues](#fonctionnalités-de-base-attendues)
-        - [Fonctionnalités avancées](#fonctionnalités-avancées)
+    - [Fonctionnalités attendues](#fonctionnalit%C3%A9s-attendues)
+        - [Fonctionnalités de base attendues](#fonctionnalit%C3%A9s-de-base-attendues)
+        - [Fonctionnalités avancées](#fonctionnalit%C3%A9s-avanc%C3%A9es)
     - [Diagramme UML](#diagramme-uml)
-    - [Utilisateur inscrit vs utilisateur connecté](#utilisateur-inscrit-vs-utilisateur-connecté)
+    - [Utilisateur inscrit vs utilisateur connecté](#utilisateur-inscrit-vs-utilisateur-connect%C3%A9)
         - [Vision machine vs vision humaine](#vision-machine-vs-vision-humaine)
     - [TP 1 - DAO](#tp-1---dao)
-        - [Pourquoi ne pas mettre les fonctions de la DAO dans l'objet métier ?](#pourquoi-ne-pas-mettre-les-fonctions-de-la-dao-dans-lobjet-métier-)
+        - [Pourquoi ne pas mettre les fonctions de la DAO dans l'objet métier ?](#pourquoi-ne-pas-mettre-les-fonctions-de-la-dao-dans-lobjet-m%C3%A9tier)
         - [Injection SQL et prepared statements](#injection-sql-et-prepared-statements)
             - [Le principe](#le-principe)
-            - [Comment s'en prémunir](#comment-sen-prémunir)
-        - [Problèmes rencontrés lors du TP 1](#problèmes-rencontrés-lors-du-tp-1)
+            - [Comment s'en prémunir](#comment-sen-pr%C3%A9munir)
+        - [Problèmes rencontrés lors du TP 1](#probl%C3%A8mes-rencontr%C3%A9s-lors-du-tp-1)
             - [Lancement de la classe et pas du main](#lancement-de-la-classe-et-pas-du-main)
-            - [Erreur lors du string replacement dans les requêtes](#erreur-lors-du-string-replacement-dans-les-requêtes)
-            - [Mon update ne se fait pas en base ??!!!](#mon-update-ne-se-fait-pas-en-base-)
+            - [Erreur lors du string replacement dans les requêtes](#erreur-lors-du-string-replacement-dans-les-requ%C3%AAtes)
+            - [Mon update ne se fait pas en base ??!!!](#mon-update-ne-se-fait-pas-en-base)
                 - [Le CRUD](#le-crud)
             - [Erreur dans les imports avec pylint](#erreur-dans-les-imports-avec-pylint)
         - [Les imports du TP1](#les-imports-du-tp1)
             - [pylint](#pylint)
             - [autopep8](#autopep8)
             - [psycopg2-binary](#psycopg2-binary)
-    - [TP 2 - Inport/Export de données](#tp-2---inportexport-de-données)
+    - [TP 2 - Inport/Export de données](#tp-2---inportexport-de-donn%C3%A9es)
         - [Le CSV](#le-csv)
         - [Le XML](#le-xml)
         - [Le JSON](#le-json)
-        - [Problèmes rencontrés lors du TP2](#problèmes-rencontrés-lors-du-tp2)
+        - [Problèmes rencontrés lors du TP2](#probl%C3%A8mes-rencontr%C3%A9s-lors-du-tp2)
             - [Les fichiers n'existent pas](#les-fichiers-nexistent-pas)
             - [Encodage](#encodage)
-    - [TP 3 : Utiliser un api web et réaliser une](#tp-3--utiliser-un-api-web-et-réaliser-une)
+    - [TP 3 : Utiliser un api web et réaliser une](#tp-3--utiliser-un-api-web-et-r%C3%A9aliser-une)
         - [Une simple URL](#une-simple-url)
-        - [Une requête HTTP](#une-requête-http)
-        - [Des méthodes HTTP](#des-méthodes-http)
+        - [Une requête HTTP](#une-requ%C3%AAte-http)
+        - [Des méthodes HTTP](#des-m%C3%A9thodes-http)
         - [Le cas de l'API Twitter](#le-cas-de-lapi-twitter)
-    - [TP 4 : la gestion des menus, des écrans et GIT](#tp-4--la-gestion-des-menus-des-écrans-et-git)
+    - [TP 4 : la gestion des menus, des écrans et GIT](#tp-4--la-gestion-des-menus-des-%C3%A9crans-et-git)
         - [Git, un gestionnaire de version](#git-un-gestionnaire-de-version)
-            - [Se synchroniser avec le dépôt du projet](#se-synchroniser-avec-le-dépôt-du-projet)
+            - [Se synchroniser avec le dépôt du projet](#se-synchroniser-avec-le-d%C3%A9p%C3%B4t-du-projet)
             - [Git au quotidien](#git-au-quotidien)
-        - [La gestion des écrans, des menus et d'une session](#la-gestion-des-écrans-des-menus-et-dune-session)
+        - [La gestion des écrans, des menus et d'une session](#la-gestion-des-%C3%A9crans-des-menus-et-dune-session)
             - [AbstractVue](#abstractvue)
-            - [Le pattern modèle/vue/contrôleur](#le-pattern-modèlevuecontrôleur)
+            - [Le pattern modèle/vue/contrôleur](#le-pattern-mod%C3%A8levuecontr%C3%B4leur)
                 - [Les vues](#les-vues)
-                - [Le contrôleur](#le-contrôleur)
-                - [Le modèle](#le-modèle)
+                - [Le contrôleur](#le-contr%C3%B4leur)
+                - [Le modèle](#le-mod%C3%A8le)
             - [La session](#la-session)
     - [Liens utiles](#liens-utiles)
 ## Introduction
@@ -621,7 +621,24 @@ Accept-Encoding: gzip, deflate
 Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
 ```
 
-Je ne vais pas vous détailler la requête comme dit plus haut c'est pas intéressant, je voulais juste vous en monter une, et vous dire que c'est ce que génère votre navigateur à chaque fois que vous tapez une URL dans la barre la barre d'URL.
+Rapidement on voit que cette requête est une requête de type GET, qui va chercher la ressource derrière l'URL ent.ensai.fr/, avec plein de paramèttre dans l'en-tête et qu'il n'y a pas de corps.
+
+Et voici la requête que génère mon navigateur derrière le proxy INSEE
+
+```
+GET http://ent.ensai.fr/ HTTP/1.1
+Host: ent.ensai.fr
+Proxy-Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4
+```
+
+C'est globalement la même, sauf qu'en passant par un proxy on doit donner l'URL complète dans la première ligne, et pas seulement l'URL relative à partir de l'host. Bon et ça rajoute d'autre paramètre, mais la grosse différence c'est ça.
 
 ### Des méthodes HTTP
 
