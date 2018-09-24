@@ -4,52 +4,52 @@
 
 ## Table des matières
 
-- [Agrégateur de flux RSS et de Tweets](#agr%C3%A9gateur-de-flux-rss-et-de-tweets)
-    - [Table des matières](#table-des-mati%C3%A8res)
+- [Agrégateur de flux RSS et de Tweets](#agrégateur-de-flux-rss-et-de-tweets)
+    - [Table des matières](#table-des-matières)
     - [Introduction](#introduction)
-    - [Fonctionnalités attendues](#fonctionnalit%C3%A9s-attendues)
-        - [Fonctionnalités de base attendues](#fonctionnalit%C3%A9s-de-base-attendues)
-        - [Fonctionnalités avancées](#fonctionnalit%C3%A9s-avanc%C3%A9es)
+    - [Fonctionnalités attendues](#fonctionnalités-attendues)
+        - [Fonctionnalités de base attendues](#fonctionnalités-de-base-attendues)
+        - [Fonctionnalités avancées](#fonctionnalités-avancées)
     - [Diagramme UML](#diagramme-uml)
-    - [Utilisateur inscrit vs utilisateur connecté](#utilisateur-inscrit-vs-utilisateur-connect%C3%A9)
+    - [Utilisateur inscrit vs utilisateur connecté](#utilisateur-inscrit-vs-utilisateur-connecté)
         - [Vision machine vs vision humaine](#vision-machine-vs-vision-humaine)
     - [TP 1 - DAO](#tp-1---dao)
-        - [Pourquoi ne pas mettre les fonctions de la DAO dans l'objet métier ?](#pourquoi-ne-pas-mettre-les-fonctions-de-la-dao-dans-lobjet-m%C3%A9tier)
+        - [Pourquoi ne pas mettre les fonctions de la DAO dans l'objet métier ?](#pourquoi-ne-pas-mettre-les-fonctions-de-la-dao-dans-lobjet-métier-)
         - [Injection SQL et prepared statements](#injection-sql-et-prepared-statements)
             - [Le principe](#le-principe)
-            - [Comment s'en prémunir](#comment-sen-pr%C3%A9munir)
-        - [Problèmes rencontrés lors du TP 1](#probl%C3%A8mes-rencontr%C3%A9s-lors-du-tp-1)
+            - [Comment s'en prémunir](#comment-sen-prémunir)
+        - [Problèmes rencontrés lors du TP 1](#problèmes-rencontrés-lors-du-tp-1)
             - [Lancement de la classe et pas du main](#lancement-de-la-classe-et-pas-du-main)
-            - [Erreur lors du string replacement dans les requêtes](#erreur-lors-du-string-replacement-dans-les-requ%C3%AAtes)
-            - [Mon update ne se fait pas en base ??!!!](#mon-update-ne-se-fait-pas-en-base)
+            - [Erreur lors du string replacement dans les requêtes](#erreur-lors-du-string-replacement-dans-les-requêtes)
+            - [Mon update ne se fait pas en base ??!!!](#mon-update-ne-se-fait-pas-en-base-)
                 - [Le CRUD](#le-crud)
             - [Erreur dans les imports avec pylint](#erreur-dans-les-imports-avec-pylint)
         - [Les imports du TP1](#les-imports-du-tp1)
             - [pylint](#pylint)
             - [autopep8](#autopep8)
             - [psycopg2-binary](#psycopg2-binary)
-    - [TP 2 - Inport/Export de données](#tp-2---inportexport-de-donn%C3%A9es)
+    - [TP 2 - Inport/Export de données](#tp-2---inportexport-de-données)
         - [Le CSV](#le-csv)
         - [Le XML](#le-xml)
         - [Le JSON](#le-json)
-        - [Problèmes rencontrés lors du TP2](#probl%C3%A8mes-rencontr%C3%A9s-lors-du-tp2)
+        - [Problèmes rencontrés lors du TP2](#problèmes-rencontrés-lors-du-tp2)
             - [Les fichiers n'existent pas](#les-fichiers-nexistent-pas)
             - [Encodage](#encodage)
-    - [TP 3 : Utiliser un api web et réaliser une](#tp-3--utiliser-un-api-web-et-r%C3%A9aliser-une)
+    - [TP 3 : Utiliser un api web et réaliser une](#tp-3--utiliser-un-api-web-et-réaliser-une)
         - [Une simple URL](#une-simple-url)
-        - [Une requête HTTP](#une-requ%C3%AAte-http)
-        - [Des méthodes HTTP](#des-m%C3%A9thodes-http)
+        - [Une requête HTTP](#une-requête-http)
+        - [Des méthodes HTTP](#des-méthodes-http)
         - [Le cas de l'API Twitter](#le-cas-de-lapi-twitter)
-    - [TP 4 : la gestion des menus, des écrans et GIT](#tp-4--la-gestion-des-menus-des-%C3%A9crans-et-git)
+    - [TP 4 : la gestion des menus, des écrans et GIT](#tp-4--la-gestion-des-menus-des-écrans-et-git)
         - [Git, un gestionnaire de version](#git-un-gestionnaire-de-version)
-            - [Se synchroniser avec le dépôt du projet](#se-synchroniser-avec-le-d%C3%A9p%C3%B4t-du-projet)
+            - [Se synchroniser avec le dépôt du projet](#se-synchroniser-avec-le-dépôt-du-projet)
             - [Git au quotidien](#git-au-quotidien)
-        - [La gestion des écrans, des menus et d'une session](#la-gestion-des-%C3%A9crans-des-menus-et-dune-session)
+        - [La gestion des écrans, des menus et d'une session](#la-gestion-des-écrans-des-menus-et-dune-session)
             - [AbstractVue](#abstractvue)
-            - [Le pattern modèle/vue/contrôleur](#le-pattern-mod%C3%A8levuecontr%C3%B4leur)
+            - [Le pattern modèle/vue/contrôleur](#le-pattern-modèlevuecontrôleur)
                 - [Les vues](#les-vues)
-                - [Le contrôleur](#le-contr%C3%B4leur)
-                - [Le modèle](#le-mod%C3%A8le)
+                - [Le contrôleur](#le-contrôleur)
+                - [Le modèle](#le-modèle)
             - [La session](#la-session)
     - [Liens utiles](#liens-utiles)
 ## Introduction
@@ -642,7 +642,33 @@ C'est globalement la même, sauf qu'en passant par un proxy on doit donner l'URL
 
 ### Des méthodes HTTP
 
-WIP
+Souvenez-vous, dans le TP3 côté serveur vous aviez
+
+```python
+@app.route("/films", methods=['GET'])
+def movieList():
+    return json.dumps({"films": movies})
+
+
+@app.route("/film", methods=['POST'])
+def addMovie():
+    content = request.get_json()
+    movies.append(content['name'])
+    return json.dumps({"result": "success"})
+```
+
+Ces deux méthodes définissent deux URL sur lesquelles votre serveur va répondre. L'une est http://url.de.mon.serveur/films, et l'autre http://url.de.mon.serveur/film. Mais en plus d'être sur des URL différentes, votre serveur attend une méthode HTTP différente (relativement GET et POST).
+
+Si vous avez la bonne URL mais pas la bonne méthode, le serveur ne va rien répondre (certains ont eu ce problème d'ailleurs). Alors faite bien attention dans le projet à appeler la bonne méthode !
+
+Voici les méthodes les plus courantes, et leur signification
+
+  - GET : pour récupérer des données (READ)
+  - POST : pour envoyer des données (CREATE)
+  - PUT : pour modifier des données (UDAPTE)
+  - DELETE : pour supprimer des données (DELETE)
+
+Mais il y en a d'autre ([doc](https://developer.mozilla.org/fr/docs/Web/HTTP/M%C3%A9thode))
 
 ### Le cas de l'API Twitter
 
