@@ -179,7 +179,7 @@ Tout simplement en ne concatenant plus de chaînes de caractères pour faire une
 
 Sans rentrer dans les détails, une prepared statements vous permet de ne pas faire une simple concaténation de chaine de caractère. Elle va prendre en charge également la conversion des champs que vous passez à la requête et donc échapper tous les caractères spéciaux. Pour réaliser cela, vous aller envoyer une requête sans paramètre à la base, qui va la compiler, et ensuite lui passer les paramètres.
 
-EDIT : en fouillant dans la doc de Psycopg il se trouve que cette librairie de réalise pas des Prepared Statments nativement. Elle protège bien des injections SQL en echappant les caractères spéciaux lors de la réalisation de la requête, mais elle ne fait pas Prepared Statement. En effet pour réaliser une Prepared Statement, il faut dans un premier temps envoyer une requête sans paramètre à la base de données qui va la compiler, et ensuite lui envoyer des paramètres pour l'exécution. Ici on envoie la requête avec les paramètre directement, mais les paramètres sont échappés. Voilà désolé pour l'erreur.
+EDIT : en fouillant dans la doc de Psycopg il se trouve que cette librairie de réalise pas des Prepared Statements nativement. Elle protège bien des injections SQL en echappant les caractères spéciaux lors de la réalisation de la requête, mais elle ne fait pas Prepared Statement. En effet pour réaliser une Prepared Statement, il faut dans un premier temps envoyer une requête sans paramètre à la base de données qui va la compiler, et ensuite lui envoyer des paramètres pour l'exécution. Ici on envoie la requête avec les paramètre directement, mais les paramètres sont échappés. Voilà désolé pour l'erreur.
 
 Je m'explique dans cette requête :
 
@@ -199,7 +199,7 @@ Alors ne vous inquiétez pas, c'est ce que vous avez déjà utilisé dans le TP1
 
 Ah et quand j'aurais votre application dans les mains, bon but sera de casser votre base de données via des injections SQL. Donc faites des Prepared Statement :smile:
 
-EDIT : il semblerait que Psycopg puisse quand même faire des Prepared Statment, mais cela demande un peu plus de travail. Si vous voulez voir la [doc](http://initd.org/psycopg/articles/2012/10/01/prepared-statements-psycopg/)
+EDIT : il semblerait que Psycopg puisse quand même faire des Prepared Statement, mais cela demande un peu plus de travail. Si vous voulez voir la [doc](http://initd.org/psycopg/articles/2012/10/01/prepared-statements-psycopg/)
 
 ### Problèmes rencontrés lors du TP 1
 
