@@ -87,15 +87,15 @@ comme moi lors de la démo, pour récupérer en diagramme il faut soit
   
 ## Utilisateur inscrit vs utilisateur connecté
 
-En passant dans les rangs, j'ai vu que beaucoup ont pris le parti d'avoir un utilisateur inscrit/non inscrit, et j'ai un peu était surpris. Après relecture du sujet, je me rend compte que c'est sûrement ma faute car je faisais mention d'utilisateur inscrit. Je vais essayer de vous expliquer pourquoi je pense que la notion d'utilisateur connecté/non connecté à plus de sens qu'inscrit/non inscrit un peu plus en détail que ce que j'ai fait à l'oral (et comme ça il y a une trace écrite).
+En passant dans les rangs, j'ai vu que beaucoup ont pris le parti d'avoir un utilisateur inscrit/non inscrit, et j'ai un peu été surpris. Après relecture du sujet, je me rend compte que c'est sûrement ma faute car je faisais mention d'utilisateur inscrit. Je vais essayer de vous expliquer pourquoi je pense que la notion d'utilisateur connecté/non connecté à plus de sens qu'inscrit/non inscrit un peu plus en détail que ce que j'ai fait à l'oral (et comme ça il y a une trace écrite).
 
 ### Vision machine vs vision humaine
 
 La notion d'inscription, n'a pas trop de sens pour la machine, c'est une vision humaine. Alors oui il y a une ligne en base, mais quand un utilisateur lancera l'application, la machine ne saura pas s'il est inscrit ou pas. Elle ce qu'elle sait c'est s'il est authentifié ou pas (vision machine).
 
-L'autre avantage de la notion de connecté/déconnecté est pour la réalisation d'un diagramme d'activité avec les états de l'utilisateur. Si vous faite le schéma de navigation "complet", de l'ouverture de l'application à sa fermeture, l'utilisateur sera non connecté au début. Et c'est sans appel. Alors qu'avec le notion d'inscrit c'est pas clair. Il pourra être inscrit, s'il a déjà utilisé l'applicaiton, comme non inscrit si c'est ça première fois. Et rien n'empêche à un utilisateur inscrit de créer nouveau un compte. Par contre un utilisateur connecté ne doit pas avoir ce droit.
+L'autre avantage de la notion de connection/déconnection est pour la réalisation d'un diagramme d'activité avec les états de l'utilisateur. Si vous faite le schéma de navigation "complet", de l'ouverture de l'application à sa fermeture, l'utilisateur sera non connecté au début. Et c'est sans appel. Alors qu'avec le notion d'inscrit c'est pas clair. Il pourra être inscrit, s'il a déjà utilisé l'applicaiton, comme non inscrit si c'est ça première fois. Et rien n'empêche à un utilisateur inscrit de créer un nouveau un compte. Par contre un utilisateur connecté ne doit pas avoir ce droit.
 
-Après c'est moi le premier a avoir parlé d'utilisateur inscrit/non inscrit, alors vous avez eu raison de reprendre ma terminologie. Et j'aurais sûrement dû parler d'utilisateur connecté/non connecté (j'ai d'ailleurs mis jour les fonctionnalités en haut de la page, et c'est celles de cette page qui sont les "bonnes"). Le côté positif, c'est que quand je suis passé, vous aviez bien tous la notion de connection, avec le CU "s'authentifier", ce qui est finalement une autre manière de représenter cela. Ce sont finalement deux visions qui s'opposent, pas un réel bug dans la conception (de mon point de vu). Donc voilà si vos diagrammes vous vont, gardez les tels quels tant que l'explication qui va avec me permet de bien les comprendre. 
+Après c'est moi le premier a avoir parlé d'utilisateur inscrit/non inscrit, alors vous avez eu raison de reprendre ma terminologie. Et j'aurais sûrement dû parler d'utilisateur connecté/non connecté (j'ai d'ailleurs mis jour les fonctionnalités en haut de la page, et c'est celles de cette page qui sont les "bonnes"). Le côté positif, c'est que quand je suis passé, vous aviez bien tous la notion de connection, avec le CU "s'authentifier", ce qui est finalement une autre manière de représenter cela. Ce sont finalement deux visions qui s'opposent, pas un réel bug dans la conception (de mon point de vus). Donc voilà si vos diagrammes vous vont, gardez les tels quels tant que l'explication qui va avec me permet de bien les comprendre. 
 
 ## TP 1 - DAO
 
@@ -112,10 +112,9 @@ Une fois vos DAO faites, la manipulation de la base de données sera transparent
 
 **Car c'est mal !**
 
-En informatique au maximum il faut dissocier les taches pour que chaque classe ne fasse qu'une chose (*forte cohérence*). Un objet métier fait partie du coeur de votre système. Ce sont eux et les traitements que vous allez y appliquer qui vont faire la plu-value de votre application. Alors que les DAO ne sont pas réellement importantes. Enfin si, car elles permettent de persister vos données. Mais elles n'apportent aucune valeur métier, et pire vous pouvez parfaitement changer de façon de stocker les données sans modifier le fonctionnement de votre applicatio. Car une DAO répond juste à un besoin technique et pas métier. Par exemple vous pourriez 
-très bien vous dire à la fin du projet
+En informatique au maximum il faut dissocier les taches pour que chaque classe ne fasse qu'une chose (*forte cohérence*). Les objets métiers font partie du coeur de votre système. Ce sont eux et les traitements que vous allez y appliquer qui vont faire la plu-value de votre application. Alors que les DAO ne sont pas réellement importantes. Enfin si, car elles permettent de persister vos données. Mais elles n'apportent aucune valeur métier, et pire vous pouvez parfaitement changer de façon de stocker les données sans modifier le fonctionnement de votre application. Car une DAO répond juste à un besoin technique et pas métier. Par exemple vous pourriez très bien vous dire à la fin du projet
 
-"Ummhhh ... Non mais en fait, travailler en PostegreSQL c'est démondé, on va faire du MongoDB"
+>"Ummhhh ... Non mais en fait, travailler en PostegreSQL c'est démondé, on va faire du MongoDB"
 
 Pour faire ça il vous suffit juste de supprimer vos classes DAO et d'en faire d'autres, sans toucher à vos objets métiers. Probabilité de "casser" votre code : faible.
 
@@ -148,13 +147,13 @@ SELECT * FROM utilisateur WHERE login = 'login_saisi' AND password = 'mdp_saisi'
 ```
 Si une ligne est renvoyée, c'est bon l'utilisateur est authentifié.
 
-Et pour faire cette requête en python, le plus simple est de concaténer les des chaînes de caractères. Et cela donnerais quelque chose comme
+Et pour faire cette requête en python, le plus simple est de concaténer les des chaînes de caractères. Et cela donnerait quelque chose comme
 
 ```python
 requete = "SELECT * FROM utilisateur WHERE login = '%s' AND password = '%s'" %(login, password)
 ```
 
-Maintenant plaçons nous dans la peau d'un attaquant, qui a une petite idée du fonctionnement de notre système d'authentification. Il connait un login, mais pas de mot de passe. Au lieu d'en tenter plein, il écrit simplement
+Maintenant plaçons nous dans la peau d'un attaquant, qui a une petite idée du fonctionnement de notre système d'authentification. Il connait un login, mais pas de mot de passe. Au lieu d'en tenter plein, il écrit simplement en mdp
 
 ```sql
 ' OR 1=1--
@@ -171,13 +170,16 @@ Si vous vous souvenez de vos cours de SQL, cette requête va systématiquement r
 
 La cause de cette faille est que l'on va concaténer des chaînes de caractères pour réaliser notre requête. Sauf qu'en SQL une chaîne de caractères est entre quote. Et en sachant cela il est facile de tricher, en fermant la chaîne dans le champ que l'on passe pour ensuite écire sa requête.
 
-Bref une injection SQL c'est vraiment tout bête. Cela consiste juste à avoir une idée de quels champ ssont utilisés pour créer une requête SQL et les remplir avec les bons bouts de requête.
+Bref une injection SQL c'est vraiment tout bête. Cela consiste juste à avoir une idée de quels champ ssont utilisés pour créer une requête SQL et les remplir avec les bons bouts de requêtes.
 
 #### Comment s'en prémunir
 
-Tout simplement en ne concatenant plus de chaîne de caractères pour faire une requête et utiliser des ***Prepared Statements***. C'est valable en python, mais également pour tous les autres langages de programmation.
+Tout simplement en ne concatenant plus de chaînes de caractères pour faire une requête et utiliser des ***Prepared Statements***. C'est valable en python, mais également pour tous les autres langages de programmation.
 
-Sans rentrer dans les détails, une prepared statements vous permet de ne pas faire une simple concaténation de chaine de caractère. Elle va prendre en charge également la conversion des champs que vous passez à la requête et donc échapper tous les caractères spéciaux.
+
+Sans rentrer dans les détails, une prepared statements vous permet de ne pas faire une simple concaténation de chaine de caractère. Elle va prendre en charge également la conversion des champs que vous passez à la requête et donc échapper tous les caractères spéciaux. Pour réaliser cela, vous aller envoyer une requête sans paramètre à la base, qui va la compiler, et ensuite lui passer les paramètres.
+
+EDIT : en fouillant dans la doc de Psycopg il se trouve que cette librairie de réalise pas des Prepared Statments. Elle protège bien des injections SQL en echappant les caractères spéciaux lors de la réalisation de la requête, mais elle ne fait pas Prepared Statement. En effet pour réaliser une Prepared Statement, il faut dans un premier temps envoyer une requête sans paramètre à la base de données qui va la compiler, et ensuite lui envoyer des paramètres pour l'exécution. Ici on envoie la requête avec les paramètre directement, mais les paramètres sont échappés. Voilà désolé pour l'erreur.
 
 Je m'explique dans cette requête :
 
@@ -191,9 +193,13 @@ vous spécifiez vous même que login et password attendent des textes (regardez 
 cur.execute("SELECT * FROM utilisateur WHERE login = %s AND password = %s" ,(login, password))
 ```
 
-Et en changeant juste cela, vous êtes assurez (enfin ça c'est si aucune faille n'est découverte dans les prepared statements) qu'aucune injection SQL ne pourrait être réalisé via cette requête. C'est vraiment tout simple, alors pourquoi s'en priver ? :smile:
+Et en changeant juste cela, vous êtes assurez qu'aucune injection SQL ne pourrait être réalisée via cette requête. C'est vraiment tout simple, alors pourquoi s'en priver ? :smile:
 
 Alors ne vous inquiétez pas, c'est ce que vous avez déjà utilisé dans le TP1, mais je voulais vous expliquer ce que vous faisiez et pourquoi vous le faisiez.
+
+Ah et quand j'aurais votre application dans les mains, bon but sera de casser votre base de données via des injections SQL. Donc faites des Prepared Statement :smile:
+
+EDIT : il semblerait que Psycopg puisse quand même faire des Prepared Statment, mais cela demande un peu plus de travail. Si vous voulez voir la [doc](http://initd.org/psycopg/articles/2012/10/01/prepared-statements-psycopg/)
 
 ### Problèmes rencontrés lors du TP 1
 
@@ -657,7 +663,7 @@ def addMovie():
     return json.dumps({"result": "success"})
 ```
 
-Ces deux méthodes définissent deux URL sur lesquelles votre serveur va répondre. L'une est http://url.de.mon.serveur/films, et l'autre http://url.de.mon.serveur/film. Mais en plus d'être sur des URL différentes, votre serveur attend une méthode HTTP différente (relativement GET et POST).
+Ces deux méthodes définissent deux URL sur lesquelles votre serveur va répondre. L'une est http://url.de.mon.serveur/films, et l'autre http://url.de.mon.serveur/film. Mais en plus d'être sur des URL différentes, votre serveur attend une méthode HTTP différente (relativement GET et POST). Cela permet, par exemple, d'avoir sur une seule URL la possibilité de récupérer un film, d'en ajouter un, d'en supprimer un ou d'en mettre à jour un.
 
 Si vous avez la bonne URL mais pas la bonne méthode, le serveur ne va rien répondre (certains ont eu ce problème d'ailleurs). Alors faite bien attention dans le projet à appeler la bonne méthode !
 
@@ -676,7 +682,7 @@ Mais comment on fait pour se connecter à Twitter ? Déjà on va lire la [doc](h
 
 Oauth est un protocole de délagation d'authentification. Rapidement, avec Oauth, vous allez pouvoir via une application consommatrice de données (par exemple l'application que vous êtes en train de développer) vous connecter à une application fournisseuse de données (par exemple twitter) sans jamais passé vos identifiant/mdp de l'application fournisseuse à l'application consommatrice. Dans notre exemple, vous allez pouvoir accéder à votre compte twitter via votre application sans jamais rentrer dans votre application votre login/mdp
 
-GROSSE PRECISION !! Ici je ne parle pas du cas d'utilisation avancé qui permet à un utilisateur de partager des choses sur twitter. Je suis juste en train de vous parler du processus qui vous permet de récupérer des infos sur twitter. Car pour connecter votre application à Twitter vous avez du demander un compte développeur et obtenir un jeu de keys. C'est avec ces keys que vous allez pouvoir connecter votre application à twitter.
+GROSSE PRECISION !! Ici je ne parle pas du cas d'utilisation avancé qui permet à un utilisateur de partager des choses sur twitter. Je suis juste en train de vous parler du processus qui vous permet de récupérer des infos sur twitter. Car pour connecter votre application à Twitter vous avez dû demander un compte développeur et obtenir un jeu de keys. C'est avec ces keys que vous allez pouvoir connecter votre application à twitter.
 
 PETITE PRECISION. Pour faire le cas d'utilisation qui permet à un utilisateur de partager quelque chose sur son twitter, vous allez utiliser également Oauth, mais ça sera plus dur.
 
