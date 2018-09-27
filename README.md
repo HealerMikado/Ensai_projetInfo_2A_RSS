@@ -895,7 +895,7 @@ def __init__(self):
     self.user = None
     pass
 ```
-Mais rien ne vous empèche de rajouter plein de paramètres ! Spoiler : vous allez devoir en rajouter plein. Mais vous pouvez également juste passez un dictionnaire à la session et le remplir au fur et à mesure. Du genre
+Mais rien ne vous empèche de rajouter plein de paramètres ! Comme la liste des derniers actus récupérées. Mais si votre objet user est bien fait, pas sûr que vous ayez besoin de beaucoup d'autres paramètres.
 
 ``` python
 class Session:
