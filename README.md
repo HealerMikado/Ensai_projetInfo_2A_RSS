@@ -87,15 +87,15 @@ comme moi lors de la démo, pour récupérer en diagramme il faut soit
   
 ## Utilisateur inscrit vs utilisateur connecté
 
-En passant dans les rangs, j'ai vu que beaucoup ont pris le parti d'avoir un utilisateur inscrit/non inscrit, et j'ai un peu était surpris. Après relecture du sujet, je me rend compte que c'est sûrement ma faute car je faisais mention d'utilisateur inscrit. Je vais essayer de vous expliquer pourquoi je pense que la notion d'utilisateur connecté/non connecté à plus de sens qu'inscrit/non inscrit un peu plus en détail que ce que j'ai fait à l'oral (et comme ça il y a une trace écrite).
+En passant dans les rangs, j'ai vu que beaucoup ont pris le parti d'avoir un utilisateur inscrit/non inscrit, et j'ai un peu été surpris. Après relecture du sujet, je me rend compte que c'est sûrement ma faute car je faisais mention d'utilisateur inscrit. Je vais essayer de vous expliquer pourquoi je pense que la notion d'utilisateur connecté/non connecté à plus de sens qu'inscrit/non inscrit un peu plus en détail que ce que j'ai fait à l'oral (et comme ça il y a une trace écrite).
 
 ### Vision machine vs vision humaine
 
 La notion d'inscription, n'a pas trop de sens pour la machine, c'est une vision humaine. Alors oui il y a une ligne en base, mais quand un utilisateur lancera l'application, la machine ne saura pas s'il est inscrit ou pas. Elle ce qu'elle sait c'est s'il est authentifié ou pas (vision machine).
 
-L'autre avantage de la notion de connecté/déconnecté est pour la réalisation d'un diagramme d'activité avec les états de l'utilisateur. Si vous faite le schéma de navigation "complet", de l'ouverture de l'application à sa fermeture, l'utilisateur sera non connecté au début. Et c'est sans appel. Alors qu'avec le notion d'inscrit c'est pas clair. Il pourra être inscrit, s'il a déjà utilisé l'applicaiton, comme non inscrit si c'est ça première fois. Et rien n'empêche à un utilisateur inscrit de créer nouveau un compte. Par contre un utilisateur connecté ne doit pas avoir ce droit.
+L'autre avantage de la notion de connection/déconnection est pour la réalisation d'un diagramme d'activité avec les états de l'utilisateur. Si vous faite le schéma de navigation "complet", de l'ouverture de l'application à sa fermeture, l'utilisateur sera non connecté au début. Et c'est sans appel. Alors qu'avec le notion d'inscrit c'est pas clair. Il pourra être inscrit, s'il a déjà utilisé l'applicaiton, comme non inscrit si c'est ça première fois. Et rien n'empêche à un utilisateur inscrit de créer un nouveau un compte. Par contre un utilisateur connecté ne doit pas avoir ce droit.
 
-Après c'est moi le premier a avoir parlé d'utilisateur inscrit/non inscrit, alors vous avez eu raison de reprendre ma terminologie. Et j'aurais sûrement dû parler d'utilisateur connecté/non connecté (j'ai d'ailleurs mis jour les fonctionnalités en haut de la page, et c'est celles de cette page qui sont les "bonnes"). Le côté positif, c'est que quand je suis passé, vous aviez bien tous la notion de connection, avec le CU "s'authentifier", ce qui est finalement une autre manière de représenter cela. Ce sont finalement deux visions qui s'opposent, pas un réel bug dans la conception (de mon point de vu). Donc voilà si vos diagrammes vous vont, gardez les tels quels tant que l'explication qui va avec me permet de bien les comprendre. 
+Après c'est moi le premier a avoir parlé d'utilisateur inscrit/non inscrit, alors vous avez eu raison de reprendre ma terminologie. Et j'aurais sûrement dû parler d'utilisateur connecté/non connecté (j'ai d'ailleurs mis jour les fonctionnalités en haut de la page, et c'est celles de cette page qui sont les "bonnes"). Le côté positif, c'est que quand je suis passé, vous aviez bien tous la notion de connection, avec le CU "s'authentifier", ce qui est finalement une autre manière de représenter cela. Ce sont finalement deux visions qui s'opposent, pas un réel bug dans la conception (de mon point de vus). Donc voilà si vos diagrammes vous vont, gardez les tels quels tant que l'explication qui va avec me permet de bien les comprendre. 
 
 ## TP 1 - DAO
 
@@ -112,10 +112,9 @@ Une fois vos DAO faites, la manipulation de la base de données sera transparent
 
 **Car c'est mal !**
 
-En informatique au maximum il faut dissocier les taches pour que chaque classe ne fasse qu'une chose (*forte cohérence*). Un objet métier fait partie du coeur de votre système. Ce sont eux et les traitements que vous allez y appliquer qui vont faire la plu-value de votre application. Alors que les DAO ne sont pas réellement importantes. Enfin si, car elles permettent de persister vos données. Mais elles n'apportent aucune valeur métier, et pire vous pouvez parfaitement changer de façon de stocker les données sans modifier le fonctionnement de votre applicatio. Car une DAO répond juste à un besoin technique et pas métier. Par exemple vous pourriez 
-très bien vous dire à la fin du projet
+En informatique au maximum il faut dissocier les taches pour que chaque classe ne fasse qu'une chose (*forte cohérence*). Les objets métiers font partie du coeur de votre système. Ce sont eux et les traitements que vous allez y appliquer qui vont faire la plu-value de votre application. Alors que les DAO ne sont pas réellement importantes. Enfin si, car elles permettent de persister vos données. Mais elles n'apportent aucune valeur métier, et pire vous pouvez parfaitement changer de façon de stocker les données sans modifier le fonctionnement de votre application. Car une DAO répond juste à un besoin technique et pas métier. Par exemple vous pourriez très bien vous dire à la fin du projet
 
-"Ummhhh ... Non mais en fait, travailler en PostegreSQL c'est démondé, on va faire du MongoDB"
+>"Ummhhh ... Non mais en fait, travailler en PostegreSQL c'est démondé, on va faire du MongoDB"
 
 Pour faire ça il vous suffit juste de supprimer vos classes DAO et d'en faire d'autres, sans toucher à vos objets métiers. Probabilité de "casser" votre code : faible.
 
@@ -148,13 +147,13 @@ SELECT * FROM utilisateur WHERE login = 'login_saisi' AND password = 'mdp_saisi'
 ```
 Si une ligne est renvoyée, c'est bon l'utilisateur est authentifié.
 
-Et pour faire cette requête en python, le plus simple est de concaténer les des chaînes de caractères. Et cela donnerais quelque chose comme
+Et pour faire cette requête en python, le plus simple est de concaténer les des chaînes de caractères. Et cela donnerait quelque chose comme
 
 ```python
 requete = "SELECT * FROM utilisateur WHERE login = '%s' AND password = '%s'" %(login, password)
 ```
 
-Maintenant plaçons nous dans la peau d'un attaquant, qui a une petite idée du fonctionnement de notre système d'authentification. Il connait un login, mais pas de mot de passe. Au lieu d'en tenter plein, il écrit simplement
+Maintenant plaçons nous dans la peau d'un attaquant, qui a une petite idée du fonctionnement de notre système d'authentification. Il connait un login, mais pas de mot de passe. Au lieu d'en tenter plein, il écrit simplement en mdp
 
 ```sql
 ' OR 1=1--
@@ -171,13 +170,16 @@ Si vous vous souvenez de vos cours de SQL, cette requête va systématiquement r
 
 La cause de cette faille est que l'on va concaténer des chaînes de caractères pour réaliser notre requête. Sauf qu'en SQL une chaîne de caractères est entre quote. Et en sachant cela il est facile de tricher, en fermant la chaîne dans le champ que l'on passe pour ensuite écire sa requête.
 
-Bref une injection SQL c'est vraiment tout bête. Cela consiste juste à avoir une idée de quels champ ssont utilisés pour créer une requête SQL et les remplir avec les bons bouts de requête.
+Bref une injection SQL c'est vraiment tout bête. Cela consiste juste à avoir une idée de quels champ ssont utilisés pour créer une requête SQL et les remplir avec les bons bouts de requêtes.
 
 #### Comment s'en prémunir
 
-Tout simplement en ne concatenant plus de chaîne de caractères pour faire une requête et utiliser des ***Prepared Statements***. C'est valable en python, mais également pour tous les autres langages de programmation.
+Tout simplement en ne concatenant plus de chaînes de caractères pour faire une requête et utiliser des ***Prepared Statements***. C'est valable en python, mais également pour tous les autres langages de programmation.
 
-Sans rentrer dans les détails, une prepared statements vous permet de ne pas faire une simple concaténation de chaine de caractère. Elle va prendre en charge également la conversion des champs que vous passez à la requête et donc échapper tous les caractères spéciaux.
+
+Sans rentrer dans les détails, une prepared statements vous permet de ne pas faire une simple concaténation de chaine de caractère. Elle va prendre en charge également la conversion des champs que vous passez à la requête et donc échapper tous les caractères spéciaux. Pour réaliser cela, vous aller envoyer une requête sans paramètre à la base, qui va la compiler, et ensuite lui passer les paramètres.
+
+EDIT : en fouillant dans la doc de Psycopg il se trouve que cette librairie de réalise pas des Prepared Statements nativement. Elle protège bien des injections SQL en echappant les caractères spéciaux lors de la réalisation de la requête, mais elle ne fait pas Prepared Statement. En effet pour réaliser une Prepared Statement, il faut dans un premier temps envoyer une requête sans paramètre à la base de données qui va la compiler, et ensuite lui envoyer des paramètres pour l'exécution. Ici on envoie la requête avec les paramètre directement, mais les paramètres sont échappés. Voilà désolé pour l'erreur.
 
 Je m'explique dans cette requête :
 
@@ -191,9 +193,13 @@ vous spécifiez vous même que login et password attendent des textes (regardez 
 cur.execute("SELECT * FROM utilisateur WHERE login = %s AND password = %s" ,(login, password))
 ```
 
-Et en changeant juste cela, vous êtes assurez (enfin ça c'est si aucune faille n'est découverte dans les prepared statements) qu'aucune injection SQL ne pourrait être réalisé via cette requête. C'est vraiment tout simple, alors pourquoi s'en priver ? :smile:
+Et en changeant juste cela, vous êtes assurez qu'aucune injection SQL ne pourrait être réalisée via cette requête. C'est vraiment tout simple, alors pourquoi s'en priver ? :smile:
 
 Alors ne vous inquiétez pas, c'est ce que vous avez déjà utilisé dans le TP1, mais je voulais vous expliquer ce que vous faisiez et pourquoi vous le faisiez.
+
+Ah et quand j'aurais votre application dans les mains, bon but sera de casser votre base de données via des injections SQL. Donc faites des Prepared Statement :smile:
+
+EDIT : il semblerait que Psycopg puisse quand même faire des Prepared Statement, mais cela demande un peu plus de travail. Si vous voulez voir la [doc](http://initd.org/psycopg/articles/2012/10/01/prepared-statements-psycopg/)
 
 ### Problèmes rencontrés lors du TP 1
 
@@ -203,7 +209,7 @@ J'ai vu pas mal de fois cette erreur, je vais essayer de vous expliquer pourquoi
 
 Déjà il y a une erreur "technique" liée aux imports. Ceux qui on essayé de lancer une DAO directement ont eu une erreur du style
 
-ModuleNotFoundError: No module named 'connection'
+>ModuleNotFoundError: No module named 'connection'
 
 Cela vient du fait que, tout bêtement, python ne trouve pas le fichier que vous voulez importer. En effet dans le dossier qui contient la DAO, il n'y a aucun fichier connection.py. Alors qu'en lançant via le main, l'import se fait car fait de manière relative à partir du main.
 
@@ -226,24 +232,24 @@ est en fait un simple "plan" et ne peut rien faire seul. Exécuter une classe po
 Pour pouvoir utiliser une classe, il faut d'abord **l'instancier**, c'est à dire, utiliser le plan de la classe pour en créer un objet avec.
 
 ```python
-	myObject = MyClass()
+myObject = MyClass()
 ```
 
-Ici je dis à python de me créer un objet que j'appelle *myObject* en utilisant le constructeur de *Myclass* (le constructeur est la méthode *\_\_init\_\_*). Comme *monObjet* à pour classe *myClass* je vais pouvoir appeler la méthode *myMethod* et l'appliquer sur *myObject*
+Ici je dis à python de me créer un objet que j'appelle *myObject* en utilisant le constructeur de *Myclass* (le constructeur est la méthode *\_\_init\_\_*). Comme *monObjet* a pour classe *myClass* je vais pouvoir appeler la méthode *myMethod* et l'appliquer sur *myObject*
 
 ```python
-	myObject.myMethod("toto")
+myObject.myMethod("toto")
 ```
 
 ***Quid de l'attribut self***
 
-L'attribut self représente l'instance "active" de l'objet (celle que vous allez manipuler). Pour la méthode *\_\_init\_\_* c'est celle que vous créez, et pour la méthode *myMethod* c'est l'instance de l'objet sur laquelle vous l'appliquez (dans l'exemple au dessus c'est *myObject*). Vous devez absolument le mettre dans les attributs lors de la définition de la méthode (ce doit même être le premier), mais vous ne devez pas le renseigner à l'appel de la méthode, car implicitement python sait le valoriser.
+L'attribut self représente l'instance "active" de l'objet (celle que vous allez manipuler). Pour la méthode *\_\_init\_\_* c'est celle que vous créez, et pour la méthode *myMethod* c'est l'instance de l'objet sur laquelle vous l'appliquez (dans l'exemple au dessus c'est *myObject*). Vous devez absolument le mettre dans les attributs lors de la définition de la méthode (ce doit même être le premier) si vous voulez intéragir avec l'objet actif, mais vous ne devez pas le renseigner à l'appel de la méthode, car implicitement python sait le valoriser.
 
 #### Erreur lors du string replacement dans les requêtes
 
 Certains d'entre vous ont eu des problèmes pour l'écriture de la requête DELETE et on vu cette erreur s'afficher 
 
-TypeError: not all arguments converted during string formatting
+>TypeError: not all arguments converted during string formatting
 
 Cela provient du fait que dans cette requête un seul placeholder (%s) était replacé, et que tout naturellement vous avez fait cela (j'aurais fait la même chose)
 
@@ -275,30 +281,30 @@ Et ce n'est pas totalement juste. En effet *close* est appelé, mais pas *commit
 Par contre c'est vrai que pour un with avec une connection et pas un curseur
 
 ```python
- psycopg2.connect(DSN) as conn:
-	#something
+psycopg2.connect(DSN) as conn:
+  #something
 ```
 
 Quand on quitte le bloc with si aucune exception n'est levée on fait un commit, et un rollback sinon. Je vous conseille donc de conserver cette écriture
 
 ```python
- with connection.cursor() as cur:
+with connection.cursor() as cur:
 ```
 car elle est plus légère que
 
 ```python
- try:
-	#something
- except:
-	#something
- finally:
-	#something
+try:
+  #something
+except:
+  #something
+finally:
+  #something
 ```
 
 mais en précisant bien 
 
 ```python
- connection.commit()
+connection.commit()
 ```
 
 
@@ -330,11 +336,11 @@ Cela provient du fait que pylint ne voit pas les répertoires. C'est pas votre f
 
 ### Les imports du TP1
 
-Au début du TP on vous a fait installer 3 bibliothèques (*pylint*, *autopep8* et *psycopg2-binary*), je vous propose une petite explication sur ces installations
+Au début du TP on vous a fait installer 3 bibliothèques (*pylint*, *autopep8* et *psycopg2-binary*), je vous propose une petite explication sur ces installations.
 
 #### pylint
 
-Pylint est un outil qui va vérifier si votre code python ne contient pas d'erreur mais aussi vérifier que vous utilisez les bonnes pratiques de codage python. C'est donc un utilitaire qui ne vous apporte rien d'un point de vu métier, mais qui vous aide à développer du code avec une syntaxe de qualité. Il peut également passer en revu votre code et vous donner des informations dessus. Mais comme vous avez pu le voir, pylint n'est pas infaillible, et peu relever des erreurs qui n'en sont pas.
+Pylint est un outil qui va vérifier si votre code python ne contient pas d'erreur mais aussi vérifier que vous utilisez les bonnes pratiques de codage python. C'est donc un utilitaire qui ne vous apporte rien d'un point de vue métier, mais qui vous aide à développer du code avec une syntaxe de qualité. Il peut également passer en revue votre code et vous donner des informations dessus. Mais comme vous avez pu le voir, pylint n'est pas infaillible, et peut relever des erreurs qui n'en sont pas.
 
 La doc complète : https://www.pylint.org/
 
@@ -346,7 +352,7 @@ La doc complète : https://github.com/hhatto/autopep8
 
 #### psycopg2-binary
 
-Psycopg2-binary est un utilitaire qui vous permet de vous connecter à une base **PostgreSQL**. Sans lui (ou une autre bibliothèque qui fait la même chose) bon courage pour vous connecter à une base. Et en plus elle vous permet de faire des prepared statements, si c'est pas beau ! Je vous conseille de l'utiliser pour votre projet :wink:
+Psycopg2-binary est un utilitaire qui vous permet de vous connecter à une base **PostgreSQL**. Sans lui (ou une autre bibliothèque qui fait la même chose) bon courage pour vous connecter à une base. Et en plus elle vous permet de vous protéger des injections SQL, si c'est pas beau ! Je vous conseille de l'utiliser pour votre projet :wink:
 
 La doc complète : http://initd.org/psycopg/docs/
 
@@ -385,7 +391,7 @@ Pour une meilleure lisibilité, on peut également rajouter en première ligne l
 "Bob";"666";"7eme cercle"
 ```
 
-Sa simplicité en fait un très bon format pour transférer des données qui peuvent s'apparenter à des tableaux. Les tableurs savent les lire, les pluparts des base de données savent les importer et les exporter. Bref pour les tableau :+1:
+Sa simplicité en fait un très bon format pour transférer des données qui peuvent se mettre sous forme de tableaux. Les tableurs savent les lire, les pluparts des base de données savent les importer et les exporter. Bref pour les tableau :+1:
 
 ### Le XML
 
@@ -414,7 +420,7 @@ La balise
 ```XML
 <?xml version="1.0" encoding="utf8"?>
 ```
-est l'entête du fichier. Elle dit juste que l'on a un fichier au format XML et que l'encodage est de l'utf8
+est l'en-tête du fichier. Elle dit juste que l'on a un fichier au format XML et que l'encodage est de l'utf8
 
 La suite est assez lisible. Dans un fichier CSV, cela donnerait
 
@@ -425,7 +431,7 @@ La suite est assez lisible. Dans un fichier CSV, cela donnerait
 "Bob";"666"
 ```
 
-En plus de cela vous pouvez imbriquer des balises les unes dans les autres pour les hiérarchiser, voir dubliquer des balises pour signaler que vous avez plusieur valeur pour cet attribut. Exemple
+En plus de cela vous pouvez imbriquer des balises les unes dans les autres pour les hiérarchiser, voir dubliquer des balises pour signaler que vous avez plusieures valeurs pour cet attribut. Exemple
 
 ```XML
 <?xml version="1.0" encoding="utf8"?>
@@ -480,13 +486,13 @@ Et même utiliser un autre fichier XML pour vérifier automatiquement la forme d
 
 Pour résumer, un XML permet
   - l'imbrication faciles de vos données ;
-  - la réutilisation du même nom de balise, aussi bien pour le même concept qu'un concept différent
+  - la réutilisation du même nom de balise, aussi bien pour le même concept qu'un concept différent ;
   - de représenter parfaitement des données sous forme d'arbre, et dont on souhaite vérifier la forme a priori.
 
 
 ### Le JSON
 
-Le **JSON** pour *JavaScript Object Notation* est un format qui provient du JavaScript (c'est le langage qui rend les page web interactive). Comme le XML, il permet de représenter la hierachie de vos données, mais de manière plus légère. A la base, c'était juste la représentation textuel d'objet JavaScript, mais avec le temps c'est devenu un format d'échange de données grâce à sa simplicité.
+Le **JSON** pour *JavaScript Object Notation* est un format qui provient du JavaScript (c'est le langage qui rend les page web interactive). Comme le XML, il permet de représenter la hierachie de vos données, mais de manière plus légère. A la base, c'était juste la représentation textuelle d'objet JavaScript, mais avec le temps c'est devenu un format d'échange de données grâce à sa simplicité.
 
 ```javascript
 [
@@ -525,9 +531,9 @@ Vous devez tous savoir qu'un ordinateur ça traite des 0 et des 1, et pas des ch
 
 Le pire, c'est qu'en général sur les caractères "normaux", c'est bon. Alors si dans un fichier exemple il n'y a pas d'accent, on pense que c'est ok et quand on passe sur le fichier final, ça fonctionne pas du tout. Je vais vous donner un exemple. Par exemple si je pendre un **é**, dans un codage ascii il devient **11101001**, mais dans un codage UTF8 c'est **11000011 10101001**. C'est pas réellement la même chose.
 
-Résultat, quand vous allez lire en fichier en utilisant le mauvaise encodage, vous allez avoir des résultats surprenants qui vont apparaitre. Car l'ordinateur il est un peu "idiot" donc il va le lire votre fichier et le traduire comme il peut. S'il a un caractère pour ce code il le met, et sinon il va vous mettre un caractère du style "?" car il ne sait pas. Et en plus en fonction de l'encodage, votre ordinateur doit lire les octets une par un, deux par deux, ou en prendre un nombre variable en foncton d'un préfixe. Bref c'est compliqué et ça génère plein d'erreurs.
+Résultat, quand vous allez lire en fichier en utilisant le mauvais encodage, vous allez avoir des résultats surprenants qui vont apparaitre. Car l'ordinateur il est un peu "idiot" donc il va le lire votre fichier et le traduire comme il peut. S'il a un caractère pour ce code il le met, et sinon il va vous mettre un caractère du style "?" car il ne sait pas. Et en plus en fonction de l'encodage, votre ordinateur doit lire les octets un par un, deux par deux, ou en prendre un nombre variable en foncton d'un préfixe. Bref c'est compliqué et ça génère plein d'erreurs.
 
-Si vous voulez vous amusez voir ce que ça fait, sur notepad++ vous pouvez changer l'encodage d'un fichier manuellement. Cela donne des résultats surprenant. Ou sinon voici un site pour vous voir ce qu'un changement d'encodage fait sur vos fichiers : http://string-functions.com/encodedecode.aspx
+Si vous voulez vous amusez voir ce que ça fait, sur notepad++ vous pouvez changer l'encodage d'un fichier manuellement. Cela donne des résultats marrant. Ou sinon voici un site pour vous voir ce qu'un changement d'encodage fait sur vos fichiers : http://string-functions.com/encodedecode.aspx
 
 ## TP 3 : Utiliser un api web et réaliser une
 
@@ -621,11 +627,54 @@ Accept-Encoding: gzip, deflate
 Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
 ```
 
-Je ne vais pas vous détailler la requête comme dit plus haut c'est pas intéressant, je voulais juste vous en monter une, et vous dire que c'est ce que génère votre navigateur à chaque fois que vous tapez une URL dans la barre la barre d'URL.
+Rapidement on voit que cette requête est une requête de type GET, qui va chercher la ressource derrière l'URL ent.ensai.fr/, avec plein de paramèttre dans l'en-tête et qu'il n'y a pas de corps.
+
+Et voici la requête que génère mon navigateur derrière le proxy INSEE
+
+```
+GET http://ent.ensai.fr/ HTTP/1.1
+Host: ent.ensai.fr
+Proxy-Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4
+```
+
+C'est globalement la même, sauf qu'en passant par un proxy on doit donner l'URL complète dans la première ligne, et pas seulement l'URL relative à partir de l'host. Bon et ça rajoute d'autre paramètre, mais la grosse différence c'est ça.
 
 ### Des méthodes HTTP
 
-WIP
+Souvenez-vous, dans le TP3 côté serveur vous aviez
+
+```python
+@app.route("/films", methods=['GET'])
+def movieList():
+    return json.dumps({"films": movies})
+
+
+@app.route("/film", methods=['POST'])
+def addMovie():
+    content = request.get_json()
+    movies.append(content['name'])
+    return json.dumps({"result": "success"})
+```
+
+Ces deux méthodes définissent deux URL sur lesquelles votre serveur va répondre. L'une est http://url.de.mon.serveur/films, et l'autre http://url.de.mon.serveur/film. Mais en plus d'être sur des URL différentes, votre serveur attend une méthode HTTP différente (relativement GET et POST). Cela permet, par exemple, d'avoir sur une seule URL la possibilité de récupérer un film, d'en ajouter un, d'en supprimer un ou d'en mettre à jour un.
+
+Si vous avez la bonne URL mais pas la bonne méthode, le serveur ne va rien répondre (certains ont eu ce problème d'ailleurs). Alors faite bien attention dans le projet à appeler la bonne méthode !
+
+Voici les méthodes les plus courantes, et leur signification
+
+  - GET : pour récupérer des données (READ)
+  - POST : pour envoyer des données (CREATE)
+  - PUT : pour modifier des données (UDAPTE)
+  - DELETE : pour supprimer des données (DELETE)
+
+Mais il y en a d'autre ([doc](https://developer.mozilla.org/fr/docs/Web/HTTP/M%C3%A9thode))
 
 ### Le cas de l'API Twitter
 
@@ -633,7 +682,7 @@ Mais comment on fait pour se connecter à Twitter ? Déjà on va lire la [doc](h
 
 Oauth est un protocole de délagation d'authentification. Rapidement, avec Oauth, vous allez pouvoir via une application consommatrice de données (par exemple l'application que vous êtes en train de développer) vous connecter à une application fournisseuse de données (par exemple twitter) sans jamais passé vos identifiant/mdp de l'application fournisseuse à l'application consommatrice. Dans notre exemple, vous allez pouvoir accéder à votre compte twitter via votre application sans jamais rentrer dans votre application votre login/mdp
 
-GROSSE PRECISION !! Ici je ne parle pas du cas d'utilisation avancé qui permet à un utilisateur de partager des choses sur twitter. Je suis juste en train de vous parler du processus qui vous permet de récupérer des infos sur twitter. Car pour connecter votre application à Twitter vous avez du demander un compte développeur et obtenir un jeu de keys. C'est avec ces keys que vous allez pouvoir connecter votre application à twitter.
+GROSSE PRECISION !! Ici je ne parle pas du cas d'utilisation avancé qui permet à un utilisateur de partager des choses sur twitter. Je suis juste en train de vous parler du processus qui vous permet de récupérer des infos sur twitter. Car pour connecter votre application à Twitter vous avez dû demander un compte développeur et obtenir un jeu de keys. C'est avec ces keys que vous allez pouvoir connecter votre application à twitter.
 
 PETITE PRECISION. Pour faire le cas d'utilisation qui permet à un utilisateur de partager quelque chose sur son twitter, vous allez utiliser également Oauth, mais ça sera plus dur.
 
@@ -846,7 +895,7 @@ def __init__(self):
     self.user = None
     pass
 ```
-Mais rien ne vous empèche de rajouter plein de paramètres ! Spoiler : vous allez devoir en rajouter plein. Mais vous pouvez également juste passez un dictionnaire à la session et le remplir au fur et à mesure. Du genre
+Mais rien ne vous empèche de rajouter plein de paramètres ! Comme la liste des derniers actus récupérées. Mais si votre objet user est bien fait, pas sûr que vous ayez besoin de beaucoup d'autres paramètres.
 
 ``` python
 class Session:
