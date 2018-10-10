@@ -1,0 +1,21 @@
+@startuml
+scale 2
+class AbstractVue {
+  {static} Session session
+  dict questions
+  void display_info()
+  AbstractVue make_choice()
+}
+
+class Accueil{
+}
+
+class Connexion {
+}
+class Actualite{
+}
+
+AbstractVue <|-- Accueil
+AbstractVue <|-- Connexion
+AbstractVue <|-- Actualite
+@enduml

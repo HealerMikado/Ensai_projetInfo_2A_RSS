@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Retour sur le TP3</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css'
+            : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h1>Session et import cyclique</h1>
+                <h3>Petit point technique</h3>
+            </section>
+
+            <section>
+                <section>
+                    <h2>Session</h2>
+                </section>
+
+                <section>
+
+                    <h3>Cas d'une appli web</h3>
+                    <img class="plain" src="image/httpsession-structure.jpg" alt="">
+
+                    <p class="fragment">Projet info : première approche d'une vraie appli</p>
+                </section>
+
+                <section>
+                    <h3>L'objet session, une classe toute simple</h3>
+                    <pre><code
+                        class="python"
+                        data-trim
+                    >
+class Session:
+    def __init__(self):
+        self.user = None
+        self.filtres = None
+        self.listeActualite = None
+        ...
+        </code></pre>
+
+                    <p class="fragment">Un simple espace de stockage</p>
+                </section>
+
+                <section>
+                    <h3>L'héritage</h3>
+                    <img class="plain" src="image/diagramme_class.png" alt="" style="width:75%">
+                </section>
+
+                <section>
+                    <h3>L'héritage</h3>
+                    <ul>
+                        <li>Variables d'intances communes (ex question)</li>
+                        <li>Variables de classes partagée (ex session)</li>
+                        <li>Définir les méthodes</li>
+                        <li>Hiérarchisation du code</li>
+                        <li>Manipulation d'objet "bas niveau"</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>It's a kind of magic</h3>
+                    <pre><code
+                        class="python"
+                        data-trim
+                    >
+                    from vue.session import Session
+                    class AbstractVue:
+                        session = Session()
+
+                        def __init__(self):
+                            self.questions= []
+
+                    class Bienvenue(AbstractVue):
+                            def display_info(self):
+                                print('Bienvenue {}'
+                                        .format(AbstractVue.session.user.pseudo))
+                        </code></pre>
+                </section>
+
+            </section>
+
+        </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+        // More info about config & dependencies:
+        // - https://github.com/hakimel/reveal.js#configuration
+        // - https://github.com/hakimel/reveal.js#dependencies
+        Reveal.initialize({
+            dependencies: [{
+                src: 'plugin/markdown/marked.js'
+            }, {
+                src: 'plugin/markdown/markdown.js'
+            }, {
+                src: 'plugin/notes/notes.js',
+                async: true
+            }, {
+                src: 'plugin/highlight/highlight.js',
+                async: true,
+                callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }],
+            // Display the page number of the current slide
+            slideNumber: true,
+
+            // Push each slide change to the browser history
+            history: true,
+
+            // Enable slide navigation via mouse wheel
+            mouseWheel: true,
+
+            // 			width : "80%",
+            // 			height : "80%"
+
+        });
+        Reveal.configure({ slideNumber: 'c/t' });
+    </script>
+</body>
+
+</html>
