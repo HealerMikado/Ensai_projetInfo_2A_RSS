@@ -1,0 +1,15 @@
+@startuml
+scale 2 
+actor user
+participant backend order 30
+
+user <- Vue1 : Envoie IHM
+user -> Vue1 : Saisie information
+Vue1 -> backend : Envoie info pour traitement
+Vue1 <- backend : Retourne info
+Vue1 -> Session : Met info en session
+Vue1 -> Vue2 : Appelle une autre vue
+Vue2 -> Session : Récupère info pour affichage
+user <- Vue2 : Envoie IHM
+
+@enduml

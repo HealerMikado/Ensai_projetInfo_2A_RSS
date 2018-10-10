@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Retour sur le TP3</title>
+    <title>Séance 3 de projet</title>
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/black.css">
@@ -97,6 +97,141 @@ class Session:
                                         .format(AbstractVue.session.user.pseudo))
                         </code></pre>
                 </section>
+
+                <section>
+                    <h3>Exemple de navigation</h3>
+                    <img class="plain" src="image/sequence.png" alt="" style="width:75%">
+                </section>
+
+            </section>
+
+            <section>
+
+                <section>
+                    <h2>Import cyclique</h2>
+                </section>
+
+                <section>
+                    <h3>Le problème</h3>
+                    <pre><code
+                        class="python"
+                        data-trim
+                    >
+                    from vue.bienvenue import Bienvenue
+                    class Accueil(AbstractVue):
+                        def make_choice(self):
+                            return Bienvenue()
+                    </code></pre>
+                    <pre><code
+                        class="python"
+                        data-trim
+                    >
+                    from vue.accueil import Accueil
+                    class Bienvenue(AbstractVue):
+                        def make_choice(self):
+                            return Accueil()
+                        </code></pre>
+                </section>
+                <section>
+                    <h3>Le problème</h3>
+
+                    <pre><code
+                            class="python"
+                            data-trim
+                        >
+                        from vue.bienvenue import Bienvenue
+                        from vue.accueil import Accueil
+                            </code></pre>
+                    <ul>
+                        <li>
+                            Chaque module doit être importé pour être utilisé
+                        </li>
+                        <li>Et c'est pas possible</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Solution 1 </h3>
+
+                    <pre><code
+                            class="python"
+                            data-trim
+                        >
+                        import vue.bienvenue as bienvenue
+                        class Accueil(AbstractVue):
+                            def make_choice(self):
+                                return bienvenue.Bienvenue()
+                        </code></pre>
+                    <pre><code
+                            class="python"
+                            data-trim
+                        >
+                        import vue.accueil as accueil
+                        class Bienvenue(AbstractVue):
+                            def make_choice(self):
+                                return accueil.Accueil()
+                            </code></pre>
+                </section>
+                <section>
+                    <h3>Solution 2 </h3>
+
+                    <pre><code
+                        class="python"
+                        data-trim
+                    >
+                    class Accueil(AbstractVue):
+                        def make_choice(self):
+                            from vue.bienvenue import Bienvenue
+                            return Bienvenue()
+                    </code></pre>
+                    <pre><code
+                        class="python"
+                        data-trim
+                    >
+                    class Bienvenue(AbstractVue):
+                        def make_choice(self):
+                            from vue.accueil import Accueil
+                            return Accueil()
+                        </code></pre>
+                </section>
+
+                <section>
+                    <h3>Solutions</h3>
+                    <ul>
+                        <li>D'après les bonnes pratiques python, privilégiez la solution 1
+                            <ul>
+                                <li>Code auto documenté</li>
+                                <li>Evite les noms identiques</li>
+                            </ul>
+
+                        </li>
+                        <li>Dans votre cas, la 2 me semble bien convenir quand même</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <h2>Séances projet</h2>
+                </section>
+
+                <section>
+                    <h3>Séances projet</h3>
+                    <ul>
+                        <li>aujourd'hui</li>
+                        <li>24/10 (présent toute la journée) + 26/10</li>
+                        <li>09/11</li>
+                        <li>Total : 4 séances</li>
+                    </ul>
+                </section>
+
+                <section>
+                        <h3>Déroulement</h3>
+                        <ul>
+                            <li>Verif travail réalisé dans la semaine</li>
+                            <li>Verif git lab</li>
+                            <li>Debug</li>
+                        </ul>
+                    </section>
 
             </section>
 
