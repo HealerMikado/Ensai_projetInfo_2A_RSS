@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Les loggers</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css'
+            : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h1>Logger</h1>
+                <h3>Petit point technique</h3>
+            </section>
+
+            <section>
+                <h3>Pourquoi logger ?</h3>
+
+                <ul>
+                    <li>Pour suivre l'exécution du code
+                        <ul>
+                            <li>Passage dans les méthodes</li>
+                            <li>Erreurs non bloquantes</li>
+                            <li>Contenu des objets</li>
+                        </ul>
+                    </li>
+                    <li>Obtenir des métriques</li>
+                    <li>Application en production : savoir ce qu'il s'est passé</li>
+                </ul>
+            </section>
+
+            <section>
+                <section>
+                    <h3>Mauvaise méthodes : print()</h3>
+
+                    <pre><code
+                        class="python"
+                        data-trim
+                    >
+                    class MyClass():
+                        def __init__(self, val):
+                            print("Instanciation de MyClass avec la valeur {}"
+                                .format(val))
+                            self.val = val
+
+                        def method(self):
+                            print("Appel de method()")
+                            ...
+                            print("Appel de method(), retourn {}".format(something))
+                            return something
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>Pourquoi c'est une mauvaise méthode ?</h3>
+                    <ul>
+                        <li>Ce n'est pas un print metier</li>
+                        <li>Pour une application en console, il faut les supprimer après usage</li>
+                        <li>Pourtant ils peuvent reservir</li>
+                        <li>On oublie souvent de les supprimer</li>
+                        <li>Le top : écrire dans un fichier</li>
+                        <li>Et avoir des niveaux (ERROR, DEBUG, INFO ...)</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <h3>La bonne solution : l'API logging</h3>
+                    <pre><code
+                        class="python"
+                        data-trim
+                    >
+                    import logging
+                    # création de l'objet logger qui va nous 
+                    # servir à écrire dans les logs
+                    logger = logging.getLogger()
+                    # on met le niveau du logger à DEBUG, comme ça il écrit tout
+                    logger.setLevel(logging.DEBUG)
+
+                    if __name__ == '__main__':
+
+                        logger.info('Hello')
+                        logger.warning('Testing {}'.format( 'foo'))
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>Pourquoi c'est une bonne méthode méthode ?</h3>
+                    <ul>
+                        <li>On a des niveaux</li>
+                        <li>On peut désactiver les logs pour une présentation ;)</li>
+                        <li>On peut écrire la log dans un fichier ! </li>
+                        <li>Et après produire des indicateurs</li>
+                    </ul>
+                </section>
+
+                <section>
+                        <h3>Mais un défaut</h3>
+                            Besoin de rappeler l'import et le logger PARTOUT
+                            <pre><code
+                                class="python"
+                                data-trim
+                            >
+                            import logging
+                            logger = logging.getLogger()
+                            logger.setLevel(logging.DEBUG)
+        
+                            if __name__ == '__main__':
+        
+                                logger.info('Hello')
+                                logger.warning('Testing {}'.format( 'foo'))
+                            </code></pre>
+                            <pre><code
+                                class="python"
+                                data-trim
+                            >
+                            import logging
+                            logger = logging.getLogger()
+
+                            class MyClass():
+                                def __init__(self,nom):
+                                    logger.debug("Objet myClass instancié avec pour nom {}"
+                                        .format(nom))
+                                    self.nom = nom
+                            </code></pre>
+                    </section>
+
+
+                <section>
+                    <h3>Les niveaux</h3>
+                    <ul>
+                        <li>DEBUG : utile quand vous débuguez, genre vérifier le contenu d'un objet</li>
+                        <li>INFO : pour suivre la fonctionnement global (appel de DAO, menu etc)</li>
+                        <li>WARNING : comportement particulier qui mérite attention (passage mode hors ligne par
+                            exemple)</li>
+                        <li>ERROR : un truc à planté</li>
+                        <li>CRITICAL : tout explose</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Utilisation</h3>
+                    <ul>
+                        <li>Fonctionnement normal : niveau INFO <br></li>
+                        On log les points importants : exception, méthodes importantes (DAO, menu)
+                        <li>Quand vous avez un problème : niveau DEBUG et on met des log DEBUG
+                            <ul>
+                                <li>Création d'objet : debug</li>
+                                <li>Retour méthode : debug</li>
+                                <li>Dictionnaire un peu chiant : debug</li>
+                            </ul>
+                        </li>
+                        <li>Pour la présentation : passer en niveau CRITICAL pour ne plus voir les log
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    Pour les plus "courageux" : logger dans un fichier et la console, puis désactiver le log
+                    console pour la démo
+                </section>
+            </section>
+
+            <section>
+                <a href="http://sametmax.com/ecrire-des-logs-en-python/">Un peu de doc</a>
+            </section>
+        </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+        // More info about config & dependencies:
+        // - https://github.com/hakimel/reveal.js#configuration
+        // - https://github.com/hakimel/reveal.js#dependencies
+        Reveal.initialize({
+            dependencies: [{
+                src: 'plugin/markdown/marked.js'
+            }, {
+                src: 'plugin/markdown/markdown.js'
+            }, {
+                src: 'plugin/notes/notes.js',
+                async: true
+            }, {
+                src: 'plugin/highlight/highlight.js',
+                async: true,
+                callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }],
+            // Display the page number of the current slide
+            slideNumber: true,
+
+            // Push each slide change to the browser history
+            history: true,
+
+            // Enable slide navigation via mouse wheel
+            mouseWheel: true,
+
+            // 			width : "80%",
+            // 			height : "80%"
+
+        });
+        Reveal.configure({ slideNumber: 'c/t' });
+    </script>
+</body>
+
+</html>

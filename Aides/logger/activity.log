@@ -1,0 +1,12 @@
+2018-10-22 14:32:26,969 :: INFO :: Hello
+2018-10-22 14:32:26,969 :: INFO :: Hello
+2018-10-22 14:32:26,969 :: WARNING :: Testing foo
+2018-10-22 14:33:08,033 :: INFO :: Hello
+2018-10-22 14:33:08,033 :: WARNING :: Testing foo
+2018-10-22 14:45:43,583 :: INFO :: Hello
+2018-10-22 14:45:43,583 :: WARNING :: Testing foo
+2018-10-22 14:46:27,459 :: INFO :: Hello
+2018-10-22 14:46:27,459 :: WARNING :: Testing foo
+2018-10-22 14:46:50,650 :: INFO :: Hello
+2018-10-22 14:46:50,651 :: WARNING :: Testing foo
+2018-10-22 14:46:50,651 :: DEBUG :: Objet myClass instancié avec pour nom test log
