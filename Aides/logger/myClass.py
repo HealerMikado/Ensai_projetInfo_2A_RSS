@@ -1,8 +1,8 @@
 import logging
 
-logger = logging.getLogger()
 class MyClass():
+    logger = logging.getLogger()
 
     def __init__(self,nom):
-        logger.debug("Objet myClass instancié avec pour nom {}".format(nom))
+        MyClass.logger.debug("Objet myClass instancié avec pour nom {}".format(nom))
         self.nom = nom

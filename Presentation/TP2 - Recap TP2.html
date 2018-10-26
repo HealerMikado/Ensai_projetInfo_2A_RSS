@@ -152,7 +152,7 @@
 					<ul>
 						<li class="fragment">&lt;verbeux&gt;verbeux&lt;/verbeux&gt;</li>
 						<li class="fragment">Pas toujours lisible</li>
-						<li class="fragment">Mais avoir des données hiérarchique c'est cool</li>
+						<li class="fragment">Mais avoir des données hiérarchiques c'est cool</li>
 						<li class="fragment">Et avec un fichier XSD on peut contrôler le fichier XML</li>
 					</ul>
 				</section>
@@ -205,7 +205,7 @@
 					<ul>
 						<li class="fragment">Format très simple</li>
 						<li class="fragment">Polyvalent</li>
-						<li class="fragment">Données hiérarchique</li>
+						<li class="fragment">Données hiérarchiques</li>
 						<li class="fragment">Natif en javascript</li>
 
 					</ul>
@@ -244,7 +244,7 @@
 	headers = next(csvreader)
 	indice_SIREN =  headers.index(SIREN)
 	for row in csvreader:
-		siret = row[indice_SIREN]
+		siren = row[indice_SIREN]
 							</code></pre>
 
 					</span>
@@ -259,7 +259,7 @@
 	headers = next(csvreader)
 	for row in csvreader:
 		dictLigne = dict(zip(headers, row))
-		siret = dictLigne[SIREN]
+		siren = dictLigne[SIREN]
 							</code></pre>
 						</span>
 				</section>

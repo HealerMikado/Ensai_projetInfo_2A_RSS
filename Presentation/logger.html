@@ -137,14 +137,14 @@
                                 data-trim
                             >
                             import logging
-                            logger = logging.getLogger()
-
+                            
                             class MyClass():
+                                LOGGER = logging.getLogger()
                                 def __init__(self,nom):
-                                    logger.debug("Objet myClass instancié avec pour nom {}"
-                                        .format(nom))
-                                    self.nom = nom
-                            </code></pre>
+                                    MyClass.LOGGER.debug("Objet myClass instancié avec pour nom {}"
+                                            .format(nom))
+                                        self.nom = nom
+                                </code></pre>
                     </section>
 
 
@@ -152,8 +152,8 @@
                     <h3>Les niveaux</h3>
                     <ul>
                         <li>DEBUG : utile quand vous débuguez, genre vérifier le contenu d'un objet</li>
-                        <li>INFO : pour suivre la fonctionnement global (appel de DAO, menu etc)</li>
-                        <li>WARNING : comportement particulier qui mérite attention (passage mode hors ligne par
+                        <li>INFO : pour suivre le fonctionnement global (appel de DAO, menu etc)</li>
+                        <li>WARNING : comportement particulier qui mérite votre attention (passage mode hors ligne par
                             exemple)</li>
                         <li>ERROR : un truc à planté</li>
                         <li>CRITICAL : tout explose</li>

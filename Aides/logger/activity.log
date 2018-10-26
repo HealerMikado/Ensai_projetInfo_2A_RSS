@@ -10,3 +10,16 @@
 2018-10-22 14:46:50,650 :: INFO :: Hello
 2018-10-22 14:46:50,651 :: WARNING :: Testing foo
 2018-10-22 14:46:50,651 :: DEBUG :: Objet myClass instancié avec pour nom test log
+2018-10-24 13:47:22,804 :: INFO :: Hello
+2018-10-24 13:47:22,807 :: WARNING :: Testing foo
+2018-10-24 13:47:22,807 :: DEBUG :: Objet myClass instancié avec pour nom test log
+2018-10-24 13:47:38,554 :: INFO :: Hello
+2018-10-24 13:47:38,554 :: WARNING :: Testing foo
+2018-10-24 13:48:01,009 :: INFO :: Hello
+2018-10-24 13:48:01,025 :: WARNING :: Testing foo
+2018-10-24 13:48:01,025 :: DEBUG :: Objet myClass instancié avec pour nom test log
+2018-10-24 13:48:15,060 :: INFO :: Hello
+2018-10-24 13:48:15,060 :: WARNING :: Testing foo
+2018-10-24 13:49:49,262 :: INFO :: Hello
+2018-10-24 13:49:49,262 :: WARNING :: Testing foo
+2018-10-24 13:49:49,262 :: DEBUG :: Objet myClass instancié avec pour nom test log
